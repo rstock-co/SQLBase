@@ -1,6 +1,16 @@
+import React from 'react';
+import SchemaForms from './schema/SchemaForms';
+
 const Tables = () => {
+  
   return (
-    <h1>Tables</h1>
+    <main>
+      <SchemaForms />
+      <div className='canvas'>
+        <p>"CREATE TABLE"</p>
+
+      </div>
+    </main>
   )
 };
 
