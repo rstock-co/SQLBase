@@ -1,0 +1,18 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  h1 {
+    align-self: left;
+  }
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    li {
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+  }
+}
