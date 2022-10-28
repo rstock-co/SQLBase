@@ -23,6 +23,16 @@ const runSchemaFiles = function () {
     client.querySync(sql);
   }
 };
+const runFunctionFiles = function () {
+  console.log(chalk.cyan(`-> Loading Function Files ...`));
+  const functionFilenames = fs.readdirSync("./db/functions");
+
+  for (const fn of functionFilenames) {
+    const sql = fs.readFileSync(`./db/functions/${fn}`, "utf8");
+    console.log(`\t-> Running ${chalk.green(fn)}`);
+    client.querySync(sql);
+  }
+};
 
 const runSeedFiles = function () {
   console.log(chalk.cyan(`-> Loading Seeds ...`));
@@ -40,6 +50,7 @@ try {
   client.connectSync(connectionString);
   runSchemaFiles();
   runSeedFiles();
+  runFunctionFiles();
   client.end();
 } catch (err) {
   console.error(chalk.red(`Failed due to error: ${err}`));
