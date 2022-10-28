@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import dataReducer, { SET_USERS } from "../reducer/data_reducer";
+import dataReducer, { SET_USERS } from '../reducers/dataReducer'
 import axios from "axios";
 
 const useApplicationData = () => {

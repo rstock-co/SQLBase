@@ -1,6 +1,6 @@
 var express = require("express");
-const dbHelpers = require("./helpers/dbHelpers")(db);
 const db = require("./db");
+const dbHelpers = require("./helpers/dbHelpers")(db);
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
