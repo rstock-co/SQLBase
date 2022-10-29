@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-
+import "./SchemaForm.scss";
 import { FormInputText } from "../../form-components/FormInputText";
 import { FormInputDropdown } from "../../form-components/FormInputDropdown";
 import { useForm } from 'react-hook-form';
 import { CopyBlock, monokai } from "react-code-blocks";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper'
 
 
 export default function FieldForm() {
@@ -194,12 +195,12 @@ export default function FieldForm() {
   }
 
   return (
+    <Paper id="container">
     <form>
       {table.map((i, tableNameIndex) => {
         return (
-          <div>
+          <div className="table">
             <div key={`${i}-${tableNameIndex}`}>
-
               <FormInputText
                 _handleChange={e => _handleChange(e, "tableName", tableNameIndex)}
                 name={"Table Name"}
@@ -327,23 +328,21 @@ export default function FieldForm() {
 
       })}
 
-      <div className="demo">
-
-        {generateSQL().map((i, tableNameIndex) => {
-
-            return (
-              <CopyBlock
-                language="sql"
-                text={i}
-                theme={monokai}
-                wrapLines={true}
-                codeBlock
-              />
-            )
-          })
-        }
-      </div>
     </form >
+    <div className="demo">
+      {generateSQL().map((i, tableNameIndex) => {
+        return (
+          <CopyBlock
+            language="sql"
+            text={i}
+            theme={monokai}
+            wrapLines={true}
+            codeBlock
+          />
+        )
+      })}
+    </div>
+  </Paper>
   );
 
 

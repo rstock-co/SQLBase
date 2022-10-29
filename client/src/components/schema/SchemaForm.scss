@@ -1,0 +1,44 @@
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 1000px;
+  flex-wrap: wrap;
+  #container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgb(237, 237, 237);
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      .table {
+        background-color: white;
+        border-radius: 2em;
+        box-shadow: 1em;
+        margin: 2%;
+        padding: 2%;
+        box-shadow: 0.4em 0.4em 0.5em gray;
+        .fieldClass {
+          display: flex;
+          flex-direction: row;
+          div {
+            padding: 1%;
+          }
+        }
+      }
+    }
+    .demo {
+      height: 100%;
+      width: 50%;
+      border-radius: 2em;
+      div {
+        padding: 2%;
+        margin-top: 5%;
+        height: auto;
+      }
+    }
+  }
+}

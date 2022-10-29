@@ -1,6 +1,5 @@
 import React from 'react';
-import SchemaForm from './schema/SchemaForm';
-import SchemaForms from './schema/SchemaForms';
+import SchemaForm from "./schema/SchemaForm"
 
 const Tables = () => {
 
