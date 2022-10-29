@@ -10,7 +10,7 @@ export const FormInputText = ({ name, control, label, value, _handleChange }) =>
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <TextField onChange={_handleChange} value={value} label={label} />
+        <TextField onChange={_handleChange} value={value} label={label} size='small' />
       )}
     />
   )

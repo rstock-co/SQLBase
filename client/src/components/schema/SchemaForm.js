@@ -211,16 +211,11 @@ export default function FieldForm() {
                 name={"Table Name"}
                 control={control}
                 label={"Table Name"} />
-              <div class="addButton" >
-                <Button primary onClick={() => handleAddField(tableNameIndex)}>
-                  Add Field +
-                </Button>
-              </div>
               {i.items.map((field, fieldItemIndex) => {
                 return (
                   <div class="fieldClass">
-                    <div key={`${field}-${fieldItemIndex}`}>
-                      Field {fieldItemIndex}
+                    <div className="field-inputs" key={`${field}-${fieldItemIndex}`}>
+                      <p>Field {fieldItemIndex}</p>
                       <FormInputText
                         _handleChange={e =>
                           _handleChange(
@@ -322,31 +317,34 @@ export default function FieldForm() {
                 );
               })}
 
+                      <div class="addButton" >
+                        <Button primary onClick={() => handleAddField(tableNameIndex)}>
+                          Add Field +
+                        </Button>
+                      </div>
 
               <Divider />
-              <Button primary onClick={() => handleAddTable()}>
-                Add Table
-              </Button>
             </div>
           </div>
         )
 
       })}
-      <div className="tables">
-        {table.map((table) => {
-          console.log('table items', table)
-          return (
-            <SchemaTables
-              table={table.table}
-              fields={table.items}
-            />
-          )
-
-        })}
-
-      </div>
+              <Button primary onClick={() => handleAddTable()}>
+                Add Table
+              </Button>
 
     </form >
+    <div className="tables">
+      {table.map((table) => {
+        console.log('table items', table)
+        return (
+          <SchemaTables
+            table={table.table}
+            fields={table.items}
+          />
+        )
+      })}
+    </div>
     <div className="demo">
       {generateSQL().map((i, tableNameIndex) => {
         return (

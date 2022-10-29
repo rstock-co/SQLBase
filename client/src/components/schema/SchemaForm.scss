@@ -9,13 +9,13 @@ main {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    background-color: rgb(237, 237, 237);
     form {
       display: flex;
       flex-direction: column;
-      width: 50%;
+      width: 40%;
+      margin-left: 1%;
+      margin-right: 1%;
       .table {
-        background-color: white;
         border-radius: 2em;
         box-shadow: 1em;
         margin: 2%;
@@ -23,16 +23,26 @@ main {
         box-shadow: 0.4em 0.4em 0.5em gray;
         .fieldClass {
           display: flex;
-          flex-direction: row;
-          div {
-            padding: 1%;
+          
+          .field-inputs {
+            font-size: 1em;
+            div {
+              margin: 1%;
+            }
           }
         }
       }
     }
+    .tables {
+      margin-left: 1%;
+      margin-right: 1%;
+      width: 33%;
+    }
     .demo {
+      margin-left: 1%;
+      margin-right: 1%;
       height: 100%;
-      width: 50%;
+      width: 27%;
       border-radius: 2em;
       div {
         padding: 2%;
