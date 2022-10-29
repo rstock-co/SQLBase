@@ -8,7 +8,6 @@ import { SchemaTables } from "./SchemaTables";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper'
-import Tables from "../Tables";
 
 
 export default function FieldForm() {
