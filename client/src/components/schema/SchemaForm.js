@@ -4,8 +4,10 @@ import { FormInputText } from "../../form-components/FormInputText";
 import { FormInputDropdown } from "../../form-components/FormInputDropdown";
 import { useForm } from 'react-hook-form';
 import { CopyBlock, monokai } from "react-code-blocks";
+import { SchemaTables } from "./SchemaTables";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Tables from "../Tables";
 
 
 export default function FieldForm() {
@@ -124,7 +126,8 @@ export default function FieldForm() {
     }
     if (type === "reference") {
       const newFieldItems = [...table[tableNameIndex].items];
-      console.log('60', newFieldItems)
+      console.log('70', newFieldItems)
+      console.log('71', event.target)
       newFieldItems[fieldItemIndex].reference = event.target.value;
       setTables(state => {
         const stateCopy = [...state];
@@ -165,28 +168,31 @@ export default function FieldForm() {
         id SERIAL PRIMARY KEY NOT NULL,
         `
       table.items.map((field, index) => {
-        output += `${field.fieldName || ""} ${field.dataType || ""} ${field.reference || ""} ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""},\n        `
+        output += `${field.fieldName || ""} ${field.dataType || ""} ${generateReference(field.reference) || ""} ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""},\n        `
       })
       result.push(output.replace(/,\n {6} *$/, '\n);'))
     })
     return result;
   }
 
-  const generateReference = (table) => {
+  const generateReference = (reference) => {
     // let output = ''
     // if (table.table[table.table.length - 1] === 's') {
     //   output += `${table.table.replace(/s*$/, '_id')}` 
     // } else {
     //   output += `${table.table}_id`
     // }
-    return `INTEGER REFERENCES ${table.table}(id) ON DELETE CASCADE`;
+    console.log('reference', reference)
+    if (!reference) return null
+    return `INTEGER REFERENCES ${reference}(id) ON DELETE CASCADE`;
   }
 
   const referenceObject = (i) => {
     let output = [];
     table.map((table) => {
+      console.log('table 191', table)
       if (i !== table) {
-        let obj = {label: table.table, value: generateReference(table)}
+        let obj = { label: table.table, value: table.table }
         output.push(obj)
       }
     })
@@ -251,10 +257,10 @@ export default function FieldForm() {
                         control={control}
                         label={"MOD1"}
                         menuOptions={[
-                          { label: "None", value: "" }, 
+                          { label: "None", value: "" },
                           { label: "NOT NULL", value: "NOT NULL" },
                           { label: "UNIQUE", value: " UNIQUE" },
-                          { label: "SERIAL", value: "SERIAL"}
+                          { label: "SERIAL", value: "SERIAL" }
                         ]}
                         _handleChange={e =>
                           _handleChange(
@@ -268,10 +274,10 @@ export default function FieldForm() {
                         control={control}
                         label={"MOD2"}
                         menuOptions={[
-                          { label: "None", value: "" }, 
+                          { label: "None", value: "" },
                           { label: "NOT NULL", value: "NOT NULL" },
                           { label: "UNIQUE", value: "UNIQUE" },
-                          { label: "SERIAL", value: "SERIAL"}
+                          { label: "SERIAL", value: "SERIAL" }
                         ]}
                         _handleChange={e =>
                           _handleChange(
@@ -326,21 +332,34 @@ export default function FieldForm() {
         )
 
       })}
+      <div className="tables">
+        {table.map((table) => {
+          console.log('table items', table)
+          return (
+            <SchemaTables
+              table={table.table}
+              fields={table.items}
+            />
+          )
+
+        })}
+
+      </div>
 
       <div className="demo">
 
         {generateSQL().map((i, tableNameIndex) => {
 
-            return (
-              <CopyBlock
-                language="sql"
-                text={i}
-                theme={monokai}
-                wrapLines={true}
-                codeBlock
-              />
-            )
-          })
+          return (
+            <CopyBlock
+              language="sql"
+              text={i}
+              theme={monokai}
+              wrapLines={true}
+              codeBlock
+            />
+          )
+        })
         }
       </div>
     </form >
