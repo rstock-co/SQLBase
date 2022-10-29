@@ -200,7 +200,7 @@ export default function FieldForm() {
   }
 
   return (
-    <Paper id="container">
+    <Paper id="container" elevation={12}>
     <form>
       {table.map((i, tableNameIndex) => {
         return (
