@@ -13,6 +13,10 @@ export default function FieldForm() {
       id: null,
       table: "",
       items: [
+        {
+          name: "",
+          value: ""
+        }
       ]
     }
   ]);
@@ -33,13 +37,16 @@ export default function FieldForm() {
   };
 
   const handleAddField = i => {
+
     setTables(state => {
       const stateCopy = JSON.parse(JSON.stringify(state));
       stateCopy[i].items.push({
         name: "",
         values: ""
       })
+
       return stateCopy
+
     })
   }
 
@@ -48,9 +55,35 @@ export default function FieldForm() {
       const newTable = [...table];
       newTable[tableNameIndex].table = event.target.value;
       setTables(newTable);
-    } else {
+    }
+    if (type === "dataType") {
       const newFieldItems = [...table[tableNameIndex].items];
-      newFieldItems[fieldItemIndex].value = event.target.value;
+      newFieldItems[fieldItemIndex].dataType = event.target.value;
+      setTables(state => {
+        const stateCopy = [...state];
+        stateCopy[tableNameIndex] = {
+          ...stateCopy[tableNameIndex],
+          items: [...newFieldItems]
+        };
+        return stateCopy;
+      })
+    }
+    if (type === "mod") {
+      const newFieldItems = [...table[tableNameIndex].items];
+      newFieldItems[fieldItemIndex].mod = event.target.value;
+      setTables(state => {
+        const stateCopy = [...state];
+        stateCopy[tableNameIndex] = {
+          ...stateCopy[tableNameIndex],
+          items: [...newFieldItems]
+        };
+        return stateCopy;
+      })
+    }
+    if (type === "fieldName") {
+      const newFieldItems = [...table[tableNameIndex].items];
+      console.log('60', newFieldItems)
+      newFieldItems[fieldItemIndex].fieldName = event.target.value;
       setTables(state => {
         const stateCopy = [...state];
         stateCopy[tableNameIndex] = {
@@ -109,7 +142,7 @@ export default function FieldForm() {
                         _handleChange={e =>
                           _handleChange(
                             e,
-                            "fieldItem",
+                            "fieldName",
                             tableNameIndex,
                             fieldItemIndex
                           )}
@@ -118,16 +151,30 @@ export default function FieldForm() {
                         label={"field"}
                       />
                       <FormInputDropdown
-                        name={"dataty[e"}
+                        name={"datatype"}
                         control={control}
                         label={"datatype"}
                         menuOptions={[{ label: "int", value: "int" }]}
+                        _handleChange={e =>
+                          _handleChange(
+                            e,
+                            "dataType",
+                            tableNameIndex,
+                            fieldItemIndex
+                          )}
                       />
                       <FormInputDropdown
                         name={"mod"}
                         control={control}
                         label={"MOD"}
-                        menuOptions={[{ label: "None", value: "" }, { label: "NOT NULL", value: "not null" }]} />
+                        menuOptions={[{ label: "None", value: "" }, { label: "NOT NULL", value: "not null" }]}
+                        _handleChange={e =>
+                          _handleChange(
+                            e,
+                            "mod",
+                            tableNameIndex,
+                            fieldItemIndex
+                          )} />
                       <Button
                         onClick={() =>
                           handleRemoveField(tableNameIndex, fieldItemIndex)
@@ -152,14 +199,14 @@ export default function FieldForm() {
       })}
 
       <div className="demo">
-        {console.log(table)}
+
         {table.map((i, tableNameIndex) => {
           return i.items.map((field, fieldItemsIndex) => {
 
             return (
               <CopyBlock
                 language="sql"
-                text={`CREATE TABLE ${i.table} (id SERIAL PRIMARY KEY NOT NULL,	${field.value})`}
+                text={`CREATE TABLE ${i.table} (id SERIAL PRIMARY KEY NOT NULL,	${field.fieldName || ""} ${field.dataType || ""} ${field.mod || ""})`}
                 theme={monokai}
                 wrapLines={true}
                 codeBlock

@@ -8,7 +8,7 @@ import { useFormContext, Controller } from "react-hook-form";
 
 
 
-export const FormInputDropdown = ({ name, control, label, menuOptions }) => {
+export const FormInputDropdown = ({ name, control, label, menuOptions, _handleChange }) => {
   const options = menuOptions
   const generateSelectOptions = () => {
     return options.map((option) => {
@@ -27,7 +27,7 @@ export const FormInputDropdown = ({ name, control, label, menuOptions }) => {
     render={({ field: { onChange, value } }) => (
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel>{label}</InputLabel>
-        <Select onChange={onChange} value={value} label={label}>
+        <Select onChange={_handleChange} value={value} label={label}>
           {generateSelectOptions()}
         </Select>
       </FormControl>

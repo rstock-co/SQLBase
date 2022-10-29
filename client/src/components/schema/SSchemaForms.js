@@ -34,7 +34,7 @@ const SSchemaForms = () => {
     const value = evt.target.value;
     setState({
       ...state,
-      [evt.target.name]: value
+      [evt.target.firstName]: value
     });
   }
 
