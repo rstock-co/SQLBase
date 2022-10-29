@@ -21,7 +21,6 @@ export const FormInputDropdown = ({ name, control, label, menuOptions, _handleCh
   };
 
   return <Controller
-    defaultValue=""
     control={control}
     name={name}
     render={({ field: { onChange, value } }) => (
@@ -29,6 +28,7 @@ export const FormInputDropdown = ({ name, control, label, menuOptions, _handleCh
         <InputLabel>{label}</InputLabel>
         <Select onChange={_handleChange} value={value} label={label}>
           {generateSelectOptions()}
+          {console.log("value", value)}
         </Select>
       </FormControl>
     )}

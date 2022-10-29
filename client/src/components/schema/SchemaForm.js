@@ -4,8 +4,10 @@ import { FormInputText } from "../../form-components/FormInputText";
 import { FormInputDropdown } from "../../form-components/FormInputDropdown";
 import { useForm } from 'react-hook-form';
 import { CopyBlock, monokai } from "react-code-blocks";
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+
+
 export default function FieldForm() {
   const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
   const [table, setTables] = useState([
@@ -68,9 +70,21 @@ export default function FieldForm() {
         return stateCopy;
       })
     }
-    if (type === "mod") {
+    if (type === "mod1") {
       const newFieldItems = [...table[tableNameIndex].items];
-      newFieldItems[fieldItemIndex].mod = event.target.value;
+      newFieldItems[fieldItemIndex].mod1 = event.target.value;
+      setTables(state => {
+        const stateCopy = [...state];
+        stateCopy[tableNameIndex] = {
+          ...stateCopy[tableNameIndex],
+          items: [...newFieldItems]
+        };
+        return stateCopy;
+      })
+    }
+    if (type === "mod2") {
+      const newFieldItems = [...table[tableNameIndex].items];
+      newFieldItems[fieldItemIndex].mod2 = event.target.value;
       setTables(state => {
         const stateCopy = [...state];
         stateCopy[tableNameIndex] = {
@@ -84,6 +98,34 @@ export default function FieldForm() {
       const newFieldItems = [...table[tableNameIndex].items];
       console.log('60', newFieldItems)
       newFieldItems[fieldItemIndex].fieldName = event.target.value;
+      setTables(state => {
+        const stateCopy = [...state];
+        stateCopy[tableNameIndex] = {
+          ...stateCopy[tableNameIndex],
+          items: [...newFieldItems]
+        };
+
+        return stateCopy;
+      });
+    }
+    if (type === "default") {
+      const newFieldItems = [...table[tableNameIndex].items];
+      console.log('60', newFieldItems)
+      newFieldItems[fieldItemIndex].default = event.target.value;
+      setTables(state => {
+        const stateCopy = [...state];
+        stateCopy[tableNameIndex] = {
+          ...stateCopy[tableNameIndex],
+          items: [...newFieldItems]
+        };
+
+        return stateCopy;
+      });
+    }
+    if (type === "reference") {
+      const newFieldItems = [...table[tableNameIndex].items];
+      console.log('60', newFieldItems)
+      newFieldItems[fieldItemIndex].reference = event.target.value;
       setTables(state => {
         const stateCopy = [...state];
         stateCopy[tableNameIndex] = {
@@ -114,6 +156,41 @@ export default function FieldForm() {
       };
       return stateCopy;
     })
+  }
+
+  const generateSQL = () => {
+    let result = [];
+    table.map((table, tableNameIndex) => {
+      let output = `CREATE TABLE ${table.table} (
+        id SERIAL PRIMARY KEY NOT NULL,
+        `
+      table.items.map((field, index) => {
+        output += `${field.fieldName || ""} ${field.dataType || ""} ${field.reference || ""} ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""},\n        `
+      })
+      result.push(output.replace(/,\n {6} *$/, '\n);'))
+    })
+    return result;
+  }
+
+  const generateReference = (table) => {
+    // let output = ''
+    // if (table.table[table.table.length - 1] === 's') {
+    //   output += `${table.table.replace(/s*$/, '_id')}` 
+    // } else {
+    //   output += `${table.table}_id`
+    // }
+    return `INTEGER REFERENCES ${table.table}(id) ON DELETE CASCADE`;
+  }
+
+  const referenceObject = (i) => {
+    let output = [];
+    table.map((table) => {
+      if (i !== table) {
+        let obj = {label: table.table, value: generateReference(table)}
+        output.push(obj)
+      }
+    })
+    return output;
   }
 
   return (
@@ -154,7 +231,13 @@ export default function FieldForm() {
                         name={"datatype"}
                         control={control}
                         label={"datatype"}
-                        menuOptions={[{ label: "int", value: "int" }]}
+                        menuOptions={[
+                          { label: "None", value: "" },
+                          { label: "INT", value: "INT" },
+                          { label: "TEXT", value: "TEXT" },
+                          { label: "BOOLEAN", value: "BOOLEAN" },
+                          { label: "DATE", value: "DATE" }
+                        ]}
                         _handleChange={e =>
                           _handleChange(
                             e,
@@ -164,17 +247,63 @@ export default function FieldForm() {
                           )}
                       />
                       <FormInputDropdown
-                        name={"mod"}
+                        name={"mod1"}
                         control={control}
-                        label={"MOD"}
-                        menuOptions={[{ label: "None", value: "" }, { label: "NOT NULL", value: "not null" }]}
+                        label={"MOD1"}
+                        menuOptions={[
+                          { label: "None", value: "" }, 
+                          { label: "NOT NULL", value: "NOT NULL" },
+                          { label: "UNIQUE", value: " UNIQUE" },
+                          { label: "SERIAL", value: "SERIAL"}
+                        ]}
                         _handleChange={e =>
                           _handleChange(
                             e,
-                            "mod",
+                            "mod1",
                             tableNameIndex,
                             fieldItemIndex
                           )} />
+                      <FormInputDropdown
+                        name={"mod2"}
+                        control={control}
+                        label={"MOD2"}
+                        menuOptions={[
+                          { label: "None", value: "" }, 
+                          { label: "NOT NULL", value: "NOT NULL" },
+                          { label: "UNIQUE", value: "UNIQUE" },
+                          { label: "SERIAL", value: "SERIAL"}
+                        ]}
+                        _handleChange={e =>
+                          _handleChange(
+                            e,
+                            "mod2",
+                            tableNameIndex,
+                            fieldItemIndex
+                          )} />
+                      <FormInputDropdown
+                        name={"Reference"}
+                        control={control}
+                        label={"Reference"}
+                        menuOptions={referenceObject(i)}
+                        _handleChange={e =>
+                          _handleChange(
+                            e,
+                            "reference",
+                            tableNameIndex,
+                            fieldItemIndex
+                          )} />
+                      <FormInputText
+                        _handleChange={e =>
+                          _handleChange(
+                            e,
+                            "default",
+                            tableNameIndex,
+                            fieldItemIndex
+                          )}
+                        name={"default"}
+                        control={control}
+                        label={"default"}
+                      />
                       <Button
                         onClick={() =>
                           handleRemoveField(tableNameIndex, fieldItemIndex)
@@ -200,20 +329,18 @@ export default function FieldForm() {
 
       <div className="demo">
 
-        {table.map((i, tableNameIndex) => {
-          return i.items.map((field, fieldItemsIndex) => {
+        {generateSQL().map((i, tableNameIndex) => {
 
             return (
               <CopyBlock
                 language="sql"
-                text={`CREATE TABLE ${i.table} (id SERIAL PRIMARY KEY NOT NULL,	${field.fieldName || ""} ${field.dataType || ""} ${field.mod || ""})`}
+                text={i}
                 theme={monokai}
                 wrapLines={true}
                 codeBlock
               />
             )
           })
-        })
         }
       </div>
     </form >
