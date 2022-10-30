@@ -37,7 +37,6 @@ export const FormInputDropdown = ({
             defaultValue=""
           >
             {generateSelectOptions()}
-            {console.log("value", value)}
           </Select>
         </FormControl>
       )}

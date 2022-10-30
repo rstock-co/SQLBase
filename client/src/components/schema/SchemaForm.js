@@ -9,7 +9,11 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import { tableFields, emptyTable } from "../../data_structures/schemaTable";
-import deepCopyArray from "../helpers/schemaFormHelpers";
+import {
+  deepCopyArray,
+  generateSQL,
+  generateReferenceObject,
+} from "../helpers/schemaFormHelpers";
 
 export default function FieldForm() {
   const {
@@ -21,8 +25,6 @@ export default function FieldForm() {
   } = useForm();
 
   const [tables, setTables] = useState([deepCopyArray(emptyTable)]);
-
-  console.log("TABLES (RICH): ", tables);
 
   const handleAddTable = i => {
     const newTables = deepCopyArray(tables);
@@ -47,82 +49,35 @@ export default function FieldForm() {
 
     const newFields = [...tables[tableIndex].fields];
     newFields[fieldIndex][type] = event.target.value;
-    setTables(tables => {
-      const newTables = deepCopyArray(tables);
-      newTables[tableIndex] = {
-        ...newTables[tableIndex],
-        fields: [...newFields],
-      };
-      return newTables;
-    });
+    const newTables = deepCopyArray(tables);
+    newTables[tableIndex] = {
+      ...newTables[tableIndex],
+      fields: [...newFields],
+    };
+    setTables(newTables);
   };
 
   const handleRemoveTable = i => {
-    const values = [...tables];
-    values.splice(i, 1);
-    setTables(values);
+    const newTables = deepCopyArray(tables);
+    newTables.splice(i, 1);
+    setTables(newTables);
   };
 
   const handleRemoveField = (tableIndex, fieldIndex) => {
-    const specificFieldItems = [...tables[tableIndex].items];
-    specificFieldItems.splice(fieldIndex, 1);
-    setTables(state => {
-      const stateCopy = [...state];
-      stateCopy[tableIndex] = {
-        ...stateCopy[tableIndex],
-        items: [...specificFieldItems],
-      };
-      return stateCopy;
-    });
-  };
-
-  const generateSQL = () => {
-    let result = [];
-    tables.map(table => {
-      let output = `CREATE TABLE ${table.table} (
-        id SERIAL PRIMARY KEY NOT NULL,
-        `;
-      table.fields.map((field, index) => {
-        output += `${field.fieldName || ""} ${field.dataType || ""} ${
-          generateReference(field.reference) || ""
-        } ${field.mod1 || ""} ${field.mod2 || ""} ${
-          field.default ? "DEFAULT '" + field.default + "'" : ""
-        },\n        `;
-      });
-      result.push(output.replace(/,\n {6} *$/, "\n);"));
-    });
-    return result;
-  };
-
-  const generateReference = reference => {
-    // let output = ''
-    // if (table.table[table.table.length - 1] === 's') {
-    //   output += `${table.table.replace(/s*$/, '_id')}`
-    // } else {
-    //   output += `${table.table}_id`
-    // }
-    console.log("reference", reference);
-    if (!reference) return null;
-    return `INTEGER REFERENCES ${reference}(id) ON DELETE CASCADE`;
-  };
-
-  const referenceObject = i => {
-    let output = [];
-    tables.map(table => {
-      console.log("table 191", table);
-      if (i !== table) {
-        let obj = { label: table.table, value: table.table };
-        output.push(obj);
-      }
-    });
-    return output;
+    const fieldsToRemove = [...tables[tableIndex].fields];
+    fieldsToRemove.splice(fieldIndex, 1);
+    const newTables = deepCopyArray(tables);
+    newTables[tableIndex] = {
+      ...newTables[tableIndex],
+      fields: [...fieldsToRemove],
+    };
+    setTables(newTables);
   };
 
   return (
     <Paper id="container">
       <form>
         {tables.map((table, tableIndex) => {
-          console.log("TABLE FROM MAP: ", table);
           return (
             <div className="table">
               <div key={`${table}-${tableIndex}`}>
@@ -200,7 +155,7 @@ export default function FieldForm() {
                           name={"Reference"}
                           control={control}
                           label={"Reference"}
-                          menuOptions={referenceObject(table)}
+                          menuOptions={generateReferenceObject(tables, table)}
                           _handleChange={e =>
                             _handleChange(
                               e,
@@ -247,16 +202,15 @@ export default function FieldForm() {
       </form>
       <div className="tables">
         {tables.map(table => {
-          console.log("table items", table);
           return <SchemaTable table={table.table} fields={table.fields} />;
         })}
       </div>
       <div className="demo">
-        {generateSQL().map((i, tableIndex) => {
+        {generateSQL(tables).map((table, tableIndex) => {
           return (
             <CopyBlock
               language="sql"
-              text={i}
+              text={table}
               theme={monokai}
               wrapLines={true}
               codeBlock
