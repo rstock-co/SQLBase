@@ -1,8 +1,9 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material'
 
 const ProductFeature = () => {
   return (
-    <div>
+    <Box>
       <section className="home-section">
         <div className="section-title">Meet SQLBase</div>
         <div className="section-content">
@@ -22,7 +23,7 @@ const ProductFeature = () => {
           <div className="section-image">Image</div>
         </div>
       </section>
-    </div>
+    </Box>
   );
 }
 
