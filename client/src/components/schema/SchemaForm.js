@@ -38,19 +38,19 @@ export default function FieldForm() {
     setTables(newTables);
   };
 
-  const _handleChange = (event, type, tableNameIndex, fieldItemIndex) => {
+  const _handleChange = (event, type, tableIndex, fieldIndex) => {
     if (type === "tableName") {
       const newTables = deepCopyArray(tables);
-      newTables[tableNameIndex].table = event.target.value;
-      setTables(newTables);
+      newTables[tableIndex].table = event.target.value;
+      return setTables(newTables);
     }
 
-    const newFields = [...tables[tableNameIndex].fields];
-    newFields[fieldItemIndex][type] = event.target.value;
+    const newFields = [...tables[tableIndex].fields];
+    newFields[fieldIndex][type] = event.target.value;
     setTables(tables => {
       const newTables = deepCopyArray(tables);
-      newTables[tableNameIndex] = {
-        ...newTables[tableNameIndex],
+      newTables[tableIndex] = {
+        ...newTables[tableIndex],
         fields: [...newFields],
       };
       return newTables;
@@ -63,9 +63,9 @@ export default function FieldForm() {
     setTables(values);
   };
 
-  const handleRemoveField = (tableIndex, fieldItemIndex) => {
+  const handleRemoveField = (tableIndex, fieldIndex) => {
     const specificFieldItems = [...tables[tableIndex].items];
-    specificFieldItems.splice(fieldItemIndex, 1);
+    specificFieldItems.splice(fieldIndex, 1);
     setTables(state => {
       const stateCopy = [...state];
       stateCopy[tableIndex] = {
@@ -78,7 +78,7 @@ export default function FieldForm() {
 
   const generateSQL = () => {
     let result = [];
-    tables.map((table, tableIndex) => {
+    tables.map(table => {
       let output = `CREATE TABLE ${table.table} (
         id SERIAL PRIMARY KEY NOT NULL,
         `;

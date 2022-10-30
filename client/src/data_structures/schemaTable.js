@@ -1,10 +1,10 @@
 const tableFields = {
-  fieldName: ``,
-  dataType: ``,
-  mod1: ``,
-  mod2: ``,
-  default: ``,
-  reference: ``,
+  fieldName: "",
+  dataType: "",
+  mod1: "",
+  mod2: "",
+  default: "",
+  reference: "",
 };
 
 const emptyTable = {
