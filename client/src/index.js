@@ -9,6 +9,7 @@ import Home from "./components/pages/Home";
 import CreateTablesPage from "./components/pages/CreateTables";
 import Queries from "./components/pages/Queries";
 
+
 export default function App() {
   return (
     <BrowserRouter>
