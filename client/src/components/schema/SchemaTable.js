@@ -12,12 +12,11 @@ export const SchemaTable = ({ table, fields }) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="simple table" title={table}>
         <TableHead>
-          <TableRow>{table}</TableRow>
+          <TableRow key={table}>{table}</TableRow>
         </TableHead>
         <TableBody>
           {fields.map(row => (
             <TableRow
-              key={row.fieldName}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">

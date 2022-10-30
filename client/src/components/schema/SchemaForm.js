@@ -75,140 +75,144 @@ export default function FieldForm() {
   };
 
   return (
-    <Paper id="container">
-      <form>
+    <Paper key={"Unique"} id="container">
+      <form key={"Unique2"}>
         {tables.map((table, tableIndex) => {
           return (
             <div className="table">
-              <div key={`${table}-${tableIndex}`}>
-                <FormInputText
-                  _handleChange={e => _handleChange(e, "tableName", tableIndex)}
-                  name={"Table Name"}
-                  control={control}
-                  label={"Table Name"}
-                />
-                {table.fields.map((field, fieldIndex) => {
-                  return (
-                    <div class="fieldClass">
-                      <div
-                        className="field-inputs"
-                        key={`${field}-${fieldIndex}`}
+              <FormInputText
+                unqiueID={`${table}-${tableIndex}`}
+                _handleChange={e => _handleChange(e, "tableName", tableIndex)}
+                name={"Table Name"}
+                control={control}
+                label={"Table Name"}
+              />
+              {table.fields.map((field, fieldIndex) => {
+                return (
+                  <div className="fieldClass">
+                    <div className="field-inputs">
+                      <p>Field {fieldIndex}</p>
+                      <FormInputText
+                        uniqueID={`Field-${fieldIndex}`}
+                        _handleChange={e =>
+                          _handleChange(e, "fieldName", tableIndex, fieldIndex)
+                        }
+                        name={"field"}
+                        control={control}
+                        label={"field"}
+                      />
+                      <FormInputDropdown
+                        uniqueID={`Datatype-${fieldIndex}`}
+                        name={"datatype"}
+                        control={control}
+                        label={"datatype"}
+                        menuOptions={[
+                          { label: "None", value: "" },
+                          { label: "INT", value: "INT" },
+                          { label: "TEXT", value: "TEXT" },
+                          { label: "BOOLEAN", value: "BOOLEAN" },
+                          { label: "DATE", value: "DATE" },
+                        ]}
+                        _handleChange={e =>
+                          _handleChange(e, "dataType", tableIndex, fieldIndex)
+                        }
+                      />
+                      <FormInputDropdown
+                        uniqueID={`Mod1-${fieldIndex}`}
+                        name={"mod1"}
+                        control={control}
+                        label={"MOD1"}
+                        menuOptions={[
+                          { label: "None", value: "" },
+                          { label: "NOT NULL", value: "NOT NULL" },
+                          { label: "UNIQUE", value: " UNIQUE" },
+                          { label: "SERIAL", value: "SERIAL" },
+                        ]}
+                        _handleChange={e =>
+                          _handleChange(e, "mod1", tableIndex, fieldIndex)
+                        }
+                      />
+                      <FormInputDropdown
+                        uniqueID={`Mod2-${fieldIndex}`}
+                        name={"mod2"}
+                        control={control}
+                        label={"MOD2"}
+                        menuOptions={[
+                          { label: "None", value: "" },
+                          { label: "NOT NULL", value: "NOT NULL" },
+                          { label: "UNIQUE", value: "UNIQUE" },
+                          { label: "SERIAL", value: "SERIAL" },
+                        ]}
+                        _handleChange={e =>
+                          _handleChange(e, "mod2", tableIndex, fieldIndex)
+                        }
+                      />
+                      <FormInputDropdown
+                        uniqueID={`Reference-${fieldIndex}`}
+                        name={"Reference"}
+                        control={control}
+                        label={"Reference"}
+                        menuOptions={generateReferenceObject(tables, table)}
+                        _handleChange={e =>
+                          _handleChange(e, "reference", tableIndex, fieldIndex)
+                        }
+                      />
+                      <FormInputText
+                        uniqueID={`Default-${fieldIndex}`}
+                        _handleChange={e =>
+                          _handleChange(e, "default", tableIndex, fieldIndex)
+                        }
+                        name={"default"}
+                        control={control}
+                        label={"default"}
+                      />
+                      <Button
+                        key={`Remove-${fieldIndex}`}
+                        onClick={() =>
+                          handleRemoveField(tableIndex, fieldIndex)
+                        }
                       >
-                        <p>Field {fieldIndex}</p>
-                        <FormInputText
-                          _handleChange={e =>
-                            _handleChange(
-                              e,
-                              "fieldName",
-                              tableIndex,
-                              fieldIndex
-                            )
-                          }
-                          name={"field"}
-                          control={control}
-                          label={"field"}
-                        />
-                        <FormInputDropdown
-                          name={"datatype"}
-                          control={control}
-                          label={"datatype"}
-                          menuOptions={[
-                            { label: "None", value: "" },
-                            { label: "INT", value: "INT" },
-                            { label: "TEXT", value: "TEXT" },
-                            { label: "BOOLEAN", value: "BOOLEAN" },
-                            { label: "DATE", value: "DATE" },
-                          ]}
-                          _handleChange={e =>
-                            _handleChange(e, "dataType", tableIndex, fieldIndex)
-                          }
-                        />
-                        <FormInputDropdown
-                          name={"mod1"}
-                          control={control}
-                          label={"MOD1"}
-                          menuOptions={[
-                            { label: "None", value: "" },
-                            { label: "NOT NULL", value: "NOT NULL" },
-                            { label: "UNIQUE", value: " UNIQUE" },
-                            { label: "SERIAL", value: "SERIAL" },
-                          ]}
-                          _handleChange={e =>
-                            _handleChange(e, "mod1", tableIndex, fieldIndex)
-                          }
-                        />
-                        <FormInputDropdown
-                          name={"mod2"}
-                          control={control}
-                          label={"MOD2"}
-                          menuOptions={[
-                            { label: "None", value: "" },
-                            { label: "NOT NULL", value: "NOT NULL" },
-                            { label: "UNIQUE", value: "UNIQUE" },
-                            { label: "SERIAL", value: "SERIAL" },
-                          ]}
-                          _handleChange={e =>
-                            _handleChange(e, "mod2", tableIndex, fieldIndex)
-                          }
-                        />
-                        <FormInputDropdown
-                          name={"Reference"}
-                          control={control}
-                          label={"Reference"}
-                          menuOptions={generateReferenceObject(tables, table)}
-                          _handleChange={e =>
-                            _handleChange(
-                              e,
-                              "reference",
-                              tableIndex,
-                              fieldIndex
-                            )
-                          }
-                        />
-                        <FormInputText
-                          _handleChange={e =>
-                            _handleChange(e, "default", tableIndex, fieldIndex)
-                          }
-                          name={"default"}
-                          control={control}
-                          label={"default"}
-                        />
-                        <Button
-                          onClick={() =>
-                            handleRemoveField(tableIndex, fieldIndex)
-                          }
-                        >
-                          X
-                        </Button>
-                      </div>
+                        X
+                      </Button>
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
 
-                <div class="addButton">
-                  <Button primary onClick={() => handleAddField(tableIndex)}>
-                    Add Field +
-                  </Button>
-                </div>
-
-                <Divider />
+              <div className="addButton">
+                <Button
+                  key={`Add-${tableIndex}`}
+                  primary="true"
+                  onClick={() => handleAddField(tableIndex)}
+                >
+                  Add Field +
+                </Button>
               </div>
+
+              <Divider />
             </div>
           );
         })}
-        <Button primary onClick={() => handleAddTable()}>
+        <Button primary="true" onClick={() => handleAddTable()}>
           Add Table
         </Button>
       </form>
       <div className="tables">
-        {tables.map(table => {
-          return <SchemaTable table={table.table} fields={table.fields} />;
+        {tables.map((table, index) => {
+          return (
+            <SchemaTable
+              key={`table-${index}`}
+              table={table.table}
+              fields={table.fields}
+            />
+          );
         })}
       </div>
       <div className="demo">
         {generateSQL(tables).map((table, tableIndex) => {
           return (
             <CopyBlock
+              key={`CopyBlock-${tableIndex}`}
               language="sql"
               text={table}
               theme={monokai}

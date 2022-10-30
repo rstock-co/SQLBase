@@ -6,6 +6,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useFormContext, Controller } from "react-hook-form";
 
 export const FormInputDropdown = ({
+  uniqueID,
   name,
   control,
   label,
@@ -31,6 +32,7 @@ export const FormInputDropdown = ({
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
           <InputLabel>{label}</InputLabel>
           <Select
+            key={uniqueID}
             onChange={_handleChange}
             value={value}
             label={label}
