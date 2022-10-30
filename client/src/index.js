@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Tables from './components/Tables';
 import Queries from './components/Queries';
 
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -16,7 +17,8 @@ export default function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="tables" element={<Tables />} />
-          <Route path='queries'element={<Queries />} />
+          <Route path='queries' element={<Queries />} />
+          <Route path='queries' element={<Queries />} />
         </Route>
       </Routes>
     </BrowserRouter>

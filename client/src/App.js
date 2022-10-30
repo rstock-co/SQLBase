@@ -1,5 +1,10 @@
 import "./App.css";
 import useApplicationData from "./hooks/useApplicationData";
+import { ThemeProvider } from "@mui/system";
+import { Button, Container } from '@mui/material';
+import { useEffect } from "react";
+import Banner from "./styles/banner.js/banner";
+
 
 const App = () => {
   const { state, dispatch } = useApplicationData();
@@ -10,11 +15,14 @@ const App = () => {
     </li>
   ));
   return (
-    <div className="App">
-      <h1> Users </h1>
+    // <div className="App">
+    //   <h1> Users </h1>
 
-      <ul> {userList} </ul>
-    </div>
+    //   <ul> {userList} </ul>
+    // </div>
+    <>
+      <Banner />
+    </>
   );
 };
 

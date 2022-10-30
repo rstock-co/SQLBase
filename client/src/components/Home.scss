@@ -1,20 +1,42 @@
-section {
-  margin-top: 5%;
+
+
+.landing-paper{
+  width:96%
 }
+
+
+.landing-hero{
+  background-color: #5755a1;
+  width: 100%;
+  padding: 0%;
+  
+}
+.page-splitter {
+  width: 100%;
+}
+
+
 
 .home-tagline {
   display: flex;
   flex-direction: row;
   width: 100%;
   #tagline {
+    color: white;
     width: 50%;
-    margin-left: 5%;
+    margin-left: 15%;
     margin-right: 5%;
     text-align: left;
-    font-size: 2.5em;
+    font-size: 1.5em;
+    margin-top: 20%;
+    margin-bottom:10%;
   }
   #tagline-image {
-    width: 50%
+    margin-top: 12%;
+    margin-bottom: 10%;
+    margin-right: 20%;
+    aspect-ratio: 1/1;
+    max-width: 300px;
   }
 }
 .home-section {
