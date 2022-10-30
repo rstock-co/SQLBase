@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { Button, Paper } from "@mui/material";
 import { tableFields, emptyTable } from "../../data_structures/schemaTable";
-import SchemaForm from "../forms/SchemaForm";
+import QueriesForm from "../forms/QueriesForm";
 import SchemaTable from "../tables/SchemaTable";
 
-import {
-  deepCopyArray,
-  generateSQL,
-  generateReferenceObject,
-} from "../../helpers/schemaFormHelpers";
+import { deepCopyArray, generateSQL } from "../../helpers/schemaFormHelpers";
 
 import "../forms/SchemaForm.scss";
 
-const CreateTablesPage = () => {
+const CreateQueriesPage = () => {
   const [tables, setTables] = useState([deepCopyArray(emptyTable)]);
 
+  const generateTableList = tables => tables.map(table => table.table);
+
   console.log("TABLES: ", tables);
+  console.log("TABLE NAMES: ", generateTableList(tables));
 
   const addTable = () => {
     const newTables = deepCopyArray(tables);
@@ -69,19 +68,19 @@ const CreateTablesPage = () => {
   return (
     <main>
       <Paper id="container">
-        <h2>Create Tables</h2>
+        <h2>Create Queries</h2>
         <br />
         <form>
           {tables.map((table, tableIndex) => {
             return (
-              <SchemaForm
+              <QueriesForm
                 key={`SchemaForm - ${tableIndex}`}
                 table={table}
                 tableIndex={tableIndex}
                 handleChange={handleChange}
                 removeField={removeField}
                 addField={addField}
-                references={generateReferenceObject(tables, table)}
+                tableNameList={generateTableList(tables)}
               />
             );
           })}
@@ -121,4 +120,4 @@ const CreateTablesPage = () => {
   );
 };
 
-export default CreateTablesPage;
+export default CreateQueriesPage;

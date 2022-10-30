@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import "./Layout.scss";
-import {} from '@mui/material'
+import {} from "@mui/material";
 
 const Layout = () => {
   return (
@@ -15,14 +15,14 @@ const Layout = () => {
             <Link to="tables">Create Tables</Link>
           </li>
           <li>
-            <Link to="/queries">Create Queries</Link>
+            <Link to="queries">Create Queries</Link>
           </li>
         </ul>
       </nav>
 
       <Outlet />
     </>
-  )
+  );
 };
 
 export default Layout;
