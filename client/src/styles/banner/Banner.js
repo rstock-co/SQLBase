@@ -1,11 +1,12 @@
 import React from 'react';
-import { useTheme, useMediaQuery, Container, Box, Typography } from '@mui/material'
+import { useTheme, useMediaQuery, Container, Box, Typography, Slide } from '@mui/material'
 import PurpleBox from '../components/PurpleBox';
+import Image from 'mui-image'
 
 const Banner = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'))
-
+  const containerRef = React.useRef(null);
   return (
 
 
@@ -13,30 +14,57 @@ const Banner = () => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
         flexWrap: 'wrap',
       }
       }
     >
       {/* {matches ? <h1>Mobile</h1> : <h1>Desktop</h1>} */}
 
-      <Typography id="tagline"
-        sx={{
-          width: 300,
-          fontSize: 'h6.fontSize',
-          zIndex: 'tooltip',
-          color: 'white',
-          textAlign: 'left',
-          marginTop: 24,
-          marginLeft: 24
-        }}
-      >
-        Create your entire database with no code. Generate, seed, and query sample data, to get your project started faster.
-      </Typography>
+      <Slide direction='up'
+        in={true}
+        easing={theme.transitions.easing.easeInOut}
+        timeout={1000}
+        mountOnEnter
+        unmountOnExit
+        container={containerRef.current}>
 
-      <Image id="tagline-image" alt="hello" src="diagram.png" width={300} />
+        <Typography id="tagline"
+          sx={{
+            width: 300,
+            fontSize: 'h6.fontSize',
+            color: 'white',
+            textAlign: 'left',
+            marginTop: 18,
+          }}
+        >
+          Create your entire database with no code. Generate, seed, and query sample data, to get your project started faster.
+        </Typography>
+      </Slide >
+
+      <Box sx={{
+        marginTop: 16,
+      }}>
+
+        <Image
+          src="diagram.png"
+          height="300px"
+          width="300px"
+          fit="scale-down"
+          duration={3000}
+          easing="cubic-bezier(0.7, 0, 0.6, 1)"
+
+          showLoading={false}
+          errorIcon={true}
+          shift='right'
+          distance="150px"
+          shiftDuration={900}
+          bgColor="inherit"
+        />
+      </Box>
 
 
-    </PurpleBox>
+    </PurpleBox >
 
   );
 }

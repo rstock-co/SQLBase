@@ -3,7 +3,8 @@ import { styled } from "@mui/material";
 
 
 const PurpleBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main
+  backgroundColor: theme.palette.primary.main,
+  paddingBottom: '10%',
 }))
 
 export default PurpleBox;
