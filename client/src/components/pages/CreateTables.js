@@ -1,40 +1,31 @@
 import React, { useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { Button, Paper } from "@mui/material";
-import { tableFields, emptyTable } from "../data_structures/schemaTable";
-import SchemaForm from "../components/forms/SchemaForm";
-import SchemaTable from "../components/tables/SchemaTable";
+import { tableFields, emptyTable } from "../../data_structures/schemaTable";
+import SchemaForm from "../forms/SchemaForm";
+import SchemaTable from "../tables/SchemaTable";
 
 import {
   deepCopyArray,
   generateSQL,
   generateReferenceObject,
-} from "../helpers/schemaFormHelpers";
+} from "../../helpers/schemaFormHelpers";
 
-import "../components/forms/SchemaForm.scss";
+import "../forms/SchemaForm.scss";
 
 const CreateTablesPage = () => {
   const [tables, setTables] = useState([deepCopyArray(emptyTable)]);
-  const [references, setReferences] = useState([]);
 
   console.log("TABLES: ", tables);
-  console.log("REFERENCES: ", references);
 
-  const addReference = (tables, i) => {
-    if (i === 0) return references;
-    const newReferences = deepCopyArray(references);
-    newReferences.push(generateReferenceObject(tables, i));
-    setReferences(newReferences);
-  };
-
-  const handleAddTable = () => {
+  const addTable = () => {
     const newTables = deepCopyArray(tables);
     const newTable = deepCopyArray(emptyTable);
     newTables.push(newTable);
     setTables(newTables);
   };
 
-  const handleAddField = i => {
+  const addField = i => {
     const newTables = deepCopyArray(tables);
     const newFields = { ...tableFields };
     newTables[i].fields.push(newFields);
@@ -58,13 +49,13 @@ const CreateTablesPage = () => {
     setTables(newTables);
   };
 
-  const handleRemoveTable = i => {
+  const removeTable = i => {
     const newTables = deepCopyArray(tables);
     newTables.splice(i, 1);
     setTables(newTables);
   };
 
-  const handleRemoveField = (tableIndex, fieldIndex) => {
+  const removeField = (tableIndex, fieldIndex) => {
     const fieldsToRemove = [...tables[tableIndex].fields];
     fieldsToRemove.splice(fieldIndex, 1);
     const newTables = deepCopyArray(tables);
@@ -86,14 +77,14 @@ const CreateTablesPage = () => {
                 table={table}
                 tableIndex={tableIndex}
                 handleChange={handleChange}
-                onRemove={handleRemoveField}
-                onAdd={handleAddField}
-                references={references}
+                removeField={removeField}
+                addField={addField}
+                references={generateReferenceObject(tables, table)}
               />
             );
           })}
 
-          <Button primary="true" onClick={() => handleAddTable()}>
+          <Button primary="true" onClick={() => addTable()}>
             Add Table
           </Button>
         </form>

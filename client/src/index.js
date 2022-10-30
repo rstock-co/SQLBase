@@ -4,10 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 // import App from './App';
 import reportWebVitals from "./reportWebVitals";
-import Layout from "./routes/Layout";
-import Home from "./pages/Home";
-import CreateTablesPage from "./pages/CreateTables";
-import Queries from "./pages/Queries";
+import Layout from "./components/routes/Layout";
+import Home from "./components/pages/Home";
+import CreateTablesPage from "./components/pages/CreateTables";
+import Queries from "./components/pages/Queries";
 
 export default function App() {
   return (

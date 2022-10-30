@@ -2,15 +2,15 @@ import React from "react";
 import "./SchemaForm.scss";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
-import { FormInputText } from "../../form-components/FormInputText";
-import { FormInputDropdown } from "../../form-components/FormInputDropdown";
+import { FormInputText } from "../fields/FormInputText";
+import { FormInputDropdown } from "../fields/FormInputDropdown";
 
 const SchemaForm = ({
   table,
   tableIndex,
   handleChange,
-  handleRemoveField,
-  handleAddField,
+  addField,
+  removeField,
   references,
 }) => {
   const {
@@ -108,7 +108,7 @@ const SchemaForm = ({
               />
               <Button
                 key={`Remove-${fieldIndex}`}
-                onClick={() => handleRemoveField(tableIndex, fieldIndex)}
+                onClick={() => removeField(tableIndex, fieldIndex)}
               >
                 X
               </Button>
@@ -121,7 +121,7 @@ const SchemaForm = ({
         <Button
           key={`Add-${tableIndex}`}
           primary="true"
-          onClick={() => handleAddField(tableIndex)}
+          onClick={() => addField(tableIndex)}
         >
           Add Field +
         </Button>
