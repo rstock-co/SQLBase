@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 
 export const FormInputText = ({
@@ -8,7 +8,7 @@ export const FormInputText = ({
   control,
   label,
   value,
-  _handleChange,
+  handleChange,
 }) => {
   return (
     <Controller
@@ -18,7 +18,7 @@ export const FormInputText = ({
       render={({ field: { onChange, value } }) => (
         <TextField
           key={uniqueID}
-          onChange={_handleChange}
+          onChange={handleChange}
           value={value}
           label={label}
           size="small"

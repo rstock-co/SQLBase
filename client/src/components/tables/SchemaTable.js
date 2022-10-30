@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-export const SchemaTable = ({ table, fields }) => {
+const SchemaTable = ({ table, fields }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="simple table" title={table}>
@@ -36,3 +36,5 @@ export const SchemaTable = ({ table, fields }) => {
     </TableContainer>
   );
 };
+
+export default SchemaTable;

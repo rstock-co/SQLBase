@@ -2,8 +2,8 @@ import React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useFormContext, Controller } from "react-hook-form";
+import Select from "@mui/material/Select";
+import { Controller } from "react-hook-form";
 
 export const FormInputDropdown = ({
   uniqueID,
@@ -11,7 +11,7 @@ export const FormInputDropdown = ({
   control,
   label,
   menuOptions,
-  _handleChange,
+  handleChange,
 }) => {
   const options = menuOptions;
   const generateSelectOptions = () => {
@@ -33,7 +33,7 @@ export const FormInputDropdown = ({
           <InputLabel>{label}</InputLabel>
           <Select
             key={uniqueID}
-            onChange={_handleChange}
+            onChange={handleChange}
             value={value}
             label={label}
             defaultValue=""
