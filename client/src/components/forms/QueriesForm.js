@@ -26,13 +26,23 @@ const QueriesForm = ({
       <FormInputText
         unqiueID={`${table}-${tableIndex}`}
         handleChange={(e) => handleChange(e, "tableName", tableIndex)}
-        name={"Table Name"}
+        name={"Query Name"}
         control={control}
-        label={"Table Name"}
+        label={"Query Name"}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
           <div className="field-inputs">
+            <FormInputDropdown
+              uniqueID={`Reference-${fieldIndex}`}
+              name={"Reference"}
+              control={control}
+              label={"Reference"}
+              menuOptions={references}
+              handleChange={(e) =>
+                handleChange(e, "reference", tableIndex, fieldIndex)
+              }
+            />
             <label>Field {fieldIndex}</label>
             <FormInputText
               uniqueID={`Field-${fieldIndex}`}
@@ -87,16 +97,6 @@ const QueriesForm = ({
               ]}
               handleChange={(e) =>
                 handleChange(e, "mod2", tableIndex, fieldIndex)
-              }
-            />
-            <FormInputDropdown
-              uniqueID={`Reference-${fieldIndex}`}
-              name={"Reference"}
-              control={control}
-              label={"Reference"}
-              menuOptions={references}
-              handleChange={(e) =>
-                handleChange(e, "reference", tableIndex, fieldIndex)
               }
             />
             <FormInputText
