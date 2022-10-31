@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { Button, Paper } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
@@ -6,6 +6,7 @@ import SchemaTable from "../tables/SchemaTable";
 import useApplicationData from "../../hooks/useApplicationData";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../styles/theme/theme.js";
+import ERDModal from "../modal/ERDModal";
 
 import {
   generateSQL,
@@ -30,9 +31,22 @@ const CreateTablesPage = () => {
 
   console.log("TABLES: ", state);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => (isOpen && setIsOpen(false));
+
+  // const erdHandler = (toggle) => {
+  //   setIsOpen(toggle)
+  //   console.log('pressed openModal')
+  //   console.log(isOpen)
+  //   return (
+  //     (isOpen && <ERDModal state={state} setIsOpen={isOpen} />)
+  //   )
+  // }
   return (
-    <main>
+    <main onClick={handleClose}>
       <div id="container">
+        {(isOpen && <ERDModal open={isOpen} />)}
         {state.map((table, tableIndex) => {
           return (
             <div id="row-container">
@@ -80,6 +94,9 @@ const CreateTablesPage = () => {
         </Button>
         <Button primary="true" onClick={() => loadProgress()}>
           Load Progress
+        </Button>
+        <Button primary="true" onClick={() => handleOpen()}>
+          Generate ERD
         </Button>
       </div>
       <PageSplitter src="body-purple.png" id="tables-bottom" />

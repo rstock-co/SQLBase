@@ -31,7 +31,7 @@ const ParticlesPartial = () => {
           //   value: "#5755a1",
           // },
         },
-        fpsLimit: 60,
+        fpsLimit: 90,
         interactivity: {
           events: {
             onClick: {
@@ -49,7 +49,7 @@ const ParticlesPartial = () => {
               quantity: 4,
             },
             repulse: {
-              distance: 200,
+              distance: 100,
               duration: 0.4,
             },
           },
@@ -75,13 +75,13 @@ const ParticlesPartial = () => {
               default: "bounce",
             },
             random: false,
-            speed: 0.5,
+            speed: 0.3,
             straight: false,
           },
           number: {
             density: {
               enable: true,
-              area: 800,
+              area: 1200,
             },
             value: 50,
           },
