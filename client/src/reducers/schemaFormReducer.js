@@ -62,6 +62,7 @@ const reducer = (state, action) => {
       return newState;
     },
     LOAD_DATA: state => action.loadedData,
+    GET_TABLE_NAMES: state => state.map(table => table.table),
     default: "tried to reduce with unsupported action type",
   };
 
