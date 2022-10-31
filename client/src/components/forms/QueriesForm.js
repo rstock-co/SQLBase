@@ -14,7 +14,7 @@ const QueriesForm = ({
   addField,
   removeField,
   removeTable,
-  references,
+  tableNameList,
 }) => {
   const {
     formState: { errors },
@@ -23,30 +23,30 @@ const QueriesForm = ({
 
   return (
     <div className="table">
-      <FormInputText
-        unqiueID={`${table}-${tableIndex}`}
-        handleChange={(e) => handleChange(e, "tableName", tableIndex)}
-        name={"Query Name"}
+      <FormInputDropdown
+        name={"TableSelect"}
         control={control}
-        label={"Query Name"}
+        label={"Table Select"}
+        menuOptions={tableNameList}
+        handleChange={e => handleChange(e, "tableS", tableIndex, fieldIndex)}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
           <div className="field-inputs">
             <FormInputDropdown
-              uniqueID={`Reference-${fieldIndex}`}
+              uniqueID={`Col-select-${fieldIndex}`}
               name={"Reference"}
               control={control}
               label={"Reference"}
-              menuOptions={references}
-              handleChange={(e) =>
+              menuOptions={tableNameList()}
+              handleChange={e =>
                 handleChange(e, "reference", tableIndex, fieldIndex)
               }
             />
             <label>Field {fieldIndex}</label>
             <FormInputText
               uniqueID={`Field-${fieldIndex}`}
-              handleChange={(e) =>
+              handleChange={e =>
                 handleChange(e, "fieldName", tableIndex, fieldIndex)
               }
               name={"field"}
@@ -65,7 +65,7 @@ const QueriesForm = ({
                 { label: "BOOLEAN", value: "BOOLEAN" },
                 { label: "DATE", value: "DATE" },
               ]}
-              handleChange={(e) =>
+              handleChange={e =>
                 handleChange(e, "dataType", tableIndex, fieldIndex)
               }
             />
@@ -80,7 +80,7 @@ const QueriesForm = ({
                 { label: "UNIQUE", value: " UNIQUE" },
                 { label: "SERIAL", value: "SERIAL" },
               ]}
-              handleChange={(e) =>
+              handleChange={e =>
                 handleChange(e, "mod1", tableIndex, fieldIndex)
               }
             />
@@ -95,13 +95,13 @@ const QueriesForm = ({
                 { label: "UNIQUE", value: "UNIQUE" },
                 { label: "SERIAL", value: "SERIAL" },
               ]}
-              handleChange={(e) =>
+              handleChange={e =>
                 handleChange(e, "mod2", tableIndex, fieldIndex)
               }
             />
             <FormInputText
               uniqueID={`Default-${fieldIndex}`}
-              handleChange={(e) =>
+              handleChange={e =>
                 handleChange(e, "default", tableIndex, fieldIndex)
               }
               name={"default"}

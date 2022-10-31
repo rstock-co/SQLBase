@@ -10,6 +10,7 @@ import reducer, {
   REMOVE_FIELD,
   HANDLE_CHANGE,
   LOAD_DATA,
+  GET_TABLE_NAMES,
 } from "../reducers/schemaFormReducer";
 
 const useApplicationData = () => {
@@ -48,6 +49,11 @@ const useApplicationData = () => {
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
   const loadData = loadedData => dispatch({ type: LOAD_DATA, loadedData });
 
+  const getTableNames = () => {
+    const newState = deepCopyArray(state);
+    return newState.map(table => table.table);
+  };
+
   /**
    * Save/load progress:  User can save the current state of their schema or load last saved at any time
    * @param {integer} id the user's id (**STRETCH**)
@@ -83,6 +89,7 @@ const useApplicationData = () => {
     handleChange,
     saveProgress,
     loadProgress,
+    getTableNames,
   };
 };
 

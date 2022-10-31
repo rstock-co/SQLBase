@@ -5,7 +5,10 @@ import { tableFields, emptyTable } from "../../data_structures/schemaTable";
 import QueriesForm from "../forms/QueriesForm";
 import SchemaTable from "../tables/SchemaTable";
 import useApplicationData from "../../hooks/useApplicationData";
-import { generateReferenceObject, generateSQL } from "../../helpers/schemaFormHelpers";
+import {
+  generateReferenceObject,
+  generateSQL,
+} from "../../helpers/schemaFormHelpers";
 import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 
@@ -19,8 +22,8 @@ const CreateQueriesPage = () => {
     handleChange,
     saveProgress,
     loadProgress,
+    getTableNames,
   } = useApplicationData();
-
 
   console.log("TABLES: ", state);
 
@@ -32,13 +35,13 @@ const CreateQueriesPage = () => {
             <div id="row-container">
               <form>
                 <QueriesForm
-                  key={`SchemaForm - ${tableIndex}`}
+                  key={`QueriesForm - ${tableIndex}`}
                   table={table}
                   tableIndex={tableIndex}
                   handleChange={handleChange}
                   removeField={removeField}
                   addField={addField}
-                  references={generateReferenceObject(state, table)}
+                  tableNameList={getTableNames}
                   removeTable={removeTable}
                 />
               </form>
