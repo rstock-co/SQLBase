@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { Button, Paper } from "@mui/material";
-import { tableFields, emptyTable } from "../../data_structures/schemaTable";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
+import useApplicationData from "../../hooks/useApplicationData";
 
 import {
-  deepCopyArray,
   generateSQL,
   generateReferenceObject,
 } from "../../helpers/schemaFormHelpers";
@@ -14,57 +13,10 @@ import {
 import "../forms/SchemaForm.scss";
 
 const CreateTablesPage = () => {
-  const [tables, setTables] = useState([deepCopyArray(emptyTable)]);
+  const { state, addTable, removeTable, addField, removeField, handleChange } =
+    useApplicationData();
 
-  console.log("TABLES: ", tables);
-
-  const addTable = () => {
-    const newTables = deepCopyArray(tables);
-    const newTable = deepCopyArray(emptyTable);
-    newTables.push(newTable);
-    setTables(newTables);
-  };
-
-  const addField = i => {
-    const newTables = deepCopyArray(tables);
-    const newFields = { ...tableFields };
-    newTables[i].fields.push(newFields);
-    setTables(newTables);
-  };
-
-  const handleChange = (event, type, tableIndex, fieldIndex) => {
-    if (type === "tableName") {
-      const newTables = deepCopyArray(tables);
-      newTables[tableIndex].table = event.target.value;
-      return setTables(newTables);
-    }
-
-    const newFields = [...tables[tableIndex].fields];
-    newFields[fieldIndex][type] = event.target.value;
-    const newTables = deepCopyArray(tables);
-    newTables[tableIndex] = {
-      ...newTables[tableIndex],
-      fields: [...newFields],
-    };
-    setTables(newTables);
-  };
-
-  const removeTable = i => {
-    const newTables = deepCopyArray(tables);
-    newTables.splice(i, 1);
-    setTables(newTables);
-  };
-
-  const removeField = (tableIndex, fieldIndex) => {
-    const fieldsToRemove = [...tables[tableIndex].fields];
-    fieldsToRemove.splice(fieldIndex, 1);
-    const newTables = deepCopyArray(tables);
-    newTables[tableIndex] = {
-      ...newTables[tableIndex],
-      fields: [...fieldsToRemove],
-    };
-    setTables(newTables);
-  };
+  console.log("TABLES: ", state);
 
   return (
     <main>
@@ -72,7 +24,7 @@ const CreateTablesPage = () => {
         <h2>Create Tables</h2>
         <br />
         <form>
-          {tables.map((table, tableIndex) => {
+          {state.map((table, tableIndex) => {
             return (
               <SchemaForm
                 key={`SchemaForm - ${tableIndex}`}
@@ -81,7 +33,7 @@ const CreateTablesPage = () => {
                 handleChange={handleChange}
                 removeField={removeField}
                 addField={addField}
-                references={generateReferenceObject(tables, table)}
+                references={generateReferenceObject(state, table)}
               />
             );
           })}
@@ -92,7 +44,7 @@ const CreateTablesPage = () => {
         </form>
 
         <div className="tables">
-          {tables.map((table, tableIndex) => {
+          {state.map((table, tableIndex) => {
             return (
               <SchemaTable
                 key={`table-${tableIndex}`}
@@ -103,7 +55,7 @@ const CreateTablesPage = () => {
           })}
         </div>
         <div className="demo">
-          {generateSQL(tables).map((table, tableIndex) => {
+          {generateSQL(state).map((table, tableIndex) => {
             return (
               <CopyBlock
                 key={`CopyBlock-${tableIndex}`}
