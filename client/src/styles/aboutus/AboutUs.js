@@ -8,6 +8,7 @@ const AboutUs = () => {
 
   return (
     <Box>
+
       <Container maxWidth="lg" sx={{ p: 6, pb: 2 }}>
         <Box className="section-title" sx={{
           display: 'flex',

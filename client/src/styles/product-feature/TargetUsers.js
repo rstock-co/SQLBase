@@ -2,9 +2,12 @@ import React from 'react';
 import { Box, Container, Typography, useTheme } from '@mui/material';
 import PurpleBox from '../components/PurpleBox';
 import Image from 'mui-image'
+import ParticlesPartial from '../components/ParticlesPartial';
+
 
 const TargetUsers = () => {
   const theme = useTheme();
+
   return (
     <PurpleBox>
       <Container maxWidth="lg" sx={{ p: 6, pb: 2 }}>

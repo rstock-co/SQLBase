@@ -14,6 +14,7 @@ import PageSplitter from "../../styles/components/PageSplitter";
 
 import { useSpring } from '@react-spring/web'
 import { Carousel } from "react-responsive-carousel";
+import ParticlesPartial from "../../styles/components/ParticlesPartial";
 
 
 
@@ -24,14 +25,6 @@ const Home = () => {
   const [scrollYOffsetSpring, scrollYOffsetSpringApi] = useSpring(() => ({
     yOffset: 0,
   }));
-
-  let slides = [
-    <img src="https://picsum.photos/800/300/?random" alt="1" />,
-    <img src="https://picsum.photos/800/301/?random" alt="2" />,
-    <img src="https://picsum.photos/800/302/?random" alt="3" />,
-    <img src="https://picsum.photos/800/303/?random" alt="4" />,
-    <img src="https://picsum.photos/800/304/?random" alt="5" />
-  ];
 
   const onScroll = useCallback((event) => {
     const yOffset = event.currentTarget.scrollTop;
@@ -52,12 +45,15 @@ const Home = () => {
   }, [onScroll]);
   return (
     <ThemeProvider theme={theme}>
+
       <Container maxWidth='false'>
         <Paper elevation={12} className="landing-paper" sx={{
           borderRadius: 4,
           marginBottom: 4
         }}>
+
           <Banner />
+
           <PageSplitter className="page-splitter" src="banner-body.jpeg" alt="banner-split" />
           <ProductFeature />
           <PageSplitter src="body-purple.png" />
