@@ -72,9 +72,6 @@ const CreateTablesPage = () => {
         <Button id="add-table" primary="true" onClick={() => addTable()}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => addTable()}>
-          Add Table
-        </Button>
         <Button primary="true" onClick={() => saveProgress()}>
           Save Progress
         </Button>
