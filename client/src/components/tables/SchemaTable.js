@@ -12,7 +12,7 @@ import {
 const SchemaTable = ({ table, fields }) => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600 }} aria-label="simple table" title={table}>
+      <Table sx={{ minWidth: 600 }} size='small' aria-label="simple table" title={table}>
         <TableHead>
           <TableRow key={table}>{table}</TableRow>
         </TableHead>

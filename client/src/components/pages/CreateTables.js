@@ -4,6 +4,8 @@ import { Button, Paper } from "@mui/material";
 import { tableFields, emptyTable } from "../../data_structures/schemaTable";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../../styles/theme/theme.js";
 
 import {
   deepCopyArray,
@@ -67,22 +69,25 @@ const CreateTablesPage = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
+
     <main>
       <Paper id="container">
         <form>
           {tables.map((table, tableIndex) => {
             return (
               <SchemaForm
-                key={`SchemaForm - ${tableIndex}`}
-                table={table}
-                tableIndex={tableIndex}
-                handleChange={handleChange}
-                removeField={removeField}
-                addField={addField}
-                references={generateReferenceObject(tables, table)}
+              key={`SchemaForm - ${tableIndex}`}
+              table={table}
+              tableIndex={tableIndex}
+              handleChange={handleChange}
+              removeField={removeField}
+              addField={addField}
+              references={generateReferenceObject(tables, table)}
+              removeTable={removeTable}
               />
-            );
-          })}
+              );
+            })}
 
           <Button primary="true" onClick={() => addTable()}>
             Add Table
@@ -93,29 +98,30 @@ const CreateTablesPage = () => {
           {tables.map((table, tableIndex) => {
             return (
               <SchemaTable
-                key={`table-${tableIndex}`}
-                table={table.table}
-                fields={table.fields}
+              key={`table-${tableIndex}`}
+              table={table.table}
+              fields={table.fields}
               />
-            );
-          })}
+              );
+            })}
         </div>
         <div className="demo">
           {generateSQL(tables).map((table, tableIndex) => {
             return (
               <CopyBlock
-                key={`CopyBlock-${tableIndex}`}
-                language="sql"
-                text={table}
-                theme={monokai}
-                wrapLines={true}
-                codeBlock
+              key={`CopyBlock-${tableIndex}`}
+              language="sql"
+              text={table}
+              theme={monokai}
+              wrapLines={true}
+              codeBlock
               />
-            );
-          })}
+              );
+            })}
         </div>
       </Paper>
     </main>
+  </ThemeProvider>
   );
 };
 
