@@ -13,6 +13,7 @@ import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
 
 import { useSpring } from '@react-spring/web'
+import zIndex from "@mui/material/styles/zIndex";
 
 
 
@@ -48,7 +49,8 @@ const Home = () => {
       <Container maxWidth='false'>
         <Paper elevation={12} className="landing-paper" sx={{
           borderRadius: 4,
-          marginBottom: 4
+          marginBottom: 4,
+          zIndex: 1
         }}>
 
           <Banner />

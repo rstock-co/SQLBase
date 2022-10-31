@@ -12,14 +12,14 @@ import {
 const SchemaTable = ({ table, fields }) => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600 }} size='small' aria-label="simple table" title={table}>
+      <Table sx={{ minWidth: 600, minHeight:150 }} size='small' aria-label="simple table" title={table}>
         <TableHead>
           <TableRow key={table}>{table}</TableRow>
         </TableHead>
         <TableBody>
           {fields.map(row => (
             <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 }, height: '50px' }}
             >
               <TableCell component="th" scope="row">
                 {row.fieldName}

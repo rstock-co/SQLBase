@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { deepCopyArray } from "../helpers/schemaFormHelpers";
 import { emptyTable } from "../data_structures/schemaTable";
-// import axios from "axios";
+import axios from "axios";
 
 import reducer, {
   ADD_TABLE,
@@ -15,7 +15,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, [deepCopyArray(emptyTable)]);
 
   /**
-   * Initializes application data via useEffect hook which runs only once, making calls to 3 different api's
+   * Initializes application data via useEffect hook which runs only once
    * Then dispatches the data to update the application state via useReducer hook
    */
 
@@ -35,13 +35,8 @@ const useApplicationData = () => {
   // }, []);
 
   /**
-   * Updates the appointments list with the new interview object when either
-   * the 'bookInterview' or 'cancelInterview' functions make an AJAX request
-   * @param {integer} id
-   * @param {object} interview
-   * @returns nothing; updates state via dispatching new appointments and updated number of spots
+   * Dispatch functions
    */
-
   const addTable = () => dispatch({ type: ADD_TABLE });
   const removeTable = tableIndex =>
     dispatch({ type: REMOVE_TABLE, tableIndex });
@@ -51,38 +46,31 @@ const useApplicationData = () => {
   const handleChange = (event, fieldType, tableIndex, fieldIndex) =>
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
 
-  // const updateAppointments = (id, interview) => {
-  //   const int = interview ? { ...interview } : null;
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: int,
-  //   };
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment,
-  //   };
-  //   dispatch({
-  //     type: SET_INTERVIEW,
-  //     appointments,
-  //     days: updateSpots(state, appointments),
-  //   });
-  // };
-
   /**
-   * Books & cancels interviews when user submits the form or clicks delete button
-   * @param {integer} id the appointment id for the appointment being booked
-   * @param {object} interview the interview data
-   * @returns an axios put call to update appointments with new interview, then update state, then update spots
+   * Save/load progress:  User can save the current state of their schema or load last saved at any time
+   * @param {integer} id the user's id (**STRETCH**)
+   * @param {object} state the tables data
+   * @returns an axios call to save/load current progress (table data)
    */
 
-  // const bookInterview = (id, interview) => {
-  //   return axios
-  //     .put(`/api/appointments/${id}`, { interview })
-  //     .then(() => updateAppointments(id, interview));
-  // };
+  const saveProgress = () => {
+    const schemaString = JSON.stringify(state);
+    return axios
+      .put(`/api/tables`, { schemaString }) // add ${id} to route if we have multiple users
+      .then(data => console.log("Save successful: ", data));
+  };
 
-  // const cancelInterview = id =>
-  //   axios.delete(`/api/appointments/${id}`).then(() => updateAppointments(id));
+  const loadProgress = () => {
+    return axios
+      .get(`/api/tables`) // add ${id} to route if we have multiple users
+      .then(data => {
+        const schemaString = JSON.parse(data.data[0]["schema_string"]);
+        console.log("Load successful: ", schemaString);
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  };
 
   return {
     state,
@@ -91,6 +79,8 @@ const useApplicationData = () => {
     addField,
     removeField,
     handleChange,
+    saveProgress,
+    loadProgress,
   };
 };
 
