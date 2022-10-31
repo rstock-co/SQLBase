@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "tsparticles": "^2.3.4"
+  }
+}

@@ -1,0 +1,17 @@
+.container-style {
+  height: 100vh; //  In my case I wanted the div to cover the whole viewport.
+}
+.hero-body {
+  position: relative;
+  height: 80vh;
+}
+
+#particles {   // This is the id of the div created by the Particles component
+  height: 80vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  z-index: -10;
+}
