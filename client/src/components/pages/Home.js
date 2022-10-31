@@ -2,6 +2,7 @@ import "./Home.scss";
 import { useEffect, useCallback, useRef } from "react";
 import Paper from '@mui/material/Paper'
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../styles/theme/theme.js";
 import Banner from '../../styles/banner/Banner'
@@ -12,6 +13,7 @@ import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
 
 import { useSpring } from '@react-spring/web'
+import { Carousel } from "react-responsive-carousel";
 
 
 
@@ -51,7 +53,6 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth='false'>
-
         <Paper elevation={12} className="landing-paper" sx={{
           borderRadius: 4,
           marginBottom: 4
@@ -62,8 +63,9 @@ const Home = () => {
           <PageSplitter src="body-purple.png" />
           <TargetUsers />
           <PageSplitter src="purple-white.png" />
+          <TestimonialCarousel />
 
-          <TestimonialCarousel slides={slides} />
+
           <AboutUs />
         </Paper>
       </Container>

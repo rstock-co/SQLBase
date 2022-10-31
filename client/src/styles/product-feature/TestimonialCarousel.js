@@ -1,22 +1,45 @@
-import React from 'react';
+import { React, Component } from 'react';
+import { ReactDOM } from 'react';
 import { Box, Container } from '@mui/material';
-import { Carousal } from '3d-react-carousal';
+import { Carousel } from 'react-responsive-carousel'
+import './testimonialCarousel.scss'
 
 
-const TestimonialCarousel = (slides) => {
+const TestimonialCarousel = () => (
+  <Box sx={{
+    display: 'flex',
+    justifyContent: 'center'
 
-  return (
-    <Container maxWidth='md' sx={{ p: 6, }} >
+  }}>
 
-      <Box>
-        <div className="section-title">Testiominals</div>
-        <div className="section-content">
-          Carousal Placeholder
-          {/* <Carousal slides={slides} autoplay={true} interval={1000} /> */}
-        </div>
-      </Box>
-    </Container>
-  );
-}
+    <Carousel axis='horizontal' centerMode='true'>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 1</p>
+      </div>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 2</p>
+      </div>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 3</p>
+      </div>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 4</p>
+      </div>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 5</p>
+      </div>
+      <div>
+        <img alt="" src="http://picsum.photos/100" />
+        <p className="legend">Legend 6</p>
+      </div>
+    </Carousel>
+  </Box>
+);
+
 
 export default TestimonialCarousel;
