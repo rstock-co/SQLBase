@@ -13,8 +13,7 @@ import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
 
 import { useSpring } from '@react-spring/web'
-import { Carousel } from "react-responsive-carousel";
-import ParticlesPartial from "../../styles/components/ParticlesPartial";
+
 
 
 
