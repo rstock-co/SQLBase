@@ -26,27 +26,6 @@ const Banner = () => {
       >
         {/* {matches ? <h1>Mobile</h1> : <h1>Desktop</h1>} */}
 
-        <Slide direction='up'
-          in={true}
-          easing={theme.transitions.easing.easeInOut}
-          timeout={1000}
-          mountOnEnter
-          unmountOnExit
-          container={containerRef.current}>
-
-          <Typography id="tagline"
-            sx={{
-              width: 300,
-              fontSize: 'h6.fontSize',
-              color: 'white',
-              textAlign: 'left',
-              marginTop: 18,
-            }}
-          >
-            Create your entire database with no code. Generate, seed, and query sample data, to get your project started faster.
-          </Typography>
-        </Slide >
-
         <Box
           sx={{
             display: 'flex',
