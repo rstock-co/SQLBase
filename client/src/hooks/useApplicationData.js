@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { deepCopyArray } from "../helpers/schemaFormHelpers";
 import { emptyTable } from "../data_structures/schemaTable";
-// import axios from "axios";
+import axios from "axios";
 
 import reducer, {
   ADD_TABLE,
@@ -47,45 +47,18 @@ const useApplicationData = () => {
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
 
   /**
-   * Updates the appointments list with the new interview object when either
-   * the 'bookInterview' or 'cancelInterview' functions make an AJAX request
-   * @param {integer} id
-   * @param {object} interview
-   * @returns nothing; updates state via dispatching new appointments and updated number of spots
-   */
-
-  // const updateAppointments = (id, interview) => {
-  //   const int = interview ? { ...interview } : null;
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: int,
-  //   };
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment,
-  //   };
-  //   dispatch({
-  //     type: SET_INTERVIEW,
-  //     appointments,
-  //     days: updateSpots(state, appointments),
-  //   });
-  // };
-
-  /**
-   * Books & cancels interviews when user submits the form or clicks delete button
-   * @param {integer} id the appointment id for the appointment being booked
-   * @param {object} interview the interview data
-   * @returns an axios put call to update appointments with new interview, then update state, then update spots
+   * Save progress:  User can save the current state of their schema at any time
+   * @param {integer} id the user's id (**STRETCH**)
+   * @param {object} state the tables data
+   * @returns an axios put call to save current progress (table data)
    */
 
   const saveProgress = () => {
+    const schemaString = JSON.stringify(state);
     return axios
-      .put(`/api/appointments/${id}`, { interview })
-      .then(() => updateAppointments(id, interview));
+      .put(`/api/tables`, { schemaString }) // add ${id} to route if we have multiple users
+      .then(data => console.log("Save successful: ", data));
   };
-
-  // const cancelInterview = id =>
-  //   axios.delete(`/api/appointments/${id}`).then(() => updateAppointments(id));
 
   return {
     state,
@@ -94,6 +67,7 @@ const useApplicationData = () => {
     addField,
     removeField,
     handleChange,
+    saveProgress,
   };
 };
 

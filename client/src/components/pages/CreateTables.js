@@ -15,14 +15,20 @@ import {
 import "../forms/SchemaForm.scss";
 
 const CreateTablesPage = () => {
-  const { state, addTable, removeTable, addField, removeField, handleChange } =
-    useApplicationData();
+  const {
+    state,
+    addTable,
+    removeTable,
+    addField,
+    removeField,
+    handleChange,
+    saveProgress,
+  } = useApplicationData();
 
   console.log("TABLES: ", state);
 
   return (
     <ThemeProvider theme={theme}>
-
       <main>
         <Paper id="container">
           <h2>Create Tables</h2>
@@ -45,6 +51,9 @@ const CreateTablesPage = () => {
 
             <Button primary="true" onClick={() => addTable()}>
               Add Table
+            </Button>
+            <Button primary="true" onClick={() => saveProgress()}>
+              Save Progress
             </Button>
           </form>
 
