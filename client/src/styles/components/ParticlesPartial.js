@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
+import './particles.scss'
 
 const ParticlesPartial = () => {
   const particlesInit = useCallback(async engine => {
@@ -22,15 +23,15 @@ const ParticlesPartial = () => {
       loaded={particlesLoaded}
       options={{
         fullScreen: {
-          enable: true,
+          enable: false,
           zIndex: -1
         },
         background: {
-          color: {
-            value: "#5755a1",
-          },
+          // color: {
+          //   value: "#5755a1",
+          // },
         },
-        fpsLimit: 120,
+        fpsLimit: 60,
         interactivity: {
           events: {
             onClick: {
@@ -41,7 +42,7 @@ const ParticlesPartial = () => {
               enable: true,
               mode: "repulse",
             },
-            resize: true,
+            resize: false,
           },
           modes: {
             push: {
@@ -59,7 +60,7 @@ const ParticlesPartial = () => {
           },
           links: {
             color: "#ffffff",
-            distance: 150,
+            distance: 125,
             enable: true,
             opacity: 0.5,
             width: 1,
@@ -74,7 +75,7 @@ const ParticlesPartial = () => {
               default: "bounce",
             },
             random: false,
-            speed: 6,
+            speed: 0.5,
             straight: false,
           },
           number: {
@@ -82,7 +83,7 @@ const ParticlesPartial = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 50,
           },
           opacity: {
             value: 0.5,
@@ -91,7 +92,7 @@ const ParticlesPartial = () => {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 4 },
           },
         },
         detectRetina: true,
