@@ -15,7 +15,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, [deepCopyArray(emptyTable)]);
 
   /**
-   * Initializes application data via useEffect hook which runs only once, making calls to 3 different api's
+   * Initializes application data via useEffect hook which runs only once
    * Then dispatches the data to update the application state via useReducer hook
    */
 
@@ -35,13 +35,8 @@ const useApplicationData = () => {
   // }, []);
 
   /**
-   * Updates the appointments list with the new interview object when either
-   * the 'bookInterview' or 'cancelInterview' functions make an AJAX request
-   * @param {integer} id
-   * @param {object} interview
-   * @returns nothing; updates state via dispatching new appointments and updated number of spots
+   * Dispatch functions
    */
-
   const addTable = () => dispatch({ type: ADD_TABLE });
   const removeTable = tableIndex =>
     dispatch({ type: REMOVE_TABLE, tableIndex });
@@ -50,6 +45,14 @@ const useApplicationData = () => {
     dispatch({ type: REMOVE_FIELD, tableIndex, fieldIndex });
   const handleChange = (event, fieldType, tableIndex, fieldIndex) =>
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
+
+  /**
+   * Updates the appointments list with the new interview object when either
+   * the 'bookInterview' or 'cancelInterview' functions make an AJAX request
+   * @param {integer} id
+   * @param {object} interview
+   * @returns nothing; updates state via dispatching new appointments and updated number of spots
+   */
 
   // const updateAppointments = (id, interview) => {
   //   const int = interview ? { ...interview } : null;
@@ -75,11 +78,11 @@ const useApplicationData = () => {
    * @returns an axios put call to update appointments with new interview, then update state, then update spots
    */
 
-  // const bookInterview = (id, interview) => {
-  //   return axios
-  //     .put(`/api/appointments/${id}`, { interview })
-  //     .then(() => updateAppointments(id, interview));
-  // };
+  const saveProgress = () => {
+    return axios
+      .put(`/api/appointments/${id}`, { interview })
+      .then(() => updateAppointments(id, interview));
+  };
 
   // const cancelInterview = id =>
   //   axios.delete(`/api/appointments/${id}`).then(() => updateAppointments(id));
