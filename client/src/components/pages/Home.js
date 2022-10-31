@@ -64,9 +64,11 @@ const Home = () => {
           <TargetUsers />
           <PageSplitter src="purple-white.png" />
           <TestimonialCarousel />
-
-
+          <PageSplitter src="body-purple.png" />
+          <PageSplitter src="purple-white.png" />
           <AboutUs />
+
+
         </Paper>
       </Container>
     </ThemeProvider>
