@@ -7,8 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import Layout from "./components/routes/Layout";
 import Home from "./components/pages/Home";
 import CreateTablesPage from "./components/pages/CreateTables";
-import Queries from "./components/pages/Queries";
-
+import CreateQueriesPage from "./components/pages/CreateQueries";
 
 export default function App() {
   return (
@@ -17,7 +16,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="tables" element={<CreateTablesPage />} />
-          <Route path="queries" element={<Queries />} />
+          <Route path="queries" element={<CreateQueriesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
