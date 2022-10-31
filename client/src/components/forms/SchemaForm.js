@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { FormInputText } from "../fields/FormInputText";
 import { FormInputDropdown } from "../fields/FormInputDropdown";
+import ClearIcon from '@mui/icons-material/Clear';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const SchemaForm = ({
   table,
@@ -12,6 +14,7 @@ const SchemaForm = ({
   addField,
   removeField,
   references,
+  removeTable
 }) => {
   const {
     formState: { errors },
@@ -29,9 +32,8 @@ const SchemaForm = ({
       />
       {table.fields.map((field, fieldIndex) => {
         return (
-          <div className="fieldClass">
             <div className="field-inputs">
-              <p>Field {fieldIndex}</p>
+              <label>Field {fieldIndex}</label>
               <FormInputText
                 uniqueID={`Field-${fieldIndex}`}
                 handleChange={e =>
@@ -39,7 +41,7 @@ const SchemaForm = ({
                 }
                 name={"field"}
                 control={control}
-                label={"field"}
+                label={"Field"}
               />
               <FormInputDropdown
                 uniqueID={`Datatype-${fieldIndex}`}
@@ -110,20 +112,26 @@ const SchemaForm = ({
                 key={`Remove-${fieldIndex}`}
                 onClick={() => removeField(tableIndex, fieldIndex)}
               >
-                X
+                <ClearIcon />
               </Button>
             </div>
-          </div>
         );
       })}
 
-      <div className="addButton">
+      <div className="add-remove-button">
         <Button
           key={`Add-${tableIndex}`}
           primary="true"
           onClick={() => addField(tableIndex)}
         >
           Add Field +
+        </Button>
+        <Button
+          key={`Remove-${tableIndex}`}
+          primary="true"
+          onClick={() => removeTable(tableIndex)}
+        >
+          <DeleteForeverIcon /> Delete Table 
         </Button>
       </div>
     </div>

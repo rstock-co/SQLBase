@@ -22,6 +22,7 @@ export const FormInputText = ({
           value={value}
           label={label}
           size="small"
+          margin="dense"
         />
       )}
     />
