@@ -9,6 +9,7 @@ import reducer, {
   ADD_FIELD,
   REMOVE_FIELD,
   HANDLE_CHANGE,
+  LOAD_DATA,
 } from "../reducers/schemaFormReducer";
 
 const useApplicationData = () => {
@@ -45,6 +46,7 @@ const useApplicationData = () => {
     dispatch({ type: REMOVE_FIELD, tableIndex, fieldIndex });
   const handleChange = (event, fieldType, tableIndex, fieldIndex) =>
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
+  const loadData = loadedData => dispatch({ type: LOAD_DATA, loadedData });
 
   /**
    * Save/load progress:  User can save the current state of their schema or load last saved at any time
@@ -65,7 +67,7 @@ const useApplicationData = () => {
       .get(`/api/tables`) // add ${id} to route if we have multiple users
       .then(data => {
         const schemaString = JSON.parse(data.data[0]["schema_string"]);
-        console.log("Load successful: ", schemaString);
+        loadData(schemaString);
       })
       .catch(err => {
         console.log("Error loading: ", err);

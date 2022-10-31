@@ -6,6 +6,7 @@ export const REMOVE_TABLE = "REMOVE_TABLE";
 export const ADD_FIELD = "ADD_FIELD";
 export const REMOVE_FIELD = "REMOVE_FIELD";
 export const HANDLE_CHANGE = "HANDLE_CHANGE";
+export const LOAD_DATA = "LOAD_DATA";
 
 /**
  * The reducer function from the 'useReducer' hook, specifies the actions (functions to execute) to update the state object
@@ -59,6 +60,7 @@ const reducer = (state, action) => {
       };
       return newState;
     },
+    LOAD_DATA: state => action.loadedData,
     default: "tried to reduce with unsupported action type",
   };
 
