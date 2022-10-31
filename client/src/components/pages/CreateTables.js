@@ -23,6 +23,7 @@ const CreateTablesPage = () => {
     removeField,
     handleChange,
     saveProgress,
+    loadProgress,
   } = useApplicationData();
 
   console.log("TABLES: ", state);
@@ -54,6 +55,9 @@ const CreateTablesPage = () => {
             </Button>
             <Button primary="true" onClick={() => saveProgress()}>
               Save Progress
+            </Button>
+            <Button primary="true" onClick={() => loadProgress()}>
+              Load Progress
             </Button>
           </form>
 

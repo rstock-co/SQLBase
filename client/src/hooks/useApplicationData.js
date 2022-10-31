@@ -47,10 +47,10 @@ const useApplicationData = () => {
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
 
   /**
-   * Save progress:  User can save the current state of their schema at any time
+   * Save/load progress:  User can save the current state of their schema or load last saved at any time
    * @param {integer} id the user's id (**STRETCH**)
    * @param {object} state the tables data
-   * @returns an axios put call to save current progress (table data)
+   * @returns an axios call to save/load current progress (table data)
    */
 
   const saveProgress = () => {
@@ -58,6 +58,18 @@ const useApplicationData = () => {
     return axios
       .put(`/api/tables`, { schemaString }) // add ${id} to route if we have multiple users
       .then(data => console.log("Save successful: ", data));
+  };
+
+  const loadProgress = () => {
+    return axios
+      .get(`/api/tables`) // add ${id} to route if we have multiple users
+      .then(data => {
+        const schemaString = JSON.parse(data.data[0]["schema_string"]);
+        console.log("Load successful: ", schemaString);
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
   };
 
   return {
@@ -68,6 +80,7 @@ const useApplicationData = () => {
     removeField,
     handleChange,
     saveProgress,
+    loadProgress,
   };
 };
 
