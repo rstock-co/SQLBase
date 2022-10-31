@@ -3,6 +3,8 @@ import { Box, Typography } from '@mui/material'
 import Image from 'mui-image'
 
 const ProductFeature = () => {
+
+
   return (
     <>
       <Box sx={{
@@ -32,7 +34,8 @@ const ProductFeature = () => {
 
           <Image src='https://picsum.photos/200' height='250px' width='250px'
             duration={1000}
-            shift={"right"} />
+            shift={"right"}
+          />
           <Box className="section-text" width={300}>
             <Typography variant='h6'>Powerful Form Tools</Typography>
             <Typography variant='body2'>SQLBase is a SQL platform that allows users to easily create, query, and seed a database. It delivers a functional database with no code inputs, providing you with the right tools to build your outstanding projects.
