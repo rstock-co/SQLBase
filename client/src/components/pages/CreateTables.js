@@ -23,59 +23,59 @@ const CreateTablesPage = () => {
   return (
     <ThemeProvider theme={theme}>
 
-    <main>
-      <Paper id="container">
-        <h2>Create Tables</h2>
-        <br />
-        <form>
-          {state.map((table, tableIndex) => {
-            return (
-              <SchemaForm
-              key={`SchemaForm - ${tableIndex}`}
-              table={table}
-              tableIndex={tableIndex}
-              handleChange={handleChange}
-              removeField={removeField}
-              addField={addField}
-              references={generateReferenceObject(tables, table)}
-              removeTable={removeTable}
-              />
+      <main>
+        <Paper id="container">
+          <h2>Create Tables</h2>
+          <br />
+          <form>
+            {state.map((table, tableIndex) => {
+              return (
+                <SchemaForm
+                  key={`SchemaForm - ${tableIndex}`}
+                  table={table}
+                  tableIndex={tableIndex}
+                  handleChange={handleChange}
+                  removeField={removeField}
+                  addField={addField}
+                  references={generateReferenceObject(state, table)}
+                  removeTable={removeTable}
+                />
               );
             })}
 
-          <Button primary="true" onClick={() => addTable()}>
-            Add Table
-          </Button>
-        </form>
+            <Button primary="true" onClick={() => addTable()}>
+              Add Table
+            </Button>
+          </form>
 
-        <div className="tables">
-          {state.map((table, tableIndex) => {
-            return (
-              <SchemaTable
-              key={`table-${tableIndex}`}
-              table={table.table}
-              fields={table.fields}
-              />
+          <div className="tables">
+            {state.map((table, tableIndex) => {
+              return (
+                <SchemaTable
+                  key={`table-${tableIndex}`}
+                  table={table.table}
+                  fields={table.fields}
+                />
               );
             })}
-        </div>
-        <div className="demo">
-          {generateSQL(state).map((table, tableIndex) => {
-            return (
-              <CopyBlock
-              key={`CopyBlock-${tableIndex}`}
-              language="sql"
-              text={table}
-              theme={monokai}
-              wrapLines={true}
-              codeBlock
-              />
+          </div>
+          <div className="demo">
+            {generateSQL(state).map((table, tableIndex) => {
+              return (
+                <CopyBlock
+                  key={`CopyBlock-${tableIndex}`}
+                  language="sql"
+                  text={table}
+                  theme={monokai}
+                  wrapLines={true}
+                  codeBlock
+                />
               );
             })}
-        </div>
-      </Paper>
-    </main>
-  </ThemeProvider>
+          </div>
+        </Paper>
+      </main>
+    </ThemeProvider>
   );
 };
 

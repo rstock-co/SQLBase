@@ -7,6 +7,8 @@ const Banner = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const containerRef = React.useRef(null);
+
+
   return (
 
 
@@ -42,9 +44,11 @@ const Banner = () => {
         </Typography>
       </Slide >
 
-      <Box sx={{
-        marginTop: 16,
-      }}>
+      <Box
+        sx={{
+          marginTop: 16,
+        }}>
+
 
         <Image
           src="diagram.png"
