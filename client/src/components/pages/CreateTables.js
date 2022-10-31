@@ -13,6 +13,8 @@ import {
 } from "../../helpers/schemaFormHelpers";
 
 import "../forms/SchemaForm.scss";
+import { useTheme } from "@emotion/react";
+import PageSplitter from "../../styles/components/PageSplitter";
 
 const CreateTablesPage = () => {
   const {
@@ -29,14 +31,12 @@ const CreateTablesPage = () => {
   console.log("TABLES: ", state);
 
   return (
-    <ThemeProvider theme={theme}>
-      <main>
-        <Paper id="container">
-          <h2>Create Tables</h2>
-          <br />
-          <form>
-            {state.map((table, tableIndex) => {
-              return (
+    <main>
+      <div id="container">
+        {state.map((table, tableIndex) => {
+          return (
+            <div id="row-container">
+              <form>
                 <SchemaForm
                   key={`SchemaForm - ${tableIndex}`}
                   table={table}
@@ -47,48 +47,43 @@ const CreateTablesPage = () => {
                   references={generateReferenceObject(state, table)}
                   removeTable={removeTable}
                 />
-              );
-            })}
-
-            <Button primary="true" onClick={() => addTable()}>
-              Add Table
-            </Button>
-            <Button primary="true" onClick={() => saveProgress()}>
-              Save Progress
-            </Button>
-            <Button primary="true" onClick={() => loadProgress()}>
-              Load Progress
-            </Button>
-          </form>
-
-          <div className="tables">
-            {state.map((table, tableIndex) => {
-              return (
+              </form>
+              <div className="tables">
                 <SchemaTable
                   key={`table-${tableIndex}`}
                   table={table.table}
                   fields={table.fields}
                 />
-              );
-            })}
-          </div>
-          <div className="demo">
-            {generateSQL(state).map((table, tableIndex) => {
-              return (
+              </div>
+              <div className="demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
-                  text={table}
+                  text={generateSQL(state)[tableIndex]}
                   theme={monokai}
                   wrapLines={true}
                   codeBlock
                 />
-              );
-            })}
-          </div>
-        </Paper>
-      </main>
-    </ThemeProvider>
+              </div>
+            </div>
+          );
+        })}
+
+        <Button id="add-table" primary="true" onClick={() => addTable()}>
+          Add Table
+        </Button>
+        <Button primary="true" onClick={() => addTable()}>
+          Add Table
+        </Button>
+        <Button primary="true" onClick={() => saveProgress()}>
+          Save Progress
+        </Button>
+        <Button primary="true" onClick={() => loadProgress()}>
+          Load Progress
+        </Button>
+      </div>
+      <PageSplitter src="body-purple.png" id="tables-bottom" />
+    </main>
   );
 };
 

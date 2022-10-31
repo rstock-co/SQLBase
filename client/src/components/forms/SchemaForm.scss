@@ -1,24 +1,29 @@
 main {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  height: 1000px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 98%;
+  margin-left: 1%;
+  justify-content: space-between;
   #container {
+    margin: 0;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 98%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    #row-container {
+      display: flex;
+      flex-direction: row;
     form {
       display: flex;
       flex-direction: column;
       width: 45%;
       .table {
         border-radius: 2em;
-        box-shadow: 1em;
         margin: 2%;
         padding: 2%;
-        box-shadow: 0.4em 0.4em 0.5em gray;
+        box-shadow: 0.2em 0.2em 0.2em gray;
         .field-inputs {
           display: flex;
           flex-direction: row;
@@ -28,9 +33,6 @@ main {
             white-space: nowrap;
             align-self: center;
           }
-          // div {
-          //   margin: 1%;
-          // }
         }
         .add-remove-button {
           display: flex;
@@ -40,6 +42,7 @@ main {
       }
     }
   }
+}
   .tables {
     margin-top: 1%;
     width: 25%;
@@ -60,4 +63,14 @@ main {
       height: auto;
     }
   }
+}
+
+
+#add-table {
+  margin-top: 3%;
+}
+
+#tables-bottom {
+  width: 100%;
+  opacity: 0.5;
 }

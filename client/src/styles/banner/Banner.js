@@ -18,6 +18,7 @@ const Banner = () => {
         flexDirection: 'row',
         justifyContent: 'center',
         flexWrap: 'wrap',
+        marginTop: '-1%'
       }
       }
     >
