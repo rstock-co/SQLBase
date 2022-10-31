@@ -47,7 +47,6 @@ const Home = () => {
 
         <Paper elevation={12} className="landing-paper" sx={{
           borderRadius: 4,
-          overflow: 'hidden',
           marginBottom: 4
         }}>
           <Banner />
