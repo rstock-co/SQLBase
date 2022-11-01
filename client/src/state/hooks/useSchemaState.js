@@ -70,6 +70,7 @@ const useSchemaState = () => {
   };
 
   return {
+    state,
     addSchemaTable,
     removeSchemaTable,
     addSchemaField,

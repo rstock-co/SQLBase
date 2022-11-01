@@ -3,7 +3,7 @@ import { CopyBlock, monokai } from "react-code-blocks";
 import { Button } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
-import useGlobalState from "../../state/hooks/useSchemaState";
+import useSchemaState from "../../state/hooks/useSchemaState";
 import ERDModal from "../modal/ERDModal";
 
 import {
@@ -14,7 +14,7 @@ import {
 import "../forms/SchemaForm.scss";
 import PageSplitter from "../../styles/components/PageSplitter";
 
-const CreateTablesPage = () => {
+const CreateSchemaPage = () => {
   const {
     state,
     addTable,
@@ -24,9 +24,9 @@ const CreateTablesPage = () => {
     handleChange,
     saveProgress,
     loadProgress,
-  } = useGlobalState();
+  } = useSchemaState();
 
-  console.log("TABLES PAGE: ", state);
+  console.log("SCHEMA PAGE STATE: ", state);
 
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
@@ -90,4 +90,4 @@ const CreateTablesPage = () => {
   );
 };
 
-export default CreateTablesPage;
+export default CreateSchemaPage;
