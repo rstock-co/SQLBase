@@ -51,7 +51,20 @@ const useApplicationData = () => {
 
   const getTableNames = () => {
     const newState = deepCopyArray(state);
-    return newState.map(table => table.table);
+    let output = [];
+    newState.forEach(table => {
+      output.push({ value: table, label: table.table})
+    });
+    return output;
+  };
+
+  const getColumnList = table => {
+    let output = [];
+    table.fields.map(field => output.push({
+      label: field.fieldName,
+      value: field.fieldName,
+    }));
+    return output;
   };
 
   /**
@@ -90,6 +103,7 @@ const useApplicationData = () => {
     saveProgress,
     loadProgress,
     getTableNames,
+    getColumnList
   };
 };
 

@@ -13,4 +13,12 @@ const emptyTable = {
   fields: [tableFields],
 };
 
-export { tableFields, emptyTable };
+const emptyQueryParams = {
+  table: "",
+  columns: [],
+  distinct: false,
+  condition: "",
+  limit: 1000,
+}
+
+export { tableFields, emptyTable, emptyQueryParams };

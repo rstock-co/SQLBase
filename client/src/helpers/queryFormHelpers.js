@@ -19,28 +19,43 @@ const query = {
   // aggregate: count // one of 3 choices:  sum, avg, count
 };
 
+const emptyQuery = {
+  table: "",
+  columns: [],
+  whereCondition: "",
+  distinct: false,
+  limit: 1000,
+  orderAscending: false,
+  orderDescending: false,
+  aggregate: "", // one of 3 choices:  sum, avg, count
+};
+
 let queryString = "";
 
 const generateFirstLine = (table, columns, distinct = false) => {
   let columnString = "";
-  columns.forEach(col => (columnString += `${col}, `));
-  columnString = columnString.slice(0, -2);
+  if (columns.length > 0) {
+    columns.forEach(col => (columnString += `${col}, `));
+    columnString = columnString.slice(0, -2);
+  } else {
+    columnString += "*"
+  }
   return distinct
     ? `SELECT DISTINCT ${columnString} FROM ${table}`
     : `SELECT ${columnString} FROM ${table}`;
 };
 
-console.log(generateFirstLine(query.table, query.columns, query.distinct));
+// console.log(generateFirstLine(query.table, query.columns, query.distinct));
 
 const generateWhere = condition => `WHERE ${condition}`;
 const generateLimit = limit => `LIMIT ${limit}`;
 
 // const generateOrder = (desc)
 
-const generateQuerySQL = query => {
-  return `${generateFirstLine(table, columns, distinct)} 
-  ${generateWhere(condition)}
-  ${generateLimit(limit)}`
+export default function generateQuerySQL(query) {
+  return `${generateFirstLine(query.table, query.columns, query.distinct) || ""} 
+  ${generateWhere(query.condition) || ""}
+  ${generateLimit(query.limit) || ""}`
 };
 
 // const generateSQL = tables => {

@@ -13,15 +13,16 @@ const QueriesForm = ({
   handleChange,
   addField,
   removeField,
-  removeTable,
+  removeQuery,
   tableNameList,
+  columnList,
+  handleQuery
 }) => {
   const {
     formState: { errors },
     control,
   } = useForm();
 
-  console.log("tableNameList", tableNameList)
 
   return (
     <div className="table">
@@ -30,85 +31,51 @@ const QueriesForm = ({
         control={control}
         label={"Table Select"}
         menuOptions={tableNameList}
-        // handleChange={e => handleChange(e, "tableS", tableIndex, fieldIndex)}
+        handleChange={e => handleChange(e, tableIndex)}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
           <div className="field-inputs">
             <FormInputDropdown
               uniqueID={`Col-select-${fieldIndex}`}
-              name={"Reference"}
+              name={"Column"}
               control={control}
-              label={"Reference"}
-              menuOptions={tableNameList}
+              label={"Column"}
+              menuOptions={columnList(table)}
               handleChange={e =>
-                handleChange(e, "reference", tableIndex, fieldIndex)
-              }
-            />
-            <label>Field {fieldIndex}</label>
-            <FormInputText
-              uniqueID={`Field-${fieldIndex}`}
-              handleChange={e =>
-                handleChange(e, "fieldName", tableIndex, fieldIndex)
-              }
-              name={"field"}
-              control={control}
-              label={"Field"}
-            />
-            <FormInputDropdown
-              uniqueID={`Datatype-${fieldIndex}`}
-              name={"datatype"}
-              control={control}
-              label={"datatype"}
-              menuOptions={[
-                { label: "None", value: "" },
-                { label: "INT", value: "INT" },
-                { label: "TEXT", value: "TEXT" },
-                { label: "BOOLEAN", value: "BOOLEAN" },
-                { label: "DATE", value: "DATE" },
-              ]}
-              handleChange={e =>
-                handleChange(e, "dataType", tableIndex, fieldIndex)
+                handleQuery(e, tableIndex, 'columns')
               }
             />
             <FormInputDropdown
-              uniqueID={`Mod1-${fieldIndex}`}
-              name={"mod1"}
+              uniqueID={`distinct-${fieldIndex}`}
+              name={"distinct"}
               control={control}
-              label={"MOD1"}
+              label={"Distinct"}
               menuOptions={[
-                { label: "None", value: "" },
-                { label: "NOT NULL", value: "NOT NULL" },
-                { label: "UNIQUE", value: " UNIQUE" },
-                { label: "SERIAL", value: "SERIAL" },
+                { label: "Not Distinct", value: false },
+                { label: "Distinct", value: true },
               ]}
               handleChange={e =>
-                handleChange(e, "mod1", tableIndex, fieldIndex)
-              }
-            />
-            <FormInputDropdown
-              uniqueID={`Mod2-${fieldIndex}`}
-              name={"mod2"}
-              control={control}
-              label={"MOD2"}
-              menuOptions={[
-                { label: "None", value: "" },
-                { label: "NOT NULL", value: "NOT NULL" },
-                { label: "UNIQUE", value: "UNIQUE" },
-                { label: "SERIAL", value: "SERIAL" },
-              ]}
-              handleChange={e =>
-                handleChange(e, "mod2", tableIndex, fieldIndex)
+                handleQuery(e, tableIndex, 'distinct')
               }
             />
             <FormInputText
-              uniqueID={`Default-${fieldIndex}`}
+              uniqueID={`condition-${fieldIndex}`}
               handleChange={e =>
-                handleChange(e, "default", tableIndex, fieldIndex)
+                handleQuery(e, tableIndex, 'condition')
               }
-              name={"default"}
+              name={"condition"}
               control={control}
-              label={"default"}
+              label={"Condition"}
+            />
+            <FormInputText
+              uniqueID={`limit-${fieldIndex}`}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'limit')
+              }
+              name={"limit"}
+              control={control}
+              label={"Limit"}
             />
             <Button
               key={`Remove-${fieldIndex}`}
@@ -121,19 +88,19 @@ const QueriesForm = ({
       })}
 
       <div className="add-remove-button">
-        <Button
+        {/* <Button
           key={`Add-${tableIndex}`}
           primary="true"
           onClick={() => addField(tableIndex)}
         >
           Add Field +
-        </Button>
+        </Button> */}
         <Button
           key={`Remove-${tableIndex}`}
           primary="true"
-          onClick={() => removeTable(tableIndex)}
+          onClick={() => removeQuery(tableIndex)}
         >
-          <DeleteForeverIcon /> Delete Table
+          <DeleteForeverIcon /> Delete Query
         </Button>
       </div>
     </div>
