@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Modal, Box, Typography, Button, Container } from '@mui/material';
 import mm from 'mermaid'
 import Mermaid from './Mermaid';
@@ -47,6 +47,7 @@ const handleDownload = () => {
     });
 }
 
+
 const createReference = (tableName, reference) => {
   return `${reference} ||--o{ ${tableName} :""`
 }
@@ -80,6 +81,22 @@ const ERDModal = (props) => {
   console.log(props)
   console.table(props.table)
   console.log(generateMermaid(props.table))
+
+  let downloadRef = useRef();
+
+  // handle click outside of modal download button to close modal
+  useEffect(() => {
+    let handler = (event) => {
+      if (!downloadRef.current.contains(event.target)) {
+        props.onClick()
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    };
+  });
+
   return (
     <Modal
       open={props.open}
@@ -113,7 +130,7 @@ const ERDModal = (props) => {
           p: 2,
           borderRadius: 2,
         }}>
-          <Button onClick={(e) => (e.target.type === `button` ? handleDownload() : props.onClick)} sx={{
+          <Button ref={downloadRef} onClick={handleDownload} sx={{
             color: '#fff',
             fontSize: 16
           }}>
