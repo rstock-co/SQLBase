@@ -12,6 +12,7 @@ export const FormInputDropdown = ({
   label,
   menuOptions,
   handleChange,
+  value
 }) => {
   const options = menuOptions;
   const generateSelectOptions = () => {
@@ -28,7 +29,7 @@ export const FormInputDropdown = ({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, } }) => (
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
           <InputLabel>{label}</InputLabel>
           <Select

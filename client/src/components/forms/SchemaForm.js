@@ -21,6 +21,9 @@ const SchemaForm = ({
     control,
   } = useForm();
 
+
+  console.log(table)
+
   return (
     <div className="table">
       <FormInputText
@@ -29,92 +32,100 @@ const SchemaForm = ({
         name={"Table Name"}
         control={control}
         label={"Table Name"}
+        value={table.table}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
-            <div className="field-inputs">
-              <label>Field {fieldIndex}</label>
-              <FormInputText
-                uniqueID={`Field-${fieldIndex}`}
-                handleChange={e =>
-                  handleChange(e, "fieldName", tableIndex, fieldIndex)
-                }
-                name={"field"}
-                control={control}
-                label={"Field"}
-              />
-              <FormInputDropdown
-                uniqueID={`Datatype-${fieldIndex}`}
-                name={"datatype"}
-                control={control}
-                label={"datatype"}
-                menuOptions={[
-                  { label: "None", value: "" },
-                  { label: "INT", value: "INT" },
-                  { label: "TEXT", value: "TEXT" },
-                  { label: "BOOLEAN", value: "BOOLEAN" },
-                  { label: "DATE", value: "DATE" },
-                ]}
-                handleChange={e =>
-                  handleChange(e, "dataType", tableIndex, fieldIndex)
-                }
-              />
-              <FormInputDropdown
-                uniqueID={`Mod1-${fieldIndex}`}
-                name={"mod1"}
-                control={control}
-                label={"MOD1"}
-                menuOptions={[
-                  { label: "None", value: "" },
-                  { label: "NOT NULL", value: "NOT NULL" },
-                  { label: "UNIQUE", value: " UNIQUE" },
-                  { label: "SERIAL", value: "SERIAL" },
-                ]}
-                handleChange={e =>
-                  handleChange(e, "mod1", tableIndex, fieldIndex)
-                }
-              />
-              <FormInputDropdown
-                uniqueID={`Mod2-${fieldIndex}`}
-                name={"mod2"}
-                control={control}
-                label={"MOD2"}
-                menuOptions={[
-                  { label: "None", value: "" },
-                  { label: "NOT NULL", value: "NOT NULL" },
-                  { label: "UNIQUE", value: "UNIQUE" },
-                  { label: "SERIAL", value: "SERIAL" },
-                ]}
-                handleChange={e =>
-                  handleChange(e, "mod2", tableIndex, fieldIndex)
-                }
-              />
-              <FormInputDropdown
-                uniqueID={`Reference-${fieldIndex}`}
-                name={"Reference"}
-                control={control}
-                label={"Reference"}
-                menuOptions={references}
-                handleChange={e =>
-                  handleChange(e, "reference", tableIndex, fieldIndex)
-                }
-              />
-              <FormInputText
-                uniqueID={`Default-${fieldIndex}`}
-                handleChange={e =>
-                  handleChange(e, "default", tableIndex, fieldIndex)
-                }
-                name={"default"}
-                control={control}
-                label={"default"}
-              />
-              <Button
-                key={`Remove-${fieldIndex}`}
-                onClick={() => removeField(tableIndex, fieldIndex)}
-              >
-                <ClearIcon />
-              </Button>
-            </div>
+          <div className="field-inputs">
+            <label>Field {fieldIndex}</label>
+            <FormInputText
+              uniqueID={`Field-${fieldIndex}`}
+              handleChange={e =>
+                handleChange(e, "fieldName", tableIndex, fieldIndex)
+              }
+              name={"field"}
+              control={control}
+              label={"Field"}
+              value={field.fieldName}
+
+            />
+            <FormInputDropdown
+              uniqueID={`Datatype-${fieldIndex}`}
+              name={"datatype"}
+              value={field.dataType}
+              control={control}
+              label={"datatype"}
+              menuOptions={[
+                { label: "None", value: "" },
+                { label: "INT", value: "INT" },
+                { label: "TEXT", value: "TEXT" },
+                { label: "BOOLEAN", value: "BOOLEAN" },
+                { label: "DATE", value: "DATE" },
+              ]}
+              handleChange={e =>
+                handleChange(e, "dataType", tableIndex, fieldIndex)
+              }
+            />
+            <FormInputDropdown
+              uniqueID={`Mod1-${fieldIndex}`}
+              name={"mod1"}
+              value={field.mod1}
+              control={control}
+              label={"MOD1"}
+              menuOptions={[
+                { label: "None", value: "" },
+                { label: "NOT NULL", value: "NOT NULL" },
+                { label: "UNIQUE", value: " UNIQUE" },
+                { label: "SERIAL", value: "SERIAL" },
+              ]}
+              handleChange={e =>
+                handleChange(e, "mod1", tableIndex, fieldIndex)
+              }
+            />
+            <FormInputDropdown
+              uniqueID={`Mod2-${fieldIndex}`}
+              name={"mod2"}
+              value={field.mod2}
+              control={control}
+              label={"MOD2"}
+              menuOptions={[
+                { label: "None", value: "" },
+                { label: "NOT NULL", value: "NOT NULL" },
+                { label: "UNIQUE", value: "UNIQUE" },
+                { label: "SERIAL", value: "SERIAL" },
+              ]}
+              handleChange={e =>
+                handleChange(e, "mod2", tableIndex, fieldIndex)
+              }
+            />
+            <FormInputDropdown
+              uniqueID={`Reference-${fieldIndex}`}
+              name={"Reference"}
+              value={field.reference}
+              control={control}
+              label={"Reference"}
+              menuOptions={references}
+              handleChange={e =>
+                handleChange(e, "reference", tableIndex, fieldIndex)
+              }
+            />
+            <FormInputText
+              uniqueID={`Default-${fieldIndex}`}
+              handleChange={e =>
+                handleChange(e, "default", tableIndex, fieldIndex)
+              }
+              name={"default"}
+              value={field.default}
+              control={control}
+              label={"default"}
+            />
+            <Button
+              key={`Remove-${fieldIndex}`}
+              onClick={() => removeField(tableIndex, fieldIndex)}
+            >
+              <ClearIcon />
+            </Button>
+          </div>
         );
       })}
 
@@ -131,7 +142,7 @@ const SchemaForm = ({
           primary="true"
           onClick={() => removeTable(tableIndex)}
         >
-          <DeleteForeverIcon /> Delete Table 
+          <DeleteForeverIcon /> Delete Table
         </Button>
       </div>
     </div>

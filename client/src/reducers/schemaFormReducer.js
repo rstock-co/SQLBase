@@ -26,7 +26,10 @@ const reducer = (state, action) => {
     },
     REMOVE_TABLE: state => {
       const newState = deepCopyArray(state);
+      console.log('newState', newState)
+      console.log('remove', action.tableIndex)
       newState.splice(action.tableIndex, 1);
+      console.log('newState2', newState)
       return newState;
     },
     ADD_FIELD: state => {

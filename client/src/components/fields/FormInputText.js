@@ -12,10 +12,10 @@ export const FormInputText = ({
 }) => {
   return (
     <Controller
-      defaultValue={value}
+      // defaultValue={defaultValue}
       name={name}
       control={control}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, } }) => (
         <TextField
           key={uniqueID}
           onChange={handleChange}
