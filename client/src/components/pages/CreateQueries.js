@@ -27,6 +27,8 @@ const CreateQueriesPage = () => {
 
   console.log("TABLES: ", state);
 
+  const tableNameList = getTableNames()
+
   return (
     <main>
       <div id="container">
@@ -41,7 +43,7 @@ const CreateQueriesPage = () => {
                   handleChange={handleChange}
                   removeField={removeField}
                   addField={addField}
-                  tableNameList={getTableNames}
+                  tableNameList={tableNameList}
                   removeTable={removeTable}
                 />
               </form>

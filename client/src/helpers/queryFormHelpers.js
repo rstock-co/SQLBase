@@ -37,7 +37,11 @@ const generateLimit = limit => `LIMIT ${limit}`;
 
 // const generateOrder = (desc)
 
-const generateQuerySQL = query => {};
+const generateQuerySQL = query => {
+  return `${generateFirstLine(table, columns, distinct)} 
+  ${generateWhere(condition)}
+  ${generateLimit(limit)}`
+};
 
 // const generateSQL = tables => {
 //   let result = [];

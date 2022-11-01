@@ -21,6 +21,8 @@ const QueriesForm = ({
     control,
   } = useForm();
 
+  console.log("tableNameList", tableNameList)
+
   return (
     <div className="table">
       <FormInputDropdown
@@ -28,7 +30,7 @@ const QueriesForm = ({
         control={control}
         label={"Table Select"}
         menuOptions={tableNameList}
-        handleChange={e => handleChange(e, "tableS", tableIndex, fieldIndex)}
+        // handleChange={e => handleChange(e, "tableS", tableIndex, fieldIndex)}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
@@ -38,7 +40,7 @@ const QueriesForm = ({
               name={"Reference"}
               control={control}
               label={"Reference"}
-              menuOptions={tableNameList()}
+              menuOptions={tableNameList}
               handleChange={e =>
                 handleChange(e, "reference", tableIndex, fieldIndex)
               }
