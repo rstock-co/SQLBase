@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box, Typography, Button } from '@mui/material';
+import { Modal, Box, Typography, Button, Container } from '@mui/material';
 import mm from 'mermaid'
 import Mermaid from './Mermaid';
 import * as htmlToImage from 'html-to-image';
@@ -14,11 +14,11 @@ const style = {
   height: '85%',
   bgcolor: '#21222c',
   boxShadow: 24,
-  p: 4,
+  pt: 4,
+  borderRadius: 8,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  borderRadius: 8
 
 };
 
@@ -38,7 +38,7 @@ const style = {
 //   users ||--o{ orders :has`
 const handleDownload = () => {
   console.log('clicked')
-  htmlToImage.toJpeg(document.getElementById('erd'), { quality: 0.95 })
+  htmlToImage.toJpeg(document.getElementById('erd'), { quality: 0.95, width: 1920, height: 1080 })
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = 'ERD.jpeg';
@@ -89,14 +89,34 @@ const ERDModal = (props) => {
       }
       }
     >
-      <Box sx={style} id='erd'>
-        <Typography variant='h3' color={'white'}>Entity Relationship Diagram</Typography>
-        <Mermaid chart={generateMermaid(props.table)} />
-        <Box>
-          <Button onClick={props.onClick}>
-            Close
-          </Button>
-          <Button onClick={() => handleDownload()}>
+      <Box sx={style}>
+        <Container id={'erd'} sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+          <Typography variant='h3' color={'white'}
+            sx={{
+              pt: 4,
+              pb: 4
+            }}
+          >
+            Entity Relationship Diagram
+          </Typography>
+          <Mermaid chart={generateMermaid(props.table)} />
+        </Container>
+        <Box sx={{
+          position: 'absolute',
+          bottom: '4em',
+          bgcolor: '#23222c',
+          boxShadow: 24,
+          p: 2,
+          borderRadius: 2,
+        }}>
+          <Button onClick={(e) => (e.target.type === `button` ? handleDownload() : props.onClick)} sx={{
+            color: '#fff',
+            fontSize: 16
+          }}>
             DOWNLOAD
           </Button>
         </Box>
