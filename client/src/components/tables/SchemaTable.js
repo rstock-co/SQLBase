@@ -11,8 +11,10 @@ import {
 
 const SchemaTable = ({ table, fields }) => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600, minHeight:150 }} size='small' aria-label="simple table" title={table}>
+    <TableContainer component={Paper} sx={{
+      width: 400
+    }}>
+      <Table sx={{ minWidth: 200, minHeight: 150 }} size='small' aria-label="simple table" title={table}>
         <TableHead>
           <TableRow key={table}>{table}</TableRow>
         </TableHead>
@@ -24,13 +26,16 @@ const SchemaTable = ({ table, fields }) => {
               <TableCell component="th" scope="row">
                 {row.fieldName}
               </TableCell>
-              <TableCell align="left">{row.dataType}</TableCell>
-              <TableCell align="left">
+              <TableCell align="right">
+                {`${row.dataType}   ${row.reference ? row.reference + "(FK)" : ""}    ${row.mod1}   ${row.mod2} `}
+              </TableCell>
+              {/* <TableCell align="left">{row.dataType}</TableCell> */}
+              {/* <TableCell align="left">
                 {row.reference ? row.reference + "(FK)" : ""}
               </TableCell>
               <TableCell align="left">{row.mod1}</TableCell>
-              <TableCell align="left">{row.mod2}</TableCell>
-              <TableCell align="left">{row.default}</TableCell>
+              <TableCell align="left">{row.mod2}</TableCell> */}
+              {/* <TableCell align="left">{row.default}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

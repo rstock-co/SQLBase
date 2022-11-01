@@ -6,6 +6,7 @@ export const REMOVE_TABLE = "REMOVE_TABLE";
 export const ADD_FIELD = "ADD_FIELD";
 export const REMOVE_FIELD = "REMOVE_FIELD";
 export const HANDLE_CHANGE = "HANDLE_CHANGE";
+export const HANDLE_CHANGE_AND_NULLIFY = "HANDLE_CHANGE_AND_NULLIFY";
 export const LOAD_DATA = "LOAD_DATA";
 export const GET_TABLE_NAMES = "GET_TABLE_NAMES";
 
@@ -26,10 +27,7 @@ const reducer = (state, action) => {
     },
     REMOVE_TABLE: state => {
       const newState = deepCopyArray(state);
-      console.log('newState', newState)
-      console.log('remove', action.tableIndex)
       newState.splice(action.tableIndex, 1);
-      console.log('newState2', newState)
       return newState;
     },
     ADD_FIELD: state => {
@@ -54,10 +52,23 @@ const reducer = (state, action) => {
         newState[action.tableIndex].table = action.event.target.value;
         return newState;
       }
-
       const newFields = [...state[action.tableIndex].fields];
       newFields[action.fieldIndex][action.fieldType] =
         action.event.target.value;
+      newState[action.tableIndex] = {
+        ...newState[action.tableIndex],
+        fields: [...newFields],
+      };
+      return newState;
+    },
+    HANDLE_CHANGE_AND_NULLIFY: state => {
+      console.log('called')
+      const newState = deepCopyArray(state);
+      const newFields = [...state[action.tableIndex].fields];
+      newFields[action.fieldIndex][action.fieldToChange] =
+        action.event.target.value;
+      newFields[action.fieldIndex][action.fieldToNullify] =
+        "";
       newState[action.tableIndex] = {
         ...newState[action.tableIndex],
         fields: [...newFields],

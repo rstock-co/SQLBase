@@ -11,6 +11,7 @@ const SchemaForm = ({
   table,
   tableIndex,
   handleChange,
+  handleChangeAndNullify,
   addField,
   removeField,
   references,
@@ -20,6 +21,12 @@ const SchemaForm = ({
     formState: { errors },
     control,
   } = useForm();
+
+  const hasProperty = (fieldProperty) => {
+    return (fieldProperty || false)
+  }
+
+  console.log('tableschemaform', table)
 
 
   return (
@@ -50,9 +57,12 @@ const SchemaForm = ({
             <FormInputDropdown
               uniqueID={`Datatype-${fieldIndex}`}
               name={"datatype"}
-              value={field.dataType}
+              // need to update state
+              value={hasProperty(field.reference) ? "" : field.dataType}
+              // value={field.dataType}
               control={control}
               label={"datatype"}
+              disabled={hasProperty(field.reference)}
               menuOptions={[
                 { label: "None", value: "" },
                 { label: "INT", value: "INT" },
@@ -61,8 +71,7 @@ const SchemaForm = ({
                 { label: "DATE", value: "DATE" },
               ]}
               handleChange={e =>
-                handleChange(e, "dataType", tableIndex, fieldIndex)
-              }
+                handleChange(e, "dataType", tableIndex, fieldIndex)}
             />
             <FormInputDropdown
               uniqueID={`Mod1-${fieldIndex}`}
@@ -105,7 +114,10 @@ const SchemaForm = ({
               menuOptions={references}
               handleChange={e =>
                 handleChange(e, "reference", tableIndex, fieldIndex)
+                // does not change state or nullify anything
+                // handleChange={e => handleChangeAndNullify(e, "reference", tableIndex, fieldIndex, "dataType")
               }
+
             />
             <FormInputText
               uniqueID={`Default-${fieldIndex}`}

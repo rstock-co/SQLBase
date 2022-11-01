@@ -9,6 +9,7 @@ export const FormInputText = ({
   label,
   value,
   handleChange,
+  disabled
 }) => {
   return (
     <Controller
@@ -23,6 +24,7 @@ export const FormInputText = ({
           label={label}
           size="small"
           margin="dense"
+          disabled={disabled}
         />
       )}
     />
