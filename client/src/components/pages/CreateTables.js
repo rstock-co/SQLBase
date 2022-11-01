@@ -30,14 +30,12 @@ const CreateTablesPage = () => {
 
   console.log("TABLES: ", state);
 
-  const handleLoadData = () => {
-    console.log(loadProgress)
-  }
+
 
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => (isOpen && setIsOpen(false));
-  // console.log('isOpen', isOpen)
+
 
 
   return (

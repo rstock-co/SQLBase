@@ -22,8 +22,6 @@ const SchemaForm = ({
   } = useForm();
 
 
-  console.log(table)
-
   return (
     <div className="table">
       <FormInputText
