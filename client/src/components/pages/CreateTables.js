@@ -15,7 +15,7 @@ import {
 
 import "../forms/SchemaForm.scss";
 import PageSplitter from "../../styles/components/PageSplitter";
-import CopySnackbar from "../snackbars/CopySnackbar";
+import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 
 const CreateTablesPage = () => {
   const {
@@ -39,7 +39,7 @@ const CreateTablesPage = () => {
     copy: false,
     save: false,
     load: false,
-    message: ''
+    message: null
   });
   const buttonHandler = (target) => {
     switch (target) {
@@ -51,12 +51,12 @@ const CreateTablesPage = () => {
         copyHandler()
         break;
       case "save":
-        saveProgress()
         setIsOpen({ save: true, message: 'Save Success!' })
+        saveProgress()
         break;
       case "load":
-        loadProgress()
         setIsOpen({ load: true, message: 'Load Success!' })
+        loadProgress()
         break;
       default:
         return false;
@@ -94,7 +94,7 @@ const CreateTablesPage = () => {
     <main>
       <div id="container">
         {(isOpen.modal && <ERDModal open={isOpen} table={state} onClick={handleClose} />)}
-        {((isOpen && !isOpen.modal) && <CopySnackbar open={isOpen} table={state} handleClose={handleClose} message={isOpen.message} />)}
+        {((isOpen && !isOpen.modal) && <SuccessSnackbar open={isOpen} table={state} handleClose={handleClose} message={isOpen.message} />)}
         {state.map((table, tableIndex) => {
           return (
             <div id="row-container">

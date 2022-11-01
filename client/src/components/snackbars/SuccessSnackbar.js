@@ -5,16 +5,19 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Typography } from '@mui/material';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import { Slide } from '@mui/material';
 
-export default function CopySnackbar(props) {
-
-  return (
+export default function SuccessSnackbar(props) {
+  function TransitionUp(props) {
+    return <Slide {...props} direction="up" />;
+  }
+  return (props.message &&
     <Snackbar
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       open={props.open}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       onClose={props.handleClose}
-    // action={action}
+      TransitionComponent={TransitionUp}
     >
       <Alert onClose={props.handleClose} severity="success" sx={{
         display: 'flex',
@@ -25,6 +28,6 @@ export default function CopySnackbar(props) {
       </Alert>
 
     </Snackbar>
-
   );
+
 }
