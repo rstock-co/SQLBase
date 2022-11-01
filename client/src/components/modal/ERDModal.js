@@ -38,7 +38,13 @@ const style = {
 //   users ||--o{ orders :has`
 const handleDownload = () => {
   console.log('clicked')
-  htmlToImage.toJpeg(document.getElementById('erd'), { quality: 0.95, width: 1920, height: 1080 })
+  htmlToImage.toJpeg(document.getElementById('erd'), {
+    width: 1920, height: 1080, style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }
+  })
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = 'ERD.jpeg';
