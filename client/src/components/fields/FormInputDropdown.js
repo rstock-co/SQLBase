@@ -12,7 +12,8 @@ export const FormInputDropdown = ({
   label,
   menuOptions,
   handleChange,
-  value
+  value,
+  disabled
 }) => {
   const options = menuOptions;
   const generateSelectOptions = () => {
@@ -38,6 +39,7 @@ export const FormInputDropdown = ({
             value={value}
             label={label}
             defaultValue=""
+            disabled={disabled}
           >
             {generateSelectOptions()}
           </Select>

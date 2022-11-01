@@ -17,13 +17,13 @@ import PageSplitter from "../../styles/components/PageSplitter";
 const CreateSchemaPage = () => {
   const {
     state,
-    addTable,
-    removeTable,
-    addField,
-    removeField,
-    handleChange,
-    saveProgress,
-    loadProgress,
+    addSchemaTable,
+    removeSchemaTable,
+    addSchemaField,
+    removeSchemaField,
+    handleSchemaChange,
+    saveSchemaProgress,
+    loadSchemaProgress,
   } = useSchemaState();
 
   console.log("SCHEMA PAGE STATE: ", state);
@@ -44,11 +44,11 @@ const CreateSchemaPage = () => {
                   key={`SchemaForm - ${tableIndex}`}
                   table={table}
                   tableIndex={tableIndex}
-                  handleChange={handleChange}
-                  removeField={removeField}
-                  addField={addField}
+                  handleChange={handleSchemaChange}
+                  removeField={removeSchemaField}
+                  addField={addSchemaField}
                   references={generateReferenceObject(state.schemaState, table)}
-                  removeTable={removeTable}
+                  removeTable={removeSchemaTable}
                 />
               </form>
               <div className="tables">
@@ -72,13 +72,13 @@ const CreateSchemaPage = () => {
           );
         })}
 
-        <Button id="add-table" primary="true" onClick={() => addTable()}>
+        <Button id="add-table" primary="true" onClick={() => addSchemaTable()}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => saveProgress()}>
+        <Button primary="true" onClick={() => saveSchemaProgress()}>
           Save Progress
         </Button>
-        <Button primary="true" onClick={() => loadProgress()}>
+        <Button primary="true" onClick={() => loadSchemaProgress()}>
           Load Progress
         </Button>
         <Button primary="true" onClick={() => handleOpen()}>
