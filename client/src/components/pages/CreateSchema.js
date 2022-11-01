@@ -3,9 +3,7 @@ import { CopyBlock, monokai } from "react-code-blocks";
 import { Button } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
-import useApplicationData from "../../hooks/useApplicationData";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../../styles/theme/theme.js";
+import useGlobalState from "../../state/hooks/useSchemaState";
 import ERDModal from "../modal/ERDModal";
 
 import {
@@ -26,23 +24,19 @@ const CreateTablesPage = () => {
     handleChange,
     saveProgress,
     loadProgress,
-  } = useApplicationData();
+  } = useGlobalState();
 
-  console.log("TABLES: ", state);
-
-
+  console.log("TABLES PAGE: ", state);
 
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
-  const handleClose = () => (isOpen && setIsOpen(false));
-
-
+  const handleClose = () => isOpen && setIsOpen(false);
 
   return (
     <main onClick={handleClose}>
       <div id="container">
-        {(isOpen && <ERDModal open={isOpen} table={state} />)}
-        {state.map((table, tableIndex) => {
+        {isOpen && <ERDModal open={isOpen} table={state} />}
+        {state.schemaState.map((table, tableIndex) => {
           return (
             <div id="row-container">
               <form>
@@ -53,7 +47,7 @@ const CreateTablesPage = () => {
                   handleChange={handleChange}
                   removeField={removeField}
                   addField={addField}
-                  references={generateReferenceObject(state, table)}
+                  references={generateReferenceObject(state.schemaState, table)}
                   removeTable={removeTable}
                 />
               </form>
@@ -68,7 +62,7 @@ const CreateTablesPage = () => {
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
-                  text={generateSQL(state)[tableIndex]}
+                  text={generateSQL(state.schemaState)[tableIndex]}
                   theme={monokai}
                   wrapLines={true}
                   codeBlock

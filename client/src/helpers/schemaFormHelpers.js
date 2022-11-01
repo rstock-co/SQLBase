@@ -1,4 +1,4 @@
-const deepCopyArray = array => JSON.parse(JSON.stringify(array));
+const deepCopy = dataStructure => JSON.parse(JSON.stringify(dataStructure));
 
 const generateReference = reference => {
   if (!reference) return null;
@@ -34,4 +34,4 @@ const generateReferenceObject = (tables, i) => {
   return output;
 };
 
-export { deepCopyArray, generateSQL, generateReferenceObject };
+export { deepCopy, generateSQL, generateReferenceObject };

@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
-import { Button, Paper } from "@mui/material";
-import { tableFields, emptyTable } from "../../data_structures/schemaTable";
+import { Button } from "@mui/material";
+
 import QueriesForm from "../forms/QueriesForm";
 import SchemaTable from "../tables/SchemaTable";
-import useApplicationData from "../../hooks/useApplicationData";
-import {
-  generateReferenceObject,
-  generateSQL,
-} from "../../helpers/schemaFormHelpers";
+import useGlobalState from "../../state/hooks/useSchemaState";
+import { generateSQL } from "../../helpers/schemaFormHelpers";
 import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 
@@ -23,16 +20,16 @@ const CreateQueriesPage = () => {
     saveProgress,
     loadProgress,
     getTableNames,
-  } = useApplicationData();
+  } = useGlobalState();
 
-  console.log("TABLES: ", state);
+  console.log("QUERY PAGE STATE: ", state);
 
-  const tableNameList = getTableNames()
+  const tableNameList = getTableNames();
 
   return (
     <main>
       <div id="container">
-        {state.map((table, tableIndex) => {
+        {state.schemaState.map((table, tableIndex) => {
           return (
             <div id="row-container">
               <form>
