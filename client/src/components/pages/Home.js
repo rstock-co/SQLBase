@@ -1,22 +1,16 @@
 import "./Home.scss";
 import { useEffect, useCallback, useRef } from "react";
-import Paper from '@mui/material/Paper'
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import { Paper, Container } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../styles/theme/theme.js";
-import Banner from '../../styles/banner/Banner'
+import Banner from "../../styles/banner/Banner";
 import ProductFeature from "../../styles/product-feature/ProductFeature";
 import TargetUsers from "../../styles/product-feature/TargetUsers";
 import TestimonialCarousel from "../../styles/product-feature/TestimonialCarousel";
 import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
 
-import { useSpring } from '@react-spring/web'
-import zIndex from "@mui/material/styles/zIndex";
-
-
-
+import { useSpring } from "@react-spring/web";
 
 const Home = () => {
   const contentContainerRef = useRef(null);
@@ -26,7 +20,7 @@ const Home = () => {
     yOffset: 0,
   }));
 
-  const onScroll = useCallback((event) => {
+  const onScroll = useCallback(event => {
     const yOffset = event.currentTarget.scrollTop;
 
     scrollYOffsetSpringApi.start({
@@ -34,28 +28,33 @@ const Home = () => {
     });
   }, []);
 
-
   useEffect(() => {
     clientHeightRef.current = document.documentElement.clientHeight;
-    contentContainerRef.current?.addEventListener('scroll', onScroll);
+    contentContainerRef.current?.addEventListener("scroll", onScroll);
 
     return () => {
-      contentContainerRef.current?.removeEventListener('scroll', onScroll);
+      contentContainerRef.current?.removeEventListener("scroll", onScroll);
     };
   }, [onScroll]);
   return (
     <ThemeProvider theme={theme}>
-
-      <Container maxWidth='false'>
-        <Paper elevation={12} className="landing-paper" sx={{
-          borderRadius: 4,
-          marginBottom: 4,
-          zIndex: 1
-        }}>
-
+      <Container maxWidth="false">
+        <Paper
+          elevation={12}
+          className="landing-paper"
+          sx={{
+            borderRadius: 4,
+            marginBottom: 4,
+            zIndex: 1,
+          }}
+        >
           <Banner />
 
-          <PageSplitter className="page-splitter" src="banner-body.jpeg" alt="banner-split" />
+          <PageSplitter
+            className="page-splitter"
+            src="banner-body.jpeg"
+            alt="banner-split"
+          />
           <ProductFeature />
           <PageSplitter src="body-purple.png" />
           <TargetUsers />
@@ -64,8 +63,6 @@ const Home = () => {
           <PageSplitter src="body-purple.png" />
           <PageSplitter src="purple-white.png" />
           <AboutUs />
-
-
         </Paper>
       </Container>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { deepCopyArray } from "../helpers/schemaFormHelpers";
 import { emptyTable } from "../data_structures/schemaTable";
 import axios from "axios";
@@ -9,11 +9,10 @@ import reducer, {
   ADD_FIELD,
   REMOVE_FIELD,
   HANDLE_CHANGE,
-  LOAD_DATA,
-  GET_TABLE_NAMES,
+  LOAD_SAVED_SCHEMA,
 } from "../reducers/schemaFormReducer";
 
-const useApplicationData = () => {
+const useSchemaData = () => {
   const [state, dispatch] = useReducer(reducer, [deepCopyArray(emptyTable)]);
 
   /**
@@ -47,12 +46,8 @@ const useApplicationData = () => {
     dispatch({ type: REMOVE_FIELD, tableIndex, fieldIndex });
   const handleChange = (event, fieldType, tableIndex, fieldIndex) =>
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
-  const loadData = loadedData => dispatch({ type: LOAD_DATA, loadedData });
-
-  const getTableNames = () => {
-    const newState = deepCopyArray(state);
-    return newState.map(table => table.table);
-  };
+  const loadSavedSchema = loadedData =>
+    dispatch({ type: LOAD_SAVED_SCHEMA, loadedData });
 
   /**
    * Save/load progress:  User can save the current state of their schema or load last saved at any time
@@ -61,10 +56,11 @@ const useApplicationData = () => {
    * @returns an axios call to save/load current progress (table data)
    */
 
-  const saveProgress = () => {
+  const saveProgress = type => {
+    // type is either 'saved_schema' or 'current_schema'
     const schemaString = JSON.stringify(state);
     return axios
-      .put(`/api/tables`, { schemaString }) // add ${id} to route if we have multiple users
+      .put(`/api/tables`, { schemaString, type }) // add ${id} to route if we have multiple users
       .then(data => console.log("Save successful: ", data));
   };
 
@@ -73,7 +69,7 @@ const useApplicationData = () => {
       .get(`/api/tables`) // add ${id} to route if we have multiple users
       .then(data => {
         const schemaString = JSON.parse(data.data[0]["schema_string"]);
-        loadData(schemaString);
+        loadSavedSchema(schemaString);
       })
       .catch(err => {
         console.log("Error loading: ", err);
@@ -89,8 +85,7 @@ const useApplicationData = () => {
     handleChange,
     saveProgress,
     loadProgress,
-    getTableNames,
   };
 };
 
-export default useApplicationData;
+export default useSchemaData;

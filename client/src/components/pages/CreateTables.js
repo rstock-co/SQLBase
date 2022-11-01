@@ -3,7 +3,7 @@ import { CopyBlock, monokai } from "react-code-blocks";
 import { Button } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
-import useApplicationData from "../../hooks/useApplicationData";
+import useSchemaData from "../../hooks/useSchemaData";
 
 import {
   generateSQL,
@@ -23,7 +23,7 @@ const CreateTablesPage = () => {
     handleChange,
     saveProgress,
     loadProgress,
-  } = useApplicationData();
+  } = useSchemaData();
 
   console.log("TABLES: ", state);
 
@@ -69,7 +69,7 @@ const CreateTablesPage = () => {
         <Button id="add-table" primary="true" onClick={() => addTable()}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => saveProgress()}>
+        <Button primary="true" onClick={() => saveProgress("saved_schema")}>
           Save Progress
         </Button>
         <Button primary="true" onClick={() => loadProgress()}>

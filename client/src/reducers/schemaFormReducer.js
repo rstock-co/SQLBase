@@ -6,7 +6,7 @@ export const REMOVE_TABLE = "REMOVE_TABLE";
 export const ADD_FIELD = "ADD_FIELD";
 export const REMOVE_FIELD = "REMOVE_FIELD";
 export const HANDLE_CHANGE = "HANDLE_CHANGE";
-export const LOAD_DATA = "LOAD_DATA";
+export const LOAD_SAVED_SCHEMA = "LOAD_SAVED_SCHEMA";
 export const GET_TABLE_NAMES = "GET_TABLE_NAMES";
 
 /**
@@ -61,8 +61,7 @@ const reducer = (state, action) => {
       };
       return newState;
     },
-    LOAD_DATA: state => action.loadedData,
-    GET_TABLE_NAMES: state => state.map(table => table.table),
+    LOAD_SAVED_SCHEMA: state => action.loadedData,
     default: "tried to reduce with unsupported action type",
   };
 
