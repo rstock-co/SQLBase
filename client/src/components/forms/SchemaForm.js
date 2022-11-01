@@ -46,7 +46,6 @@ const SchemaForm = ({
         removeTable(tableIndex)
         break;
       case "removeField":
-        console.log('removing')
         setIsOpen({ removeField: true, message: 'Field Deleted!', isError: true })
         removeField(tableIndex, fieldIndex)
         break;
