@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Layout from "./components/routes/Layout";
 import Home from "./components/pages/Home";
-import CreateTablesPage from "./components/pages/CreateTables";
+import CreateSchemaPage from "./components/pages/CreateSchema";
 import CreateQueriesPage from "./components/pages/CreateQueries";
 import GlobalProvider from "./state/GlobalStateProvider";
 
@@ -15,7 +15,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="tables" element={<CreateTablesPage />} />
+            <Route path="tables" element={<CreateSchemaPage />} />
             <Route path="queries" element={<CreateQueriesPage />} />
           </Route>
         </Routes>
