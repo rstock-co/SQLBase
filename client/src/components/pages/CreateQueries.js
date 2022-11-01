@@ -4,118 +4,81 @@ import { Button, Paper } from "@mui/material";
 import { tableFields, emptyTable } from "../../data_structures/schemaTable";
 import QueriesForm from "../forms/QueriesForm";
 import SchemaTable from "../tables/SchemaTable";
-
-import { deepCopyArray, generateSQL } from "../../helpers/schemaFormHelpers";
-
+import useApplicationData from "../../hooks/useApplicationData";
+import {
+  generateReferenceObject,
+  generateSQL,
+} from "../../helpers/schemaFormHelpers";
+import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 
 const CreateQueriesPage = () => {
-  const [tables, setTables] = useState([deepCopyArray(emptyTable)]);
+  const {
+    state,
+    addTable,
+    removeTable,
+    addField,
+    removeField,
+    handleChange,
+    saveProgress,
+    loadProgress,
+    getTableNames,
+  } = useApplicationData();
 
-  const generateTableList = tables => tables.map(table => table.table);
+  console.log("TABLES: ", state);
 
-  console.log("TABLES: ", tables);
-  console.log("TABLE NAMES: ", generateTableList(tables));
-
-  const addTable = () => {
-    const newTables = deepCopyArray(tables);
-    const newTable = deepCopyArray(emptyTable);
-    newTables.push(newTable);
-    setTables(newTables);
-  };
-
-  const addField = i => {
-    const newTables = deepCopyArray(tables);
-    const newFields = { ...tableFields };
-    newTables[i].fields.push(newFields);
-    setTables(newTables);
-  };
-
-  const handleChange = (event, type, tableIndex, fieldIndex) => {
-    if (type === "tableName") {
-      const newTables = deepCopyArray(tables);
-      newTables[tableIndex].table = event.target.value;
-      return setTables(newTables);
-    }
-
-    const newFields = [...tables[tableIndex].fields];
-    newFields[fieldIndex][type] = event.target.value;
-    const newTables = deepCopyArray(tables);
-    newTables[tableIndex] = {
-      ...newTables[tableIndex],
-      fields: [...newFields],
-    };
-    setTables(newTables);
-  };
-
-  const removeTable = i => {
-    const newTables = deepCopyArray(tables);
-    newTables.splice(i, 1);
-    setTables(newTables);
-  };
-
-  const removeField = (tableIndex, fieldIndex) => {
-    const fieldsToRemove = [...tables[tableIndex].fields];
-    fieldsToRemove.splice(fieldIndex, 1);
-    const newTables = deepCopyArray(tables);
-    newTables[tableIndex] = {
-      ...newTables[tableIndex],
-      fields: [...fieldsToRemove],
-    };
-    setTables(newTables);
-  };
+  const tableNameList = getTableNames()
 
   return (
     <main>
-      <Paper id="container">
-        <h2>Create Queries</h2>
-        <br />
-        <form>
-          {tables.map((table, tableIndex) => {
-            return (
-              <QueriesForm
-                key={`SchemaForm - ${tableIndex}`}
-                table={table}
-                tableIndex={tableIndex}
-                handleChange={handleChange}
-                removeField={removeField}
-                addField={addField}
-                tableNameList={generateTableList(tables)}
-              />
-            );
-          })}
+      <div id="container">
+        {state.map((table, tableIndex) => {
+          return (
+            <div id="row-container">
+              <form>
+                <QueriesForm
+                  key={`QueriesForm - ${tableIndex}`}
+                  table={table}
+                  tableIndex={tableIndex}
+                  handleChange={handleChange}
+                  removeField={removeField}
+                  addField={addField}
+                  tableNameList={tableNameList}
+                  removeTable={removeTable}
+                />
+              </form>
+              <div className="tables">
+                <SchemaTable
+                  key={`table-${tableIndex}`}
+                  table={table.table}
+                  fields={table.fields}
+                />
+              </div>
+              <div className="demo">
+                <CopyBlock
+                  key={`CopyBlock-${tableIndex}`}
+                  language="sql"
+                  text={generateSQL(state)[tableIndex]}
+                  theme={monokai}
+                  wrapLines={true}
+                  codeBlock
+                />
+              </div>
+            </div>
+          );
+        })}
 
-          <Button primary="true" onClick={() => addTable()}>
-            Add Table
-          </Button>
-        </form>
-
-        <div className="tables">
-          {tables.map((table, tableIndex) => {
-            return (
-              <SchemaTable
-                key={`table-${tableIndex}`}
-                table={table.table}
-                fields={table.fields}
-              />
-            );
-          })}
-        </div>
-        <div className="demo">
-          {generateSQL(tables).map((table, tableIndex) => {
-            return (
-              <CopyBlock
-                key={`CopyBlock-${tableIndex}`}
-                language="sql"
-                text={table}
-                theme={monokai}
-                wrapLines={true}
-                codeBlock
-              />
-            );
-          })}
-        </div>
-      </Paper>
+        <Button id="add-table" primary="true" onClick={() => addTable()}>
+          Add Table
+        </Button>
+        <Button primary="true" onClick={() => saveProgress()}>
+          Save Progress
+        </Button>
+        <Button primary="true" onClick={() => loadProgress()}>
+          Load Progress
+        </Button>
+      </div>
+      <PageSplitter src="body-purple.png" id="tables-bottom" />
     </main>
   );
 };

@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
-import { Button, Paper } from "@mui/material";
+import { Button } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
 import useApplicationData from "../../hooks/useApplicationData";
@@ -14,7 +14,6 @@ import {
 } from "../../helpers/schemaFormHelpers";
 
 import "../forms/SchemaForm.scss";
-import { useTheme } from "@emotion/react";
 import PageSplitter from "../../styles/components/PageSplitter";
 
 const CreateTablesPage = () => {
@@ -77,9 +76,6 @@ const CreateTablesPage = () => {
         })}
 
         <Button id="add-table" primary="true" onClick={() => addTable()}>
-          Add Table
-        </Button>
-        <Button primary="true" onClick={() => addTable()}>
           Add Table
         </Button>
         <Button primary="true" onClick={() => saveProgress()}>
