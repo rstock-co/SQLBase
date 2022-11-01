@@ -16,7 +16,8 @@ const generateSQL = tables => {
         } ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""
         },\n        `;
     });
-    result.push(output.replace(/,\n {6} *$/, "\n);"));
+    result.push(output.replace(/,\n {6} *$/, "\n);\n"));
+    console.log(result)
   });
   return result;
 };
