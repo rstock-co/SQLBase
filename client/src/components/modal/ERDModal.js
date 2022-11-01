@@ -12,76 +12,73 @@ const style = {
   width: '85%',
   height: '85%',
   bgcolor: '#21222c',
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  borderRadius: 8
+
 };
 
-const example = `
-classDiagram
-class GeoPointType {
- <<enumeration>>
-  BROWNFIELD
-  OGWELL
-  CELL_TOWER
-  NUCLEAR_REACTOR
-  SUPERFUND
-}
-class GeoPoint {
-  -UUID id
-  +GeoPointType type
-  +GeographyPoint location
-  -UUID metadata references metadata(id)
-  +Datetime createdAt
-}
-class GeographyPoint {
-  <<interface>>
-  +GeoJSON geojson
-  +Int srid
-  +Float longitude
-  +Float latitude
-}
-class NearbyPoint {
- <<Interface>>
-  -UUID id references GeoPoint(id)
-  +GeoPointType GeoPoint::type
-  +GeographyPoint GeoPoint::location
-  +UUID GeoPoint::metadata
-  +Float distance
-}
-class NearbyPoints {
-<<Service>>
-  +GeoJSON origin
-  +Float radiusMi
-  +Int first
-  +Int last
-  +Int offset
-  +Cursor before
-  +Cursor after
-}
-class Hotel {
- -UUID id
-+String name
--Int objectid 
-}
-GeoPoint *-- GeoPointType: Composition
-GeoPoint *-- GeographyPoint: Composition
-GeoPoint "1" <|-- "1" NearbyPoint: Implements
-NearbyPoints "1" -- "0..n"NearbyPoint: Contains
-Hotel "1" -- "1" GeoPoint: May Contain
-`
+// const example =
+//   `erDiagram
+//   users {
+//    TEXT name
+//    INT phone
+//    BOOLEAN human
 
-const ERDModal = (state, open) => {
+//   }
+//   orders {
+//    TEXT item
+//     INT user FK
+
+//   }
+//   users ||--o{ orders :has`
+
+const createReference = (tableName, reference) => {
+  return `${reference} ||--o{ ${tableName} :""`
+}
+const createTable = (tableName) => {
+  return `${tableName} {\n   `
+}
+const createFields = (fieldName, dataType, reference) => {
+  return `${dataType} ${reference ? 'INT ' + reference + ' FK' : fieldName}`
+}
+const generateMermaid = (state) => {
+  let reference = ''
+  let output2 =
+    `
+erDiagram `
+  state.map((table) => {
+    output2 += `${createTable(table.table)}`
+    table.fields.map(field => {
+      if (field.reference) reference = createReference(table.table, field.reference)
+      output2 += `${createFields(field.fieldName, field.dataType, field.reference)}\n   `
+
+    })
+    output2 += `\n  }\n`
+    output2 += `  ${reference}\n`
+  })
+  console.log(output2)
+  return output2
+
+}
+
+const ERDModal = (props) => {
+  console.table(props.table)
+  console.log(generateMermaid(props.table))
   return (
     <Modal
-      open={open}
+      open={props.open}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{
       }}
     >
       <Box sx={style}>
-        <Mermaid chart={example} />
+        <Typography variant='h3' color={'white'}>Entity Relationship Diagram</Typography>
+        <Mermaid chart={generateMermaid(props.table)} />
       </Box>
     </Modal>
   );

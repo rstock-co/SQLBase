@@ -1,11 +1,45 @@
 import { React, Component } from "react";
 import mermaid from "mermaid";
+import './mermaid.scss'
+
+const style = {
+  maxWidth: '100%',
+  fontSize: 32,
+}
 
 mermaid.initialize({
   startOnLoad: true,
-  theme: "default",
+  theme: "neutral",
   securityLevel: "loose",
+  er: {
+    diagramPadding: 20,
+    layoutDirection: 'TB',
+    minEntityWidth: 100,
+    minEntityHeight: 70,
+    entityPadding: 15,
+    stroke: 'gray',
+    fill: 'honeydew',
+    fontSize: 24,
+    useMaxWidth: false,
+  },
   themeCSS: `
+    .er.relationshipLine {
+      stroke-width: 1.5;
+    }
+    .er.entityBox {
+      fill: #262c72
+    }
+    .er.entityLabel {
+      fill: #fff
+    }
+    .er.attributeBoxEven {
+      fill: #8781d3
+    }
+    .er.attributeBoxOdd {
+      fill: #5755a1
+    }
+
+
     g.classGroup rect {
       fill: #282a36;
       stroke: #6272a4;
@@ -15,7 +49,7 @@ mermaid.initialize({
     }
     g.classGroup line {
       stroke: #f8f8f2;
-      stroke-width: 0.5;
+      stroke-width: 1;
     }
     .classLabel .box {
       stroke: #21222c;
@@ -50,31 +84,9 @@ mermaid.initialize({
       stroke: #f8f8f2;
       stroke-width: 1;
     }`,
-  fontFamily: "Fira Code"
+  fontFamily: "roboto",
 });
 
-// export default class Mermaid extends React.Component {
-//   componentDidMount() {
-//     mermaid.contentLoaded();
-//   }
-//   render() {
-//     return <div className="mermaid"></div>;
-//   }
-// }
-
-// const Mermaid = () => {
-//   componentDidMount() {
-//     mermaid.contentLoaded();
-
-//   }
-//   console.log(mermaid.contentLoaded())
-
-//   return (
-//     <div className="mermaid">
-//       {this.props.chart}
-//     </div>
-//   );
-// }
 
 
 export default class Mermaid extends Component {
@@ -82,7 +94,7 @@ export default class Mermaid extends Component {
     mermaid.contentLoaded();
   }
   render() {
-    return <div className="mermaid">{this.props.chart}</div>;
+    return <div className="mermaid" style={style}>{this.props.chart}</div>;
   }
 }
 

@@ -34,19 +34,12 @@ const CreateTablesPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => (isOpen && setIsOpen(false));
+  // console.log('isOpen', isOpen)
 
-  // const erdHandler = (toggle) => {
-  //   setIsOpen(toggle)
-  //   console.log('pressed openModal')
-  //   console.log(isOpen)
-  //   return (
-  //     (isOpen && <ERDModal state={state} setIsOpen={isOpen} />)
-  //   )
-  // }
   return (
     <main onClick={handleClose}>
       <div id="container">
-        {(isOpen && <ERDModal open={isOpen} />)}
+        {(isOpen && <ERDModal open={isOpen} table={state} />)}
         {state.map((table, tableIndex) => {
           return (
             <div id="row-container">
