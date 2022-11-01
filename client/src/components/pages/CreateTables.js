@@ -39,9 +39,9 @@ const CreateTablesPage = () => {
 
 
   return (
-    <main onClick={handleClose}>
+    <main>
       <div id="container">
-        {(isOpen && <ERDModal open={isOpen} table={state} />)}
+        {(isOpen && <ERDModal open={isOpen} table={state} onClick={handleClose} />)}
         {state.map((table, tableIndex) => {
           return (
             <div id="row-container">

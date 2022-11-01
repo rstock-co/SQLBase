@@ -2,7 +2,8 @@ import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import mm from 'mermaid'
 import Mermaid from './Mermaid';
-
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 const style = {
   position: 'absolute',
@@ -35,6 +36,16 @@ const style = {
 
 //   }
 //   users ||--o{ orders :has`
+const handleDownload = () => {
+  console.log('clicked')
+  htmlToImage.toJpeg(document.getElementById('erd'), { quality: 0.95 })
+    .then(function (dataUrl) {
+      var link = document.createElement('a');
+      link.download = 'ERD.jpeg';
+      link.href = dataUrl;
+      link.click();
+    });
+}
 
 const createReference = (tableName, reference) => {
   return `${reference} ||--o{ ${tableName} :""`
@@ -66,6 +77,7 @@ erDiagram `
 }
 
 const ERDModal = (props) => {
+  console.log(props)
   console.table(props.table)
   console.log(generateMermaid(props.table))
   return (
@@ -74,13 +86,22 @@ const ERDModal = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{
-      }}
+      }
+      }
     >
-      <Box sx={style}>
+      <Box sx={style} id='erd'>
         <Typography variant='h3' color={'white'}>Entity Relationship Diagram</Typography>
         <Mermaid chart={generateMermaid(props.table)} />
+        <Box>
+          <Button onClick={props.onClick}>
+            Close
+          </Button>
+          <Button onClick={() => handleDownload()}>
+            DOWNLOAD
+          </Button>
+        </Box>
       </Box>
-    </Modal>
+    </Modal >
   );
 }
 
