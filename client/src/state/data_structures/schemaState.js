@@ -1,4 +1,4 @@
-const tableFields = {
+export const schemaTableFields = {
   fieldName: "",
   dataType: "",
   mod1: "",
@@ -7,10 +7,8 @@ const tableFields = {
   reference: "",
 };
 
-const emptyTable = {
+export const initialSchemaState = {
   id: null,
   table: "",
-  fields: [tableFields],
+  fields: [schemaTableFields],
 };
-
-export { tableFields, emptyTable };
