@@ -11,15 +11,26 @@ export default function SuccessSnackbar(props) {
   function TransitionUp(props) {
     return <Slide {...props} direction="up" />;
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'timeout') {
+      return props.handleClose()
+    }
+  };
+  const AlertType = (isError) => {
+    console.log(isError)
+    if (isError) return "error"
+    return "success"
+  }
   return (props.message &&
     <Snackbar
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       open={props.open}
       autoHideDuration={3000}
-      onClose={props.handleClose}
+      onClose={handleClose}
       TransitionComponent={TransitionUp}
     >
-      <Alert onClose={props.handleClose} severity="success" sx={{
+      <Alert severity={AlertType(props.isError)} sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

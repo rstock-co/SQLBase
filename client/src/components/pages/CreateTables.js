@@ -31,14 +31,12 @@ const CreateTablesPage = () => {
 
   console.log("TABLES: ", state);
 
-
-
-
   const [isOpen, setIsOpen] = useState({
     modal: false,
     copy: false,
     save: false,
     load: false,
+    addTable: false,
     message: null
   });
   const buttonHandler = (target) => {
@@ -57,6 +55,10 @@ const CreateTablesPage = () => {
       case "load":
         setIsOpen({ load: true, message: 'Load Success!' })
         loadProgress()
+        break;
+      case "addTable":
+        setIsOpen({ addTable: true, message: 'Table Added' })
+        addTable()
         break;
       default:
         return false;
@@ -131,7 +133,7 @@ const CreateTablesPage = () => {
           );
         })}
 
-        <Button id="add-table" primary="true" onClick={() => addTable()}>
+        <Button id="add-table" primary="true" onClick={() => buttonHandler("addTable")}>
           Add Table
         </Button>
         <Button primary="true" onClick={() => buttonHandler("save")}>
