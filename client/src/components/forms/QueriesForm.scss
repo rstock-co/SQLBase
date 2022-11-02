@@ -1,0 +1,70 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 98%;
+  margin-left: 1%;
+  justify-content: space-between;
+  box-shadow: 0.2em 0 0.2em -4px gray, -0.2em 0 0.2em -4px gray;
+  #container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    #row-container {
+      display: flex;
+      flex-direction: row;
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      .table {
+        border-radius: 2em;
+        margin: 2%;
+        padding: 2%;
+        box-shadow: 0.2em 0.2em 0.2em gray;
+        .field-inputs {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+          label {
+            margin-right: 1%;
+            white-space: nowrap;
+            align-self: center;
+          }
+        }
+        .add-remove-button {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+  .demo {
+    margin-left: 1%;
+    margin-right: 1%;
+    height: 100%;
+    width: 40%;
+    border-radius: 2em;
+    div {
+      padding: 2%;
+      margin-top: 5%;
+      height: auto;
+    }
+  }
+}
+
+
+#add-table {
+  margin-top: 3%;
+}
+
+#tables-bottom {
+  width: 100%;
+  opacity: 0.5;
+}

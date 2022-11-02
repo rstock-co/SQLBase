@@ -23,14 +23,22 @@ const generateFirstLine = (table, columns, distinct = false) => {
     : `SELECT ${columnString} FROM ${table}`;
 };
 
-const generateWhere = condition => `WHERE ${condition}`;
-const generateLimit = limit => `LIMIT ${limit}`;
-const generateOrder = order => ``
+const generateWhere = condition => {
+  return condition ? `WHERE ${condition}` : "";
+}
+  
+const generateLimit = limit => {
+  return (limit === 1000) ? "" : `LIMIT ${limit}`;
+}
+const generateOrder = (orderBy, order) => {
+  return orderBy ? `ORDER BY ${orderBy} ${order || ""}` : "";
+}
 
 
 export default function generateQuerySQL(query) {
   return `${generateFirstLine(query.table, query.columns, query.distinct) || ""} 
-  ${generateWhere(query.condition) || ""}
-  ${generateLimit(query.limit) || ""}`
+  ${generateWhere(query.condition)}
+  ${generateOrder(query.orderBy, query.order)}
+  ${generateLimit(query.limit)}`
 };
 

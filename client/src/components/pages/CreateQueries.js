@@ -19,7 +19,8 @@ const CreateQueriesPage = () => {
     saveSchemaProgress,
     loadSchemaProgress,
     getTableNames,
-    getColumnList
+    getColumnList,
+    createMenuOption
   } = useQueryState();
 
   console.log("QUERY PAGE STATE: ", state);
@@ -47,15 +48,9 @@ const CreateQueriesPage = () => {
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
                   queries={queries}
+                  groupByMenuOptions={createMenuOption(queries[tableIndex].columns)}
                 />
               </form>
-              <div className="tables">
-                {/* <SchemaTable
-                  key={`table-${tableIndex}`}
-                  table={table.table}
-                  fields={table.fields}
-                /> */}
-              </div>
               <div className="demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}

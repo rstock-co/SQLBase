@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import "./SchemaForm.scss";
+import "./QueriesForm.scss";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { FormInputText } from "../fields/FormInputText";
@@ -19,6 +19,7 @@ const QueriesForm = ({
   tableNameList,
   getColumnList,
   handleQuery,
+  groupByMenuOptions
 }) => {
   const {
     formState: { errors },
@@ -88,11 +89,11 @@ const QueriesForm = ({
                 handleQuery(e, tableIndex, 'orderBy')
               }
             />
-            {queries[tableIndex].order && <FormInputDropdown
+            {queries[tableIndex].orderBy && <FormInputDropdown
               uniqueID={`order-${fieldIndex}`}
               name={"order"}
               control={control}
-              label={"Order"}
+              label={"Asc/Desc"}
               menuOptions={[
                 { label: "Ascending", value: 'ASC' },
                 { label: "Descending", value: 'DESC' },
@@ -110,11 +111,23 @@ const QueriesForm = ({
                 { label: "Sum", value: 'SUM' },
                 { label: "Average", value: 'AVG' },
                 { label: "Count", value: 'COUNT' },
+                { label: "Max", value: 'MAX' },
+                { label: "Min", value: 'MIN' },
               ]}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'aggregate')
               }
             />
+            {queries[tableIndex].aggregate && <FormInputDropdown
+              uniqueID={`groupBy-${fieldIndex}`}
+              name={"groupBy"}
+              control={control}
+              label={"Group By"}
+              menuOptions={groupByMenuOptions}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'groupBy')
+              }
+            />}
             <Button
               key={`Remove-${fieldIndex}`}
               onClick={() => removeField(tableIndex, fieldIndex)}
