@@ -11,6 +11,7 @@ import reducer, {
   HANDLE_CHANGE,
   LOAD_DATA,
   GET_TABLE_NAMES,
+  HANDLE_CHANGE_AND_NULLIFY,
 } from "../reducers/schemaFormReducer";
 
 const useApplicationData = () => {
@@ -47,6 +48,11 @@ const useApplicationData = () => {
     dispatch({ type: REMOVE_FIELD, tableIndex, fieldIndex });
   const handleChange = (event, fieldType, tableIndex, fieldIndex) =>
     dispatch({ type: HANDLE_CHANGE, event, fieldType, tableIndex, fieldIndex });
+  const handleChangeAndNullify = (event, fieldToChange, tableIndex, fieldIndex, fieldToNullify) => {
+
+    console.log(fieldToChange, fieldToNullify)
+    dispatch({ type: HANDLE_CHANGE_AND_NULLIFY, event, fieldToChange, tableIndex, fieldIndex, fieldToNullify });
+  }
   const loadData = loadedData => dispatch({ type: LOAD_DATA, loadedData });
 
   const getTableNames = () => {
@@ -100,6 +106,7 @@ const useApplicationData = () => {
     addField,
     removeField,
     handleChange,
+    handleChangeAndNullify,
     saveProgress,
     loadProgress,
     getTableNames,

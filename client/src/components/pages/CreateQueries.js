@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
-import { Button, Paper } from "@mui/material";
-import { tableFields, emptyTable, emptyQueryParams } from "../../data_structures/schemaTable";
+import { Button } from "@mui/material";
+import { initialSchemaState } from "../../state/data_structures/schemaState";
+import initialQueryState from "../../state/data_structures/queryState";
 import QueriesForm from "../forms/QueriesForm";
-import SchemaTable from "../tables/SchemaTable";
-import useApplicationData from "../../hooks/useApplicationData";
-import {
-  deepCopyArray,
-  generateReferenceObject,
-  generateSQL,
-} from "../../helpers/schemaFormHelpers";
 import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
+import { deepCopy } from "../../helpers/schemaFormHelpers";
+import useSchemaState from "../../state/hooks/useSchemaState";
 
 const CreateQueriesPage = () => {
   const {
@@ -22,29 +18,31 @@ const CreateQueriesPage = () => {
     addField,
     removeField,
     handleChange,
-    saveProgress,
-    loadProgress,
+    saveSchemaProgress,
+    loadSchemaProgress,
     getTableNames,
     getColumnList
-  } = useApplicationData();
+  } = useSchemaState();
 
-  console.log("TABLES: ", state);
+  console.log("QUERY PAGE STATE: ", state);
 
-  const tableNameList = getTableNames()
+  const tableNameList = getTableNames();
 
-  const [ selectedTable, setSelectedTable ] = useState(emptyTable);
-  const [ queryTables, setQueryTables ] = useState([emptyTable]);
-  const [ queryParams, setQueryParams ] = useState([emptyQueryParams])
+  const [ queryTables, setQueryTables ] = useState([initialSchemaState]);
+  const [ queryParams, setQueryParams ] = useState([initialQueryState])
+
+  const findTable = (state, tableName) => {
+    return state.schemaState.filter(table => table.table === tableName)[0]
+  }
 
   const selectTableHandler = (e, tableIndex) => {
-    setSelectedTable(e.target.value);
-    addToQueryTable(e.target.value);
+    addToQueryTable(findTable(state, e.target.value));
     handleQueryParams(e, tableIndex, 'name')
   }
 
   const addToQueryTable = (table) => {
     setQueryTables(prev => {
-      let newPrev = deepCopyArray(prev);
+      let newPrev = deepCopy(prev);
       let lastObject = newPrev[newPrev.length - 1];
       if (lastObject.table === "") {
         newPrev.pop()
@@ -55,43 +53,43 @@ const CreateQueriesPage = () => {
   }; 
 
   const addQueryTable = (emptyTable) => {
-    setQueryTables(prev => [...prev, emptyTable])
-    setQueryParams(prev => [...prev, emptyQueryParams])
+    setQueryTables(prev => [...prev, initialSchemaState])
+    setQueryParams(prev => [...prev, initialQueryState])
   }
 
   const handleQueryParams = (event, queryIndex, type) => {
     console.log('qp', queryParams[0])
     if (type === 'columns') {
-      const newQueries = deepCopyArray(queryParams);
+      const newQueries = deepCopy(queryParams);
       newQueries[queryIndex].columns.push(event.target.value)
       return setQueryParams(newQueries)
     }
     if (type === 'condition') {
-      const newQueries = deepCopyArray(queryParams);
+      const newQueries = deepCopy(queryParams);
       newQueries[queryIndex].condition = event.target.value;
       return setQueryParams(newQueries)
     }
     if (type === 'distinct') {
-      const newQueries = deepCopyArray(queryParams);
+      const newQueries = deepCopy(queryParams);
       newQueries[queryIndex].distinct = event.target.value;
       return setQueryParams(newQueries)
     }
     if (type === 'name') {
-      const newQueries = deepCopyArray(queryParams);
+      const newQueries = deepCopy(queryParams);
       newQueries[queryIndex].table = event.target.value.table
       console.log("test", newQueries)
       return setQueryParams(newQueries)
     }
     if (type === 'limit') {
-      const newQueries = deepCopyArray(queryParams);
+      const newQueries = deepCopy(queryParams);
       newQueries[queryIndex].limit = event.target.value;
       return setQueryParams(newQueries)
     }
   }
 
   const removeQuery = (tableIndex) => {
-    const newQueries = deepCopyArray(queryParams)
-    const newQueryTables = deepCopyArray(queryTables)
+    const newQueries = deepCopy(queryParams)
+    const newQueryTables = deepCopy(queryTables)
     newQueries.splice(tableIndex, 1);
     newQueryTables.splice(tableIndex, 1);
     setQueryParams(newQueries); 
@@ -114,7 +112,7 @@ const CreateQueriesPage = () => {
                   addField={addField}
                   tableNameList={tableNameList}
                   removeQuery={removeQuery}
-                  columnList={getColumnList}
+                  getColumnList={getColumnList}
                   handleQuery={handleQueryParams}
                 />
               </form>
@@ -139,13 +137,13 @@ const CreateQueriesPage = () => {
           );
         })}
 
-        <Button id="add-table" primary="true" onClick={() => addQueryTable(emptyTable)}>
+        <Button id="add-table" primary="true" onClick={() => addQueryTable(initialSchemaState)}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => saveProgress()}>
+        <Button primary="true" onClick={() => saveSchemaProgress()}>
           Save Progress
         </Button>
-        <Button primary="true" onClick={() => loadProgress()}>
+        <Button primary="true" onClick={() => loadSchemaProgress()}>
           Load Progress
         </Button>
       </div>

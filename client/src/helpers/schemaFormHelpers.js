@@ -1,4 +1,4 @@
-const deepCopyArray = array => JSON.parse(JSON.stringify(array));
+const deepCopy = dataStructure => JSON.parse(JSON.stringify(dataStructure));
 
 const generateReference = reference => {
   if (!reference) return null;
@@ -12,13 +12,12 @@ const generateSQL = tables => {
         id SERIAL PRIMARY KEY NOT NULL,
         `;
     table.fields.map(field => {
-      output += `${field.fieldName || ""} ${field.dataType || ""} ${
-        generateReference(field.reference) || ""
-      } ${field.mod1 || ""} ${field.mod2 || ""} ${
-        field.default ? "DEFAULT '" + field.default + "'" : ""
-      },\n        `;
+      output += `${field.fieldName || ""} ${field.dataType || ""} ${generateReference(field.reference) || ""
+        } ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""
+        },\n        `;
     });
-    result.push(output.replace(/,\n {6} *$/, "\n);"));
+    result.push(output.replace(/,\n {6} *$/, "\n);\n"));
+    console.log(result)
   });
   return result;
 };
@@ -34,4 +33,4 @@ const generateReferenceObject = (tables, i) => {
   return output;
 };
 
-export { deepCopyArray, generateSQL, generateReferenceObject };
+export { deepCopy, generateSQL, generateReferenceObject };

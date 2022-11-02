@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import "./SchemaForm.scss";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
@@ -6,6 +6,7 @@ import { FormInputText } from "../fields/FormInputText";
 import { FormInputDropdown } from "../fields/FormInputDropdown";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 
 const QueriesForm = ({
   table,
@@ -15,14 +16,20 @@ const QueriesForm = ({
   removeField,
   removeQuery,
   tableNameList,
-  columnList,
-  handleQuery
+  getColumnList,
+  handleQuery,
 }) => {
   const {
     formState: { errors },
     control,
   } = useForm();
 
+
+
+
+
+
+  console.log("tableNameList", tableNameList)
 
   return (
     <div className="table">
@@ -41,7 +48,7 @@ const QueriesForm = ({
               name={"Column"}
               control={control}
               label={"Column"}
-              menuOptions={columnList(table)}
+              menuOptions={getColumnList(table)}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'columns')
               }

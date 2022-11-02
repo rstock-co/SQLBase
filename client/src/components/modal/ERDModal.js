@@ -1,8 +1,9 @@
-import React from 'react';
-import { Modal, Box, Typography, Button } from '@mui/material';
+import React, { useRef, useEffect } from 'react';
+import { Modal, Box, Typography, Button, Container } from '@mui/material';
 import mm from 'mermaid'
 import Mermaid from './Mermaid';
-
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 const style = {
   position: 'absolute',
@@ -13,11 +14,11 @@ const style = {
   height: '85%',
   bgcolor: '#21222c',
   boxShadow: 24,
-  p: 4,
+  pt: 4,
+  borderRadius: 8,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  borderRadius: 8
 
 };
 
@@ -35,6 +36,23 @@ const style = {
 
 //   }
 //   users ||--o{ orders :has`
+const handleDownload = () => {
+  console.log('clicked')
+  htmlToImage.toJpeg(document.getElementById('erd'), {
+    width: 1920, height: 1080, style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }
+  })
+    .then(function (dataUrl) {
+      var link = document.createElement('a');
+      link.download = 'ERD.jpeg';
+      link.href = dataUrl;
+      link.click();
+    });
+}
+
 
 const createReference = (tableName, reference) => {
   return `${reference} ||--o{ ${tableName} :""`
@@ -66,21 +84,67 @@ erDiagram `
 }
 
 const ERDModal = (props) => {
+  console.log(props)
   console.table(props.table)
   console.log(generateMermaid(props.table))
+
+  let downloadRef = useRef();
+
+  // handle click outside of modal download button to close modal
+  useEffect(() => {
+    let handler = (event) => {
+      if (!downloadRef.current.contains(event.target)) {
+        props.onClick()
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    };
+  });
+
   return (
     <Modal
       open={props.open}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{
-      }}
+      }
+      }
     >
       <Box sx={style}>
-        <Typography variant='h3' color={'white'}>Entity Relationship Diagram</Typography>
-        <Mermaid chart={generateMermaid(props.table)} />
+        <Container id={'erd'} sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+          <Typography variant='h3' color={'white'}
+            sx={{
+              pt: 4,
+              pb: 4
+            }}
+          >
+            Entity Relationship Diagram
+          </Typography>
+          <Mermaid chart={generateMermaid(props.table)} />
+        </Container>
+        <Box sx={{
+          position: 'absolute',
+          bottom: '4em',
+          bgcolor: '#23222c',
+          boxShadow: 24,
+          p: 2,
+          borderRadius: 2,
+        }}>
+          <Button ref={downloadRef} onClick={handleDownload} sx={{
+            color: '#fff',
+            fontSize: 16
+          }}>
+            DOWNLOAD
+          </Button>
+        </Box>
       </Box>
-    </Modal>
+    </Modal >
   );
 }
 
