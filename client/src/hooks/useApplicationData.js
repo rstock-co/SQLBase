@@ -10,7 +10,6 @@ import reducer, {
   REMOVE_FIELD,
   HANDLE_CHANGE,
   LOAD_DATA,
-  GET_TABLE_NAMES,
   HANDLE_CHANGE_AND_NULLIFY,
 } from "../reducers/schemaFormReducer";
 

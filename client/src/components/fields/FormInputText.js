@@ -13,7 +13,6 @@ export const FormInputText = ({
 }) => {
   return (
     <Controller
-      // defaultValue={defaultValue}
       name={name}
       control={control}
       render={({ field: { onChange, } }) => (

@@ -3,7 +3,6 @@ import {
   initialSchemaState,
 } from "../data_structures/schemaState";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
-import initialQueryState from "../data_structures/queryState";
 import { initialQueries } from "../data_structures/queryState";
 
 // schema
@@ -21,11 +20,6 @@ export const INSERT_QUERY_TABLE = "INSERT_QUERY_TABLE";
 export const SET_QUERY_PARAMS = "SET_QUERY_PARAMS";
 
 
-// export const SCHEMA_REMOVE_TABLE = "SCHEMA_REMOVE_TABLE";
-// export const SCHEMA_ADD_FIELD = "SCHEMA_ADD_FIELD";
-// export const SCHEMA_REMOVE_FIELD = "SCHEMA_REMOVE_FIELD";
-// export const SCHEMA_HANDLE_CHANGE = "SCHEMA_HANDLE_CHANGE";
-// export const SCHEMA_LOAD_DATA = "SCHEMA_LOAD_DATA";
 // seed
 
 /**

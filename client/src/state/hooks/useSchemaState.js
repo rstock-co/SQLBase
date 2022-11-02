@@ -10,7 +10,6 @@ import {
   SCHEMA_HANDLE_CHANGE,
   SCHEMA_LOAD_DATA,
 } from "../reducers/globalReducer";
-import { deepCopy } from "../../helpers/schemaFormHelpers";
 
 const useSchemaState = () => {
   const [state, dispatch] = useContext(GlobalContext);

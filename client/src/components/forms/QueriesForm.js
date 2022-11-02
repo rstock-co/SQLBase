@@ -24,13 +24,6 @@ const QueriesForm = ({
     control,
   } = useForm();
 
-
-
-
-
-
-  console.log("tableNameList", tableNameList)
-
   return (
     <div className="table">
       <FormInputDropdown
@@ -95,13 +88,6 @@ const QueriesForm = ({
       })}
 
       <div className="add-remove-button">
-        {/* <Button
-          key={`Add-${tableIndex}`}
-          primary="true"
-          onClick={() => addField(tableIndex)}
-        >
-          Add Field +
-        </Button> */}
         <Button
           key={`Remove-${tableIndex}`}
           primary="true"

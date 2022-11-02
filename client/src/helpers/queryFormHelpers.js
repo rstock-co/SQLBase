@@ -9,28 +9,6 @@
 // (3) display x number of "select columns" drop down boxes in one row
 // (4)
 
-const query = {
-  table: "users",
-  columns: ["*"], //"first_name", "last_name", "age"], // need to create an array of fieldNames when user selects a table
-  whereCondition: "age > 40", // string (from text input box)
-  distinct: false, // boolean (checkbox),
-  limit: 5, // number
-  // orderBy: ascending
-  // aggregate: count // one of 3 choices:  sum, avg, count
-};
-
-const emptyQuery = {
-  table: "",
-  columns: [],
-  whereCondition: "",
-  distinct: false,
-  limit: 1000,
-  orderAscending: false,
-  orderDescending: false,
-  aggregate: "", // one of 3 choices:  sum, avg, count
-};
-
-let queryString = "";
 
 const generateFirstLine = (table, columns, distinct = false) => {
   let columnString = "";
@@ -45,12 +23,9 @@ const generateFirstLine = (table, columns, distinct = false) => {
     : `SELECT ${columnString} FROM ${table}`;
 };
 
-// console.log(generateFirstLine(query.table, query.columns, query.distinct));
-
 const generateWhere = condition => `WHERE ${condition}`;
 const generateLimit = limit => `LIMIT ${limit}`;
 
-// const generateOrder = (desc)
 
 export default function generateQuerySQL(query) {
   console.warn('whatismyquery', query)
@@ -59,20 +34,3 @@ export default function generateQuerySQL(query) {
   ${generateLimit(query.limit) || ""}`
 };
 
-// const generateSQL = tables => {
-//   let result = [];
-//   tables.map(table => {
-//     let output = `CREATE TABLE ${table.table} (
-//         id SERIAL PRIMARY KEY NOT NULL,
-//         `;
-//     table.fields.map(field => {
-//       output += `${field.fieldName || ""} ${field.dataType || ""} ${
-//         generateReference(field.reference) || ""
-//       } ${field.mod1 || ""} ${field.mod2 || ""} ${
-//         field.default ? "DEFAULT '" + field.default + "'" : ""
-//       },\n        `;
-//     });
-//     result.push(output.replace(/,\n {6} *$/, "\n);"));
-//   });
-//   return result;
-// };

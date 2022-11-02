@@ -74,21 +74,6 @@ const CreateSchemaPage = () => {
     return navigator.clipboard.writeText(allStrings.join(""))
   }
 
-  //   CREATE TABLE dsafdsa (
-  //     id SERIAL PRIMARY KEY NOT NULL,
-  //     fdsafdsa INT    
-  // );
-  // ,CREATE TABLE safdsa (
-  //     id SERIAL PRIMARY KEY NOT NULL,
-  //     fdsafdsa  INTEGER REFERENCES a(id) ON DELETE CASCADE   
-  // );
-  // ,CREATE TABLE a (
-  //     id SERIAL PRIMARY KEY NOT NULL,
-  //     fds INT    
-  // );
-
-
-
 
   return (
     <main onClick={handleClose}>
