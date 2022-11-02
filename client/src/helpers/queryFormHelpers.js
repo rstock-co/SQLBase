@@ -25,10 +25,10 @@ const generateFirstLine = (table, columns, distinct = false) => {
 
 const generateWhere = condition => `WHERE ${condition}`;
 const generateLimit = limit => `LIMIT ${limit}`;
+const generateOrder = order => ``
 
 
 export default function generateQuerySQL(query) {
-  console.warn('whatismyquery', query)
   return `${generateFirstLine(query.table, query.columns, query.distinct) || ""} 
   ${generateWhere(query.condition) || ""}
   ${generateLimit(query.limit) || ""}`

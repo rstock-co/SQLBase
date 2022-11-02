@@ -10,6 +10,7 @@ import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 
 const QueriesForm = ({
   table,
+  queries,
   tableIndex,
   handleChange,
   addField,
@@ -76,6 +77,43 @@ const QueriesForm = ({
               name={"limit"}
               control={control}
               label={"Limit"}
+            />
+            <FormInputDropdown
+              uniqueID={`orderBy-${fieldIndex}`}
+              name={"orderBy"}
+              control={control}
+              label={"Order by"}
+              menuOptions={getColumnList(table)}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'orderBy')
+              }
+            />
+            {queries[tableIndex].order && <FormInputDropdown
+              uniqueID={`order-${fieldIndex}`}
+              name={"order"}
+              control={control}
+              label={"Order"}
+              menuOptions={[
+                { label: "Ascending", value: 'ASC' },
+                { label: "Descending", value: 'DESC' },
+              ]}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'order')
+              }
+            />}
+            <FormInputDropdown
+              uniqueID={`aggregate-${fieldIndex}`}
+              name={"aggregate"}
+              control={control}
+              label={"Aggregate"}
+              menuOptions={[
+                { label: "Sum", value: 'SUM' },
+                { label: "Average", value: 'AVG' },
+                { label: "Count", value: 'COUNT' },
+              ]}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'aggregate')
+              }
             />
             <Button
               key={`Remove-${fieldIndex}`}

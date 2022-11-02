@@ -31,9 +31,7 @@ const CreateQueriesPage = () => {
   return (
     <main>
       <div id="container">
-        {console.error(state.queryState[0])}
         {schemas.map((table, tableIndex) => {
-          console.warn(queries[tableIndex])
           return (
             <div id="row-container">
               <form>
@@ -48,6 +46,7 @@ const CreateQueriesPage = () => {
                   removeQuery={removeQueryTable}
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
+                  queries={queries}
                 />
               </form>
               <div className="tables">

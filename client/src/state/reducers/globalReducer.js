@@ -156,14 +156,12 @@ const globalReducer = (state, action) => {
         ...queryState,
         schemas,
       }]
-      // queryState = [queryState]
       return {
         ...newState,
         queryState,
       }
     },
     SET_QUERY_PARAMS: state => {
-      //state(obj)--> queryState(arr)--> queries(arr) ||schemas(arr)
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
       let queries = queryState.queries;
@@ -173,8 +171,6 @@ const globalReducer = (state, action) => {
           ...queryState,
           queries,
         }]
-        // queryState = [queryState]
-        // console.warn(queryState)
         return {
           ...newState,
           queryState,
