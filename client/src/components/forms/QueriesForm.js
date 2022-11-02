@@ -75,7 +75,7 @@ const QueriesForm = ({
                 { label: "Min", value: 'MIN' },
               ]}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'aggregate')
+                handleQuery(e, tableIndex, 'aggregate', fieldIndex)
               }
             />
             {queries[tableIndex].aggregate && <FormInputText
@@ -100,7 +100,7 @@ const QueriesForm = ({
             {queries[tableIndex].aggregate && <FormInputText
               uniqueID={`having-${fieldIndex}`}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'having')
+                handleQuery(e, tableIndex, 'having', fieldIndex)
               }
               name={"having"}
               control={control}

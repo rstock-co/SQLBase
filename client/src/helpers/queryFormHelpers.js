@@ -14,9 +14,9 @@ const generateColumns = (aggregate, aggregateAs, columns, having) => {
   let havingString = '';
   if (columns.length > 0) {
     columns.forEach(col => {
-      (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col} ${aggregateAs[columns.indexOf(col)] ? 'AS ' + aggregateAs[columns.indexOf(col)] + ", " : ''}`);
+      (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] + ", " : ', '}`);
       
-      (havingString += `${having ? aggregate[columns.indexOf(col)] + '(' + col + ')' : ""}`); 
+      (havingString += `${having.length > 0 ? "HAVING " + aggregate[columns.indexOf(col)] + '(' + col + ')' : ""}`); 
     })
   } else {
     columnString += "*"
@@ -50,7 +50,7 @@ const generateGroupBy = (groupBy) => {
 
 export default function generateQuerySQL(queries) {
   return queries.map(query => {
-    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition ?'\n' + generateWhere(query.condition) : ""} ${query.groupBy ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""}`
+    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition ?'\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
   })
 };
   
