@@ -22,7 +22,7 @@ const CreateQueriesPage = () => {
     getColumnList,
   } = useQueryState();
 
-  console.log("QUERY PAGE STATE: ", state);
+  console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
 
   const tableNameList = getTableNames();
   let schemas = state.queryState[0].schemas
@@ -53,7 +53,7 @@ const CreateQueriesPage = () => {
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
-                  text={generateQuerySQL(queries[tableIndex])}
+                  text={generateQuerySQL(queries)[tableIndex]}
                   theme={monokai}
                   wrapLines={true}
                   codeBlock

@@ -11,11 +11,12 @@
 
 const generateColumns = (aggregate, aggregateAs, columns, having) => {
   let columnString = '';
-  let havingString = `${having ? "HAVING " : ""}`;
+  let havingString = '';
   if (columns.length > 0) {
     columns.forEach(col => {
       (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col} ${aggregateAs[columns.indexOf(col)] ? 'AS ' + aggregateAs[columns.indexOf(col)] + ", " : ''}`);
-      having ? havingString += `${aggregate[columns.indexOf(col)]}(${col}) ${having}` : havingString = ""
+      
+      (havingString += `${having ? aggregate[columns.indexOf(col)] + '(' + col + ')' : ""}`); 
     })
   } else {
     columnString += "*"
@@ -47,7 +48,9 @@ const generateGroupBy = (groupBy) => {
 }
 
 
-export default function generateQuerySQL(query) {
-  return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.condition ?'\n' + generateWhere(query.condition) : ""} ${query.groupBy ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""}`
+export default function generateQuerySQL(queries) {
+  return queries.map(query => {
+    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition ?'\n' + generateWhere(query.condition) : ""} ${query.groupBy ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""}`
+  })
 };
-
+  

@@ -33,6 +33,7 @@ const QueriesForm = ({
         label={"Table Select"}
         menuOptions={tableNameList}
         handleChange={e => handleChange(e, tableIndex)}
+        value={table.table}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
@@ -46,6 +47,7 @@ const QueriesForm = ({
               handleChange={e =>
                 handleQuery(e, tableIndex, 'columns')
               }
+              value={queries[tableIndex].columns[fieldIndex]}
             />
             <FormInputDropdown
               uniqueID={`distinct-${fieldIndex}`}
@@ -107,9 +109,9 @@ const QueriesForm = ({
             <FormInputText
               uniqueID={`condition-${fieldIndex}`}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'condition')
+                handleQuery(e, tableIndex, 'whereCondition')
               }
-              name={"condition"}
+              name={"whereCondition"}
               control={control}
               label={"Condition"}
             />

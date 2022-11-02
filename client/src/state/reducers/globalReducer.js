@@ -84,7 +84,7 @@ const globalReducer = (state, action) => {
           schemaState,
         };
       }
-
+      
       const newFields = [...schemaState[action.tableIndex].fields];
       newFields[action.fieldIndex][action.fieldType] =
         action.event.target.value;
