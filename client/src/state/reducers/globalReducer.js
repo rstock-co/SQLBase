@@ -3,6 +3,8 @@ import {
   initialSchemaState,
 } from "../data_structures/schemaState";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
+import initialQueryState from "../data_structures/queryState";
+import { initialQueries } from "../data_structures/queryState";
 
 // schema
 export const SCHEMA_ADD_TABLE = "SCHEMA_ADD_TABLE";
@@ -13,7 +15,17 @@ export const SCHEMA_HANDLE_CHANGE = "SCHEMA_HANDLE_CHANGE";
 export const SCHEMA_LOAD_DATA = "SCHEMA_LOAD_DATA";
 
 // query
+export const QUERY_ADD_TABLE = "QUERY_ADD_TABLE";
+export const QUERY_REMOVE_TABLE = "QUERY_REMOVE_TABLE"
+export const INSERT_QUERY_TABLE = "INSERT_QUERY_TABLE";
+export const SET_QUERY_PARAMS = "SET_QUERY_PARAMS";
 
+
+// export const SCHEMA_REMOVE_TABLE = "SCHEMA_REMOVE_TABLE";
+// export const SCHEMA_ADD_FIELD = "SCHEMA_ADD_FIELD";
+// export const SCHEMA_REMOVE_FIELD = "SCHEMA_REMOVE_FIELD";
+// export const SCHEMA_HANDLE_CHANGE = "SCHEMA_HANDLE_CHANGE";
+// export const SCHEMA_LOAD_DATA = "SCHEMA_LOAD_DATA";
 // seed
 
 /**
@@ -92,6 +104,114 @@ const globalReducer = (state, action) => {
       };
     },
     SCHEMA_LOAD_DATA: state => action.loadedData,
+
+    //------------------------------------------- QUERY REDUCERS
+    QUERY_ADD_TABLE: state => {
+      const newState = deepCopy(state);
+      let queryState = newState.queryState[0];
+      let schema = queryState.schemas
+      let queries = queryState.queries
+      const newTable = deepCopy(initialSchemaState);
+      const newQueries = deepCopy(initialQueries);
+      schema.push(newTable);
+      queries.push(newQueries)
+
+      queryState = [{
+        ...queryState,
+        schema,
+        queries
+      }]
+      return {
+        ...newState,
+        queryState
+      };
+    },
+    QUERY_REMOVE_TABLE: state => {
+      const newState = deepCopy(state);
+      let queryState = newState.queryState[0];
+      const schema = queryState.schemas;
+      schema.splice(action.tableIndex, 1);
+      queryState = [{
+        ...queryState,
+        schema,
+      }]
+      return {
+        ...newState,
+        queryState,
+      }
+    },
+    INSERT_QUERY_TABLE: state => {
+      const newState = deepCopy(state);
+      let queryState = newState.queryState[0];
+      let schemas = queryState.schemas;
+      const tableName = action.tableName
+      const findTable = (newState, tableName) => {
+        return newState.schemaState.filter(table => table.table === tableName)[0]
+      }
+      const table = findTable(newState, tableName)
+      const insertQueryTable = (tableObj) => {
+        let lastTableObject = schemas[schemas.length - 1];
+        if (lastTableObject.table === "") {
+          schemas.pop()
+          return [...schemas, tableObj]
+        }
+        return [...schemas, tableObj]
+      }
+      schemas = insertQueryTable(table)
+      queryState = [{
+        ...queryState,
+        schemas,
+      }]
+      // queryState = [queryState]
+      return {
+        ...newState,
+        queryState,
+      }
+    },
+    SET_QUERY_PARAMS: state => {
+      //state(obj)--> queryState(arr)--> queries(arr) ||schemas(arr)
+      const newState = deepCopy(state);
+      let queryState = newState.queryState[0];
+      let queries = queryState.queries;
+      if (action.queryType === "name") {
+        queries[action.queryIndex].table = action.queryName;
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        // queryState = [queryState]
+        // console.warn(queryState)
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "columns") {
+        queries[action.queryIndex].columns.push(action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+
+      queries[action.queryIndex][action.queryType] = action.queryName;
+      queryState = [{
+        ...queryState,
+        queries,
+      }]
+      return {
+        ...newState,
+        queryState,
+      }
+    },
+
+
+
+
   };
 
   if (reducers[action.type]) return reducers[action.type](state);

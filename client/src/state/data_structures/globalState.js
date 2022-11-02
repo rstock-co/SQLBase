@@ -7,3 +7,4 @@ export const initialGlobalState = {
   queryState: [initialQueryState],
   seedState: [initialSeedState],
 };
+

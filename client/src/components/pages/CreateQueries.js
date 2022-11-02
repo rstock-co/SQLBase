@@ -8,98 +8,103 @@ import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
-import useSchemaState from "../../state/hooks/useSchemaState";
+import useQueryState from "../../state/hooks/useQueryState";
 
 const CreateQueriesPage = () => {
   const {
     state,
-    addTable,
-    removeTable,
+    addQueryTable,
+    removeQueryTable,
     addField,
     removeField,
     handleChange,
+    selectTableHandler,
+    setQueryParams,
     saveSchemaProgress,
     loadSchemaProgress,
+    findTable,
     getTableNames,
     getColumnList
-  } = useSchemaState();
+  } = useQueryState();
 
   console.log("QUERY PAGE STATE: ", state);
 
   const tableNameList = getTableNames();
 
-  const [ queryTables, setQueryTables ] = useState([initialSchemaState]);
-  const [ queryParams, setQueryParams ] = useState([initialQueryState])
+  // const [queryTables, setQueryTables] = useState([initialSchemaState]);
+  // const [queryParams, setQueryParams] = useState([initialQueryState]);
 
-  const findTable = (state, tableName) => {
-    return state.schemaState.filter(table => table.table === tableName)[0]
-  }
 
-  const selectTableHandler = (e, tableIndex) => {
-    addToQueryTable(findTable(state, e.target.value));
-    handleQueryParams(e, tableIndex, 'name')
-  }
 
-  const addToQueryTable = (table) => {
-    setQueryTables(prev => {
-      let newPrev = deepCopy(prev);
-      let lastObject = newPrev[newPrev.length - 1];
-      if (lastObject.table === "") {
-        newPrev.pop()
-        return [...newPrev, table]
-      }
-      return  [...prev, table]
-    })
-  }; 
+  // const selectTableHandler = (e, tableIndex) => {
+  //   addToQueryTable(findTable(state, e.target.value));
+  //   handleQueryParams(e, tableIndex, 'name')
+  // }
 
-  const addQueryTable = (emptyTable) => {
-    setQueryTables(prev => [...prev, initialSchemaState])
-    setQueryParams(prev => [...prev, initialQueryState])
-  }
+  // const addToQueryTable = (table) => {
+  //   setQueryTables(prev => {
+  //     let newPrev = deepCopy(prev);
+  //     let lastObject = newPrev[newPrev.length - 1];
+  //     if (lastObject.table === "") {
+  //       newPrev.pop()
+  //       return [...newPrev, table]
+  //     }
+  //     return [...prev, table]
+  //   })
+  // };
 
-  const handleQueryParams = (event, queryIndex, type) => {
-    console.log('qp', queryParams[0])
-    if (type === 'columns') {
-      const newQueries = deepCopy(queryParams);
-      newQueries[queryIndex].columns.push(event.target.value)
-      return setQueryParams(newQueries)
-    }
-    if (type === 'condition') {
-      const newQueries = deepCopy(queryParams);
-      newQueries[queryIndex].condition = event.target.value;
-      return setQueryParams(newQueries)
-    }
-    if (type === 'distinct') {
-      const newQueries = deepCopy(queryParams);
-      newQueries[queryIndex].distinct = event.target.value;
-      return setQueryParams(newQueries)
-    }
-    if (type === 'name') {
-      const newQueries = deepCopy(queryParams);
-      newQueries[queryIndex].table = event.target.value.table
-      console.log("test", newQueries)
-      return setQueryParams(newQueries)
-    }
-    if (type === 'limit') {
-      const newQueries = deepCopy(queryParams);
-      newQueries[queryIndex].limit = event.target.value;
-      return setQueryParams(newQueries)
-    }
-  }
+  // const addQueryTable = (emptyTable) => {
+  //   setQueryTables(prev => [...prev, initialSchemaState])
+  //   setQueryParams(prev => [...prev, initialQueryState])
+  // }
 
-  const removeQuery = (tableIndex) => {
-    const newQueries = deepCopy(queryParams)
-    const newQueryTables = deepCopy(queryTables)
-    newQueries.splice(tableIndex, 1);
-    newQueryTables.splice(tableIndex, 1);
-    setQueryParams(newQueries); 
-    setQueryTables(newQueryTables);
-  }
+  // const handleQueryParams = (event, queryIndex, type) => {
+  //   console.log('qp', queryParams[0])
+  //   if (type === 'columns') {
+  //     const newQueries = deepCopy(queryParams);
+  //     newQueries[queryIndex].columns.push(event.target.value)
+  //     return setQueryParams(newQueries)
+  //   }
+  //   if (type === 'condition') {
+  //     const newQueries = deepCopy(queryParams);
+  //     newQueries[queryIndex].condition = event.target.value;
+  //     return setQueryParams(newQueries)
+  //   }
+  //   if (type === 'distinct') {
+  //     const newQueries = deepCopy(queryParams);
+  //     newQueries[queryIndex].distinct = event.target.value;
+  //     return setQueryParams(newQueries)
+  //   }
+  //   if (type === 'name') {
+  //     const newQueries = deepCopy(queryParams);
+  //     newQueries[queryIndex].table = event.target.value.table
+  //     console.log("test", newQueries)
+  //     return setQueryParams(newQueries)
+  //   }
+  //   if (type === 'limit') {
+  //     const newQueries = deepCopy(queryParams);
+  //     newQueries[queryIndex].limit = event.target.value;
+  //     return setQueryParams(newQueries)
+  //   }
+  // }
 
+  // const removeQuery = (tableIndex) => {
+  //   const newQueries = deepCopy(queryParams)
+  //   const newQueryTables = deepCopy(queryTables)
+  //   newQueries.splice(tableIndex, 1);
+  //   newQueryTables.splice(tableIndex, 1);
+  //   setQueryParams(newQueries);
+  //   setQueryTables(newQueryTables);
+  // }
+
+  let schemas = state.queryState[0].schemas
+  let queries = state.queryState[0].queries
   return (
     <main>
       <div id="container">
-        {queryTables.map((table, tableIndex) => {
+        {console.error(state.queryState[0])}
+        {schemas.map((table, tableIndex) => {
+          console.warn(queries[tableIndex])
           return (
             <div id="row-container">
               <form>
@@ -111,9 +116,9 @@ const CreateQueriesPage = () => {
                   removeField={removeField}
                   addField={addField}
                   tableNameList={tableNameList}
-                  removeQuery={removeQuery}
+                  removeQuery={removeQueryTable}
                   getColumnList={getColumnList}
-                  handleQuery={handleQueryParams}
+                  handleQuery={setQueryParams}
                 />
               </form>
               <div className="tables">
@@ -127,7 +132,7 @@ const CreateQueriesPage = () => {
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
-                  text={generateQuerySQL(queryParams[tableIndex])}
+                  text={generateQuerySQL(queries[tableIndex])}
                   theme={monokai}
                   wrapLines={true}
                   codeBlock
@@ -137,7 +142,7 @@ const CreateQueriesPage = () => {
           );
         })}
 
-        <Button id="add-table" primary="true" onClick={() => addQueryTable(initialSchemaState)}>
+        <Button id="add-table" primary="true" onClick={() => addQueryTable()}>
           Add Table
         </Button>
         <Button primary="true" onClick={() => saveSchemaProgress()}>

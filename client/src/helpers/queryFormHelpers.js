@@ -53,6 +53,7 @@ const generateLimit = limit => `LIMIT ${limit}`;
 // const generateOrder = (desc)
 
 export default function generateQuerySQL(query) {
+  console.warn('whatismyquery', query)
   return `${generateFirstLine(query.table, query.columns, query.distinct) || ""} 
   ${generateWhere(query.condition) || ""}
   ${generateLimit(query.limit) || ""}`

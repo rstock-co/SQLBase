@@ -1,4 +1,6 @@
-const initialQueryState = {
+import { initialSchemaState } from "./schemaState";
+
+export const initialQueries = {
   table: "",
   columns: [],
   whereCondition: "",
@@ -8,5 +10,12 @@ const initialQueryState = {
   orderDescending: false,
   aggregate: "", // one of 3 choices:  sum, avg, count
 };
+
+const initialQueryState = {
+  schemas: [initialSchemaState],
+  queries: [initialQueries],
+};
+
+
 
 export default initialQueryState;

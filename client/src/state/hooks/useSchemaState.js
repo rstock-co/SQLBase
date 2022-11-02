@@ -36,23 +36,6 @@ const useSchemaState = () => {
       fieldIndex,
     });
 
-  const getTableNames = () => {
-    const newState = deepCopy(state);
-    let output = [];
-    newState.schemaState.forEach(table => {
-      output.push({ value: table.table, label: table.table })
-    });
-    return output;
-  };
-
-  const getColumnList = table => {
-    let output = [];
-    table.fields.map(field => output.push({
-      label: field.fieldName,
-      value: field.fieldName,
-    }));
-    return output;
-  };
 
   /**
    * Database
@@ -98,8 +81,6 @@ const useSchemaState = () => {
     handleSchemaChange,
     saveSchemaProgress,
     loadSchemaProgress,
-    getTableNames,
-    getColumnList
   };
 };
 
