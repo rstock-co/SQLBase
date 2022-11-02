@@ -19,7 +19,6 @@ const QueriesForm = ({
   tableNameList,
   getColumnList,
   handleQuery,
-  groupByMenuOptions
 }) => {
   const {
     formState: { errors },
@@ -61,6 +60,50 @@ const QueriesForm = ({
                 handleQuery(e, tableIndex, 'distinct')
               }
             />
+            <FormInputDropdown
+              uniqueID={`aggregate-${fieldIndex}`}
+              name={"aggregate"}
+              control={control}
+              label={"Aggregate"}
+              menuOptions={[
+                { label: "Sum", value: 'SUM' },
+                { label: "Average", value: 'AVG' },
+                { label: "Count", value: 'COUNT' },
+                { label: "Max", value: 'MAX' },
+                { label: "Min", value: 'MIN' },
+              ]}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'aggregate')
+              }
+            />
+            {queries[tableIndex].aggregate && <FormInputText
+              uniqueID={`aggregateAs-${fieldIndex}`}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'aggregateAs')
+              }
+              name={"aggregateAs"}
+              control={control}
+              label={"As"}
+            />}
+            {queries[tableIndex].aggregate && <FormInputDropdown
+              uniqueID={`groupBy-${fieldIndex}`}
+              name={"groupBy"}
+              control={control}
+              label={"Group By"}
+              menuOptions={getColumnList(table)}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'groupBy')
+              }
+            />}
+            {queries[tableIndex].aggregate && <FormInputText
+              uniqueID={`having-${fieldIndex}`}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'having')
+              }
+              name={"having"}
+              control={control}
+              label={"Having Condition"}
+            />}
             <FormInputText
               uniqueID={`condition-${fieldIndex}`}
               handleChange={e =>
@@ -100,32 +143,6 @@ const QueriesForm = ({
               ]}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'order')
-              }
-            />}
-            <FormInputDropdown
-              uniqueID={`aggregate-${fieldIndex}`}
-              name={"aggregate"}
-              control={control}
-              label={"Aggregate"}
-              menuOptions={[
-                { label: "Sum", value: 'SUM' },
-                { label: "Average", value: 'AVG' },
-                { label: "Count", value: 'COUNT' },
-                { label: "Max", value: 'MAX' },
-                { label: "Min", value: 'MIN' },
-              ]}
-              handleChange={e =>
-                handleQuery(e, tableIndex, 'aggregate')
-              }
-            />
-            {queries[tableIndex].aggregate && <FormInputDropdown
-              uniqueID={`groupBy-${fieldIndex}`}
-              name={"groupBy"}
-              control={control}
-              label={"Group By"}
-              menuOptions={groupByMenuOptions}
-              handleChange={e =>
-                handleQuery(e, tableIndex, 'groupBy')
               }
             />}
             <Button

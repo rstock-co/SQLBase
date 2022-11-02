@@ -20,7 +20,6 @@ const CreateQueriesPage = () => {
     loadSchemaProgress,
     getTableNames,
     getColumnList,
-    createMenuOption
   } = useQueryState();
 
   console.log("QUERY PAGE STATE: ", state);
@@ -48,7 +47,6 @@ const CreateQueriesPage = () => {
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
                   queries={queries}
-                  groupByMenuOptions={createMenuOption(queries[tableIndex].columns)}
                 />
               </form>
               <div className="demo">

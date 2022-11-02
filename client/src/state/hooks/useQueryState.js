@@ -62,16 +62,6 @@ const useQueryState = () => {
   };
 
 
-  const createMenuOption = (array) => {
-    return array.map(item => {
-      return {
-        label: item,
-        value: item
-      }
-    })
-  }
-
-  
   /**
    * Database
    */
@@ -117,7 +107,6 @@ const useQueryState = () => {
     getColumnList,
     selectTableHandler,
     setQueryParams,
-    createMenuOption
   };
 };
 
