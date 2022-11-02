@@ -12,12 +12,13 @@ const generateSQL = tables => {
         id SERIAL PRIMARY KEY NOT NULL,
         `;
     table.fields.map(field => {
-      output += `${field.fieldName || ""} ${field.dataType || ""} ${generateReference(field.reference) || ""
-        } ${field.mod1 || ""} ${field.mod2 || ""} ${field.default ? "DEFAULT '" + field.default + "'" : ""
-        },\n        `;
+      output += `${field.fieldName || ""} ${field.dataType || ""} ${
+        generateReference(field.reference) || ""
+      } ${field.mod1 || ""} ${field.mod2 || ""} ${
+        field.default ? "DEFAULT '" + field.default + "'" : ""
+      },\n        `;
     });
     result.push(output.replace(/,\n {6} *$/, "\n);\n"));
-    console.log(result)
   });
   return result;
 };
