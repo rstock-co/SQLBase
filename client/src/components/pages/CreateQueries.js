@@ -6,34 +6,35 @@ import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
 import useQueryState from "../../state/hooks/useQueryState";
+import useDatabase from "../../state/hooks/useDatabase";
 
 const CreateQueriesPage = () => {
   const {
     state,
     addQueryTable,
     removeQueryTable,
-    addField,
-    removeField,
     selectTableHandler,
     setQueryParams,
-    saveSchemaProgress,
-    loadSchemaProgress,
     getTableNames,
-    getColumnList
+    getColumnList,
+    // addField,
+    // removeField,
   } = useQueryState();
+
+  const { saveProgress, loadProgress } = useDatabase();
 
   console.log("QUERY PAGE STATE: ", state);
 
   const tableNameList = getTableNames();
-  let schemas = state.queryState[0].schemas
-  let queries = state.queryState[0].queries
+  let schemas = state.queryState[0].schemas;
+  let queries = state.queryState[0].queries;
 
   return (
     <main>
       <div id="container">
         {console.error(state.queryState[0])}
         {schemas.map((table, tableIndex) => {
-          console.warn(queries[tableIndex])
+          console.warn(queries[tableIndex]);
           return (
             <div id="row-container">
               <form>
@@ -42,12 +43,12 @@ const CreateQueriesPage = () => {
                   table={table}
                   tableIndex={tableIndex}
                   handleChange={selectTableHandler}
-                  removeField={removeField}
-                  addField={addField}
                   tableNameList={tableNameList}
                   removeQuery={removeQueryTable}
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
+                  // removeField={removeField}
+                  // addField={addField}
                 />
               </form>
               <div className="tables">
@@ -74,10 +75,10 @@ const CreateQueriesPage = () => {
         <Button id="add-table" primary="true" onClick={() => addQueryTable()}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => saveSchemaProgress()}>
+        <Button primary="true" onClick={() => saveProgress()}>
           Save Progress
         </Button>
-        <Button primary="true" onClick={() => loadSchemaProgress()}>
+        <Button primary="true" onClick={() => loadProgress()}>
           Load Progress
         </Button>
       </div>
