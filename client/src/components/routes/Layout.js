@@ -18,6 +18,7 @@ const Layout = () => {
           </li>
           <li>
             <Link to="user-databases">My Databases</Link>
+            <Link to="seeds">Create Seeds</Link>
           </li>
         </ul>
       </nav>
