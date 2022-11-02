@@ -27,6 +27,33 @@ const uniqueArray = array => {
 const useSeedState = () => {
   const [state, dispatch] = useContext(GlobalContext);
 
+  // Form UI
+  // -------
+  // (0) there should be a 'load progress' button for user to load their schema
+  // (1) provide list of tables in state to the Seed Form for rendering
+  // (2) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
+  // (3) user will make selections and then click button 'Seed Data' at bottom of form
+
+  // Seed process
+  // ------------
+  // (0) determine a list of columns for each table
+  // (1) For each table, generate the selected amount of fake data points for each column
+  // (2) Save into seedState globally (need to determine data structure)
+  // (3) Render the tables on the screen (so user can verify no errors / make changes to schema)
+  // (4) user will finish seed process and then click "Generate Database" when done
+
+  // Database process
+  // ----------------
+  // (0) create the database
+  // (1) use the SQL schema language from App 1 (schemaState) to create tables
+  // (2) use the seed data from App 3 to seed tables
+  // (3) return the number of entries from each table to verify database is seeded properly
+
+  // Query DB
+  // --------
+  // Now, a link in the navbar should conditionally render "Execute queries"
+  // This is a new page where the user can run the queries from App 2 on their seeded database
+
   /**
    * USERS
    */

@@ -3,9 +3,13 @@ import { Button } from "@mui/material";
 import QueriesForm from "../forms/QueriesForm";
 import "../forms/SchemaForm.scss";
 import useSeedState from "../../state/hooks/useSeedState";
+import useDatabase from "../../state/hooks/useDatabase";
+import useGlobalState from "../../state/hooks/useGlobalState";
 
 const CreateSeedsPage = () => {
-  const { fakeProductName, fakeCompany, fakeProductDesc } = useSeedState();
+  const { productName, companyName, productDesc } = useSeedState();
+  const { getTableNames, getColumnList } = useGlobalState();
+  const { saveProgress, loadProgress } = useDatabase();
   const h1style = {
     marginLeft: "50px",
   };
@@ -14,24 +18,34 @@ const CreateSeedsPage = () => {
     marginLeft: "75px",
   };
 
-  const product = fakeProductName();
+  const product = productName();
+  const tableNameList = getTableNames();
 
   return (
     <>
-      <div style={h1style}>
+      {/* <div style={h1style}>
         <h1>Fake Company Generation</h1>
-      </div>
+      </div> */}
       <div style={style}>
-        <p>
-          <b>Company Name:</b> {fakeCompany(10)}
+        {/* <p>
+          <b>Company Name:</b> {companyName(10)}
         </p>
         <p>
           <b>Product Name:</b> {product}
         </p>
         <p>
-          <b>Product Desc:</b> {fakeProductDesc(product, 2)}
+          <b>Product Desc:</b> {productDesc(product, 2)}
+        </p> */}
+        <p>
+          <b>Tables:</b> {JSON.stringify(tableNameList)}
         </p>
       </div>
+      <Button primary="true" onClick={() => saveProgress()}>
+        Save Progress
+      </Button>
+      <Button primary="true" onClick={() => loadProgress()}>
+        Load Progress
+      </Button>
     </>
     /* // <main>
     //   <div id="container">

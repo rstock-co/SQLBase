@@ -28,7 +28,10 @@ const useDatabase = () => {
     return axios
       .get(`/api/tables`) // add ${id} to route if we have multiple users
       .then(data => {
-        console.log("Loading log: ", JSON.parse(data.data[0]["global_state"]));
+        console.log(
+          "Data Loaded from DB: ",
+          JSON.parse(data.data[0]["global_state"])
+        );
         const globalStateString = JSON.parse(data.data[0]["global_state"]);
         loadData(globalStateString);
       })
