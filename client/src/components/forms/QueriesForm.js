@@ -79,7 +79,7 @@ const QueriesForm = ({
             {queries[tableIndex].aggregate && <FormInputText
               uniqueID={`aggregateAs-${fieldIndex}`}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'aggregateAs')
+                handleQuery(e, tableIndex, 'aggregateAs', fieldIndex)
               }
               name={"aggregateAs"}
               control={control}

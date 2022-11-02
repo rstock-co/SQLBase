@@ -36,9 +36,9 @@ const useQueryState = () => {
   }
 
 
-  const setQueryParams = (e, queryIndex, queryType) => {
+  const setQueryParams = (e, queryIndex, queryType, fieldIndex) => {
     const queryName = e.target.value;
-    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType })
+    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType, fieldIndex })
   }
 
 

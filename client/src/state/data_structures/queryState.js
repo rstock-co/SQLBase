@@ -8,6 +8,7 @@ export const initialQueries = {
   limit: 1000,
   aggregate: [], // one of 3 choices:  sum, avg, count
   aggregateAs: [],
+  having: [],
 };
 
 const initialQueryState = {

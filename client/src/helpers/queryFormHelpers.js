@@ -9,19 +9,25 @@
 // (3) display x number of "select columns" drop down boxes in one row
 // (4)
 
-const generateColumns = (aggregate, aggregateAs, columns) => {
-  console.log('aggregateAs', aggregateAs)
+const generateColumns = (aggregate, aggregateAs, columns, having) => {
   let columnString = '';
+  let havingString = `${having ? "HAVING " : ""}`;
   if (columns.length > 0) {
-    columns.forEach(col => (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col} ${aggregateAs[columns.indexOf(col)] ? 'AS ' + aggregateAs[columns.indexOf(col)] : ''}`));
+    columns.forEach(col => {
+      (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col} ${aggregateAs[columns.indexOf(col)] ? 'AS ' + aggregateAs[columns.indexOf(col)] + ", " : ''}`);
+      having ? havingString += `${aggregate[columns.indexOf(col)]}(${col}) ${having}` : havingString = ""
+    })
   } else {
     columnString += "*"
   }
-  return columnString
+  return {
+    columnString,
+    havingString 
+  }
 }
 
-const generateFirstLine = (table, columns, distinct = false, aggregate, aggregateAs) => {
-  return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns)} FROM ${table}`
+const generateFirstLine = (table, columns, distinct = false, aggregate, aggregateAs, having) => {
+  return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns, having).columnString} FROM ${table}`
 };
 
 const generateWhere = condition => {
@@ -36,20 +42,12 @@ const generateOrder = (orderBy, order) => {
   return orderBy ? `ORDER BY ${orderBy} ${order || ""}` : "";
 }
 
-const generateGroupBy = (aggregate, groupBy) => {
-  return aggregate ? `GROUP BY ${groupBy ? groupBy : ""}` : '';
+const generateGroupBy = (groupBy) => {
+  return groupBy ? `GROUP BY ${groupBy ? groupBy : ""}` : '';
 }
 
-const generateHaving = (aggregate, having) => {
-  return aggregate ? `HAVING ${having ? having : ""}` : "";
-}
 
 export default function generateQuerySQL(query) {
-  return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs)} 
-  ${generateWhere(query.condition)}
-  ${generateGroupBy(query.aggregate, query.groupBy)}
-  ${generateHaving(query.aggregate, query.having)}
-  ${generateOrder(query.orderBy, query.order)}
-  ${generateLimit(query.limit)}`
+  return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.condition ?'\n' + generateWhere(query.condition) : ""} ${query.groupBy ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""}`
 };
 

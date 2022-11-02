@@ -199,7 +199,18 @@ const globalReducer = (state, action) => {
         }
       }
       if (action.queryType === "aggregateAs") {
-        queries[action.queryIndex].aggregateAs.push(action.queryName)
+        queries[action.queryIndex].aggregateAs[action.fieldIndex] = (action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "having") {
+        queries[action.queryIndex].having[action.fieldIndex] = (action.queryName)
         queryState = [{
           ...queryState,
           queries,
