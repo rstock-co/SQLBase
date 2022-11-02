@@ -16,6 +16,9 @@ const Layout = () => {
           <li>
             <Link to="queries">Create Queries</Link>
           </li>
+          <li>
+            <Link to="seeds">Create Seeds</Link>
+          </li>
         </ul>
       </nav>
       <Outlet />
