@@ -31,7 +31,7 @@ const EditableField = (props) => {
         <TextField
           autoFocus
           value={databaseName}
-          onChange={e => props.handleChange(e, "databaseName", props.state)}
+          onChange={e => props.handleChange(e, "databaseName")}
           onBlur={e => handleEditableField(false)} />
         // <FormInputText
         // // autoFocus

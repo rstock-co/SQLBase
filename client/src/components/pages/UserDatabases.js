@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Button, Box, Container, Paper } from '@mui/material'
+import { Button, Box, Container, Paper, Typography } from '@mui/material'
 import useDatabase from '../../state/hooks/useDatabase';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
@@ -16,8 +16,7 @@ const UserDatabases = () => {
     removeSchemaField,
     handleSchemaChange,
   } = useSchemaState()
-  // const [isNameFocused, setIsNamedFocused] = useState(false);
-  // const handleEditableField = (focused) => setIsNamedFocused(focused);
+
   const { saveProgress, loadProgress, loadDatabase, createDatabase, getDatabases } = useDatabase();
   const [list, setList] = useState([]);
   const navigate = useNavigate()
@@ -51,7 +50,10 @@ const UserDatabases = () => {
             return (
               <Box sx={{ margin: 4 }}>
                 <Paper>
-                  <EditableField handleChange={handleSchemaChange} state={JSON.parse(data.global_state)} />
+                  <Typography>
+
+                    {JSON.parse(data.global_state).databaseName}
+                  </Typography>
 
                   <Button onClick={() => { loadHandler(listIndex) }}>
                     Load Database

@@ -79,7 +79,7 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
-      <EditableField focused={isNameFocused} handleChange={handleSchemaChange} focus={handleEditableField} state={state.databaseName} />
+      <EditableField focused={isNameFocused} handleChange={handleSchemaChange} focus={handleEditableField} state={state} />
       <div id="container">
         {isOpen.modal && (
           <ERDModal
