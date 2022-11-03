@@ -107,7 +107,7 @@ const SchemaForm = ({
               menuOptions={[
                 { label: "None", value: "" },
                 { label: "INT", value: "INT" },
-                { label: "TEXT", value: "TEXT" },
+                { label: "VARCHAR", value: "VARCHAR" },
                 { label: "BOOLEAN", value: "BOOLEAN" },
                 { label: "DATE", value: "DATE" },
               ]}
@@ -115,6 +115,16 @@ const SchemaForm = ({
                 handleChange(e, "dataType", tableIndex, fieldIndex)
               }
             />
+            {field.dataType === "VARCHAR" && <FormInputText
+              uniqueID={`varcharSize-${fieldIndex}`}
+              handleChange={e =>
+                handleChange(e, "varcharSize", tableIndex, fieldIndex)
+              }
+              name={"varcharSize"}
+              value={field.varcharSize}
+              control={control}
+              label={"size"}
+            />}
             <FormInputDropdown
               uniqueID={`Mod1-${fieldIndex}`}
               name={"mod1"}

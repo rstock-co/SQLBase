@@ -1,8 +1,8 @@
+import { deepCopy } from "../../helpers/schemaFormHelpers";
 import {
   schemaTableFields,
   initialSchemaState,
 } from "../data_structures/schemaState";
-import { deepCopy } from "../../helpers/schemaFormHelpers";
 import { initialQueries } from "../data_structures/queryState";
 
 // database
@@ -22,6 +22,7 @@ export const INSERT_QUERY_TABLE = "INSERT_QUERY_TABLE";
 export const SET_QUERY_PARAMS = "SET_QUERY_PARAMS";
 
 // seed
+export const SEED_FAKE_DATA = "SEED_FAKE_DATA";
 
 /**
  * The reducer function from the 'useReducer' hook, specifies the actions (functions to execute) to update the state object
@@ -107,7 +108,7 @@ const globalReducer = (state, action) => {
       };
     },
 
-    //------------------------------------------- QUERY REDUCERS
+    //--------------------------------------- QUERY REDUCERS
     QUERY_ADD_TABLE: state => {
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
@@ -172,14 +173,12 @@ const globalReducer = (state, action) => {
           schemas,
         },
       ];
-      // queryState = [queryState]
       return {
         ...newState,
         queryState,
       };
     },
     SET_QUERY_PARAMS: state => {
-      //state(obj)--> queryState(arr)--> queries(arr) ||schemas(arr)
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
       let queries = queryState.queries;
@@ -191,8 +190,6 @@ const globalReducer = (state, action) => {
             queries,
           },
         ];
-        // queryState = [queryState]
-        // console.warn(queryState)
         return {
           ...newState,
           queryState,
@@ -211,7 +208,80 @@ const globalReducer = (state, action) => {
           queryState,
         };
       }
-
+      if (action.queryType === "aggregate") {
+        queries[action.queryIndex].aggregate[action.fieldIndex] =
+          action.queryName;
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
+      if (action.queryType === "aggregateAs") {
+        queries[action.queryIndex].aggregateAs[action.fieldIndex] =
+          action.queryName;
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
+      if (action.queryType === "having") {
+        queries[action.queryIndex].having[action.fieldIndex] = action.queryName;
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
+      if (action.queryType === "whereCondition") {
+        queries[action.queryIndex].whereCondition[action.fieldIndex] =
+          action.queryName;
+        console.log(
+          "bug fix",
+          queries[action.queryIndex].whereCondition[action.fieldIndex]
+        );
+        console.log("bug fix 2", action.fieldIndex);
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
+      if (action.queryType === "groupBy") {
+        queries[action.queryIndex].groupBy[action.fieldIndex] =
+          action.queryName;
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
       queries[action.queryIndex][action.queryType] = action.queryName;
       queryState = [
         {
@@ -222,6 +292,15 @@ const globalReducer = (state, action) => {
       return {
         ...newState,
         queryState,
+      };
+    },
+    //--------------------------------------- SEED REDUCERS
+    SEED_FAKE_DATA: state => {
+      const newState = deepCopy(state);
+      const seedState = action.seedState;
+      return {
+        ...newState,
+        seedState,
       };
     },
   };

@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalStateProvider";
-import { deepCopy } from "../../helpers/schemaFormHelpers";
 
 import {
   QUERY_ADD_TABLE,
@@ -11,30 +10,6 @@ import {
 
 const useQueryState = () => {
   const [state, dispatch] = useContext(GlobalContext);
-
-  const getTableNames = () => {
-    const newState = deepCopy(state);
-    let output = [];
-    newState.schemaState.forEach(table => {
-      output.push({ value: table.table, label: table.table });
-    });
-    return output;
-  };
-
-  const getColumnList = table => {
-    let output = [];
-    table.fields.map(field =>
-      output.push({
-        label: field.fieldName,
-        value: field.fieldName,
-      })
-    );
-    return output;
-  };
-
-  /**
-   * DISPATCH functions
-   */
 
   const addQueryTable = () => {
     console.log("Add Table function triggered");
@@ -59,15 +34,13 @@ const useQueryState = () => {
     );
   };
 
-  const setQueryParams = (e, queryIndex, queryType) => {
-    const queryName = e.target.value;
-    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType });
+  const setQueryParams = (event, queryIndex, queryType, fieldIndex) => {
+    const queryName = event.target.value;
+    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType, fieldIndex });
   };
 
   return {
     state,
-    getTableNames,
-    getColumnList,
     addQueryTable,
     removeQueryTable,
     selectTableHandler,

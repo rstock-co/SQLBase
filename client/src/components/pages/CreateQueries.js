@@ -7,6 +7,7 @@ import "../forms/SchemaForm.scss";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
 import useQueryState from "../../state/hooks/useQueryState";
 import useDatabase from "../../state/hooks/useDatabase";
+import useGlobalState from "../../state/hooks/useGlobalState";
 
 const CreateQueriesPage = () => {
   const {
@@ -15,12 +16,11 @@ const CreateQueriesPage = () => {
     removeQueryTable,
     selectTableHandler,
     setQueryParams,
-    getTableNames,
-    getColumnList,
-    // addField,
-    // removeField,
   } = useQueryState();
 
+  console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
+
+  const { getTableNames, getColumnList } = useGlobalState();
   const { saveProgress, loadProgress } = useDatabase();
 
   console.log("QUERY PAGE STATE: ", state);
@@ -32,9 +32,7 @@ const CreateQueriesPage = () => {
   return (
     <main>
       <div id="container">
-        {console.error(state.queryState[0])}
         {schemas.map((table, tableIndex) => {
-          console.warn(queries[tableIndex]);
           return (
             <div id="row-container">
               <form>
@@ -47,22 +45,14 @@ const CreateQueriesPage = () => {
                   removeQuery={removeQueryTable}
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
-                  // removeField={removeField}
-                  // addField={addField}
+                  queries={queries}
                 />
               </form>
-              <div className="tables">
-                {/* <SchemaTable
-                  key={`table-${tableIndex}`}
-                  table={table.table}
-                  fields={table.fields}
-                /> */}
-              </div>
               <div className="demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
-                  text={generateQuerySQL(queries[tableIndex])}
+                  text={generateQuerySQL(queries)[tableIndex]}
                   theme={monokai}
                   wrapLines={true}
                   codeBlock

@@ -1,6 +1,6 @@
 import { initialSchemaState } from "./schemaState";
-import initialQueryState from "./queryState";
-import initialSeedState from "./seedState";
+import { initialQueryState } from "./queryState";
+import { initialSeedState } from "./seedState";
 
 export const initialGlobalState = {
   databaseName: 'database Name',
@@ -8,4 +8,3 @@ export const initialGlobalState = {
   queryState: [initialQueryState],
   seedState: [initialSeedState],
 };
-

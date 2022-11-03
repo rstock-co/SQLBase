@@ -9,28 +9,72 @@
 // (3) display x number of "select columns" drop down boxes in one row
 // (4)
 
-
-const generateFirstLine = (table, columns, distinct = false) => {
-  let columnString = "";
+const generateColumns = (aggregate, aggregateAs, columns, having) => {
+  let columnString = '';
+  let havingString = 'HAVING ';
   if (columns.length > 0) {
-    columns.forEach(col => (columnString += `${col}, `));
-    columnString = columnString.slice(0, -2);
+    columns.forEach(col => {
+      (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] + ", " : ', '}`);
+      
+      (havingString += `${having.length > 0 ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having : ""}`); 
+    })
   } else {
     columnString += "*"
   }
-  return distinct
-    ? `SELECT DISTINCT ${columnString} FROM ${table}`
-    : `SELECT ${columnString} FROM ${table}`;
+  return {
+    columnString,
+    havingString 
+  }
+}
+
+const generateFirstLine = (table, columns, distinct = false, aggregate, aggregateAs, having) => {
+  return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns, having).columnString} FROM ${table}`
 };
 
-const generateWhere = condition => `WHERE ${condition}`;
-const generateLimit = limit => `LIMIT ${limit}`;
+const generateWhere = (condition) => {
+  let whereString = 'WHERE ';
+  if (condition.length < 2) {
+    whereString += `${condition[0]}`
+  } else {
+    condition.forEach(con => {
+      if (condition.indexOf(con) !== condition.length - 1) {
+        whereString += `${con ? con + ' AND ' : ""}`
+      } else {
+        whereString += `${con}`
+      }
+    })
+  }
+  return whereString
+}
+  
+const generateLimit = limit => {
+  return (limit === 1000) ? "" : `LIMIT ${limit}`;
+}
+
+const generateOrder = (orderBy, order) => {
+  return orderBy ? `ORDER BY ${orderBy} ${order || ""}` : "";
+}
+
+const generateGroupBy = (groupBy) => {
+  let groupByString = 'GROUP BY ';
+  if (groupBy.length < 2) {
+    groupByString += `${groupBy[0]}`
+  } else {
+    groupBy.forEach(con => {
+      if (groupBy.indexOf(con) !== groupBy.length - 1) {
+        groupByString += `${con}, `
+      } else {
+        groupByString += `${con}`
+      }
+    })
+  }
+  return groupByString
+}
 
 
-export default function generateQuerySQL(query) {
-  console.warn('whatismyquery', query)
-  return `${generateFirstLine(query.table, query.columns, query.distinct) || ""} 
-  ${generateWhere(query.condition) || ""}
-  ${generateLimit(query.limit) || ""}`
+export default function generateQuerySQL(queries) {
+  return queries.map(query => {
+    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition.length > 0 ?'\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy.length > 0 ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
+  })
 };
-
+  

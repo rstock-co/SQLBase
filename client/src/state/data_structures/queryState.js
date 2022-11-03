@@ -3,19 +3,16 @@ import { initialSchemaState } from "./schemaState";
 export const initialQueries = {
   table: "",
   columns: [],
-  whereCondition: "",
+  whereCondition: [],
   distinct: false,
   limit: 1000,
-  orderAscending: false,
-  orderDescending: false,
-  aggregate: "", // one of 3 choices:  sum, avg, count
+  aggregate: [],
+  aggregateAs: [],
+  having: [],
+  groupBy: [],
 };
 
-const initialQueryState = {
+export const initialQueryState = {
   schemas: [initialSchemaState],
   queries: [initialQueries],
 };
-
-
-
-export default initialQueryState;
