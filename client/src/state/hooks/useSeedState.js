@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalStateProvider";
 import { numRowsDropdown } from "../data_structures/seedState";
+
 import {
-  rand,
   randNumber,
   randFloat,
   randUser,
@@ -15,14 +15,11 @@ import {
   randBrand,
   randFullName,
   randProduct,
-  randProductName,
   randProductDescription,
   randProductCategory,
 } from "@ngneat/falso";
 
-// import {
-//   SCHEMA_ADD_TABLE,
-// } from "../reducers/globalReducer";
+import { SEED_FAKE_DATA } from "../reducers/globalReducer";
 
 // helper functions (can move later)
 
@@ -34,38 +31,42 @@ const uniqueArray = array => {
 const useSeedState = () => {
   const [state, dispatch] = useContext(GlobalContext);
 
-  console.log("dropdown: ", numRowsDropdown);
+  // console.log("dropdown: ", numRowsDropdown);
 
-  // Form UI
-  // -------
-  // (DONE) there should be a 'load progress' button for user to load their schema
-  // (DONE) provide list of tables in state to the Seed Form for rendering
-  // (DONE) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
-  // (Lawrence?) build SeedForm in UI
-  // (4) user will make selections and then click button 'Seed Data' at bottom of form
-  // (5) build a click handler function for the 'Seed Data' button which will execute seed process
+  /** Form UI
+    -------
+      (✓) there should be a 'load progress' button for user to load their schema
+      (✓) provide list of tables in state to the Seed Form for rendering
+      (✓) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
+      (Lawrence?) build SeedForm in UI
+      (user) user will make selections and then click button 'Seed Data' at bottom of form
+      (✘ ) build a click handler function for the 'Seed Data' button which will execute seed proces
 
-  // Seed process
-  // ------------
-  // (DONE) determine a list of columns for each table (as ARRAY of strings)
-  // (1) For each table, generate the selected amount of fake data points for each column
-  //    (a) build a set of helper functions which take in (colName, numDataPoints)
-  //        and return an array of objects (1 per table) containing the seed data
-  // (2) Save the seed data into seedState globally (need to determine data structure)
-  // (3) Render the seeded data as tables on the screen (so user can verify no errors / make changes to schema)
-  // (4) user will finish seed process and then click "Generate Database" when done
+    Seed process
+    ------------
+      (✓) determine a list of columns for each table (as ARRAY of strings)
+      (✓) For each table, generate the selected amount of fake data points for each column.
+             Build a set of helper functions which take in (colName, numDataPoints)
+             and return an array of objects (1 per table) containing the seed data
 
-  // Database process
-  // ----------------
-  // (0) create the database
-  // (1) use the SQL schema language from App 1 (schemaState) to create tables
-  // (2) use the seed data from App 3 to seed tables
-  // (3) return the number of entries from each table to verify database is seeded properly
+    ------------------------ | REMAINING TASKS | ----------------------------------
+      (✘ ) Save the seed data into seedState globally (need to determine data structure)
+      (✘ ) Render the seeded data as tables on the screen (so user can verify no errors / make changes to schema)
+      (✘ ) user will finish seed process and then click "Generate Database" when done
 
-  // Query DB
-  // --------
-  // Now, a link in the navbar should conditionally render "Execute queries"
-  // This is a new page where the user can run the queries from App 2 on their seeded database
+    Database process
+    ----------------
+      (✘ ) create the database
+      (✘ ) use the SQL schema language from App 1 (schemaState) to create tables
+      (✘ ) use the seed data from App 3 to seed tables
+      (✘ ) return the number of entries from each table to verify database is seeded properly
+
+    Execute Queries
+    ---------------
+      (✘ ) conditionally render a link to a new page "Execute queries". This is a new page
+           where the user can run the queries from App 2 on their seeded database
+      (✘ )
+*/
 
   /**
    * FAKE DATA HELPER FUNCTIONS: goals are (1) generate DB seed string to seed database, (2) store in global state?
@@ -110,7 +111,7 @@ const useSeedState = () => {
     return companies;
   };
 
-  console.log("Companies: ", companySeed(15));
+  // console.log("Companies: ", companySeed(15));
 
   /**
    * EMPLOYEES
@@ -165,7 +166,7 @@ const useSeedState = () => {
     return employees;
   };
 
-  console.log("Employees: ", employeeSeed(15));
+  // console.log("Employees: ", employeeSeed(15));
 
   /**
    * PRODUCTS (name, description, price, status, level (subscription plan), product_line, ...[look at falso library])
@@ -179,7 +180,7 @@ const useSeedState = () => {
       let rating = product.rating.rate;
       let rating_count = product.rating.count;
       let retail = Math.round(randNumber({ min: 20, max: 1000 }) / 5) * 5;
-      let cost = randFloat({ min: 20, max: retail - 19, fraction: 2 });
+      let cost = randFloat({ min: 5, max: retail - retail * 0.1, fraction: 2 });
       let profit_margin = ((retail - cost) / cost) * 100;
 
       ["id", "rating"].forEach(i => delete product[i]);
@@ -200,13 +201,27 @@ const useSeedState = () => {
     return products;
   };
 
-  console.log("Products: ", productSeed(15));
+  // console.log("Products: ", productSeed(15));
+
+  const generateSeedState = seedFormData => {
+    const tableToSeedFn = {
+      companies: companySeed,
+      employees: employeeSeed,
+      products: productSeed,
+    };
+    const seedState = {};
+    seedFormData.forEach(table => {
+      seedState[table[0]] = tableToSeedFn[table[0]](table[1]);
+    });
+    dispatch({ type: SEED_FAKE_DATA, seedState });
+  };
 
   return {
     state,
     companySeed,
     employeeSeed,
     productSeed,
+    generateSeedState,
   };
 };
 

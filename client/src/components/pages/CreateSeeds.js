@@ -5,10 +5,14 @@ import "../forms/SchemaForm.scss";
 import useSeedState from "../../state/hooks/useSeedState";
 import useDatabase from "../../state/hooks/useDatabase";
 import useGlobalState from "../../state/hooks/useGlobalState";
-import { numRowsDropdown } from "../../state/data_structures/seedState";
+import {
+  numRowsDropdown,
+  seedFormData,
+} from "../../state/data_structures/seedState"; // delete seedFormData once form is built
 
 const CreateSeedsPage = () => {
-  const { state, employeeSeed, companySeed, productSeed } = useSeedState();
+  const { state, employeeSeed, companySeed, productSeed, generateSeedState } =
+    useSeedState();
   const { getTableNames, getColumnList } = useGlobalState();
   const { saveProgress, loadProgress } = useDatabase();
 
@@ -64,6 +68,9 @@ const CreateSeedsPage = () => {
           <b>Random Product:</b> {JSON.stringify(productSeed(1))}
         </p>
       </div>
+      <Button primary="true" onClick={() => generateSeedState(seedFormData)}>
+        Seed into State
+      </Button>
       <Button primary="true" onClick={() => saveProgress()}>
         Save Progress
       </Button>
