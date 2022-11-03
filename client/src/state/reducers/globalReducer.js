@@ -84,7 +84,6 @@ const globalReducer = (state, action) => {
         newState.databaseName = action.event.target.value;
         return {
           ...newState,
-          newState
         };
       }
       if (action.fieldType === "tableName") {

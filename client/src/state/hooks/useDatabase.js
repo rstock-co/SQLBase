@@ -20,9 +20,10 @@ const useDatabase = () => {
   const saveProgress = () => {
     const globalStateString = JSON.stringify(state);
     const databaseName = state.databaseName;
+    const databaseUuid = state.databaseUuid
     const userID = 1;
     return axios
-      .put(`/api/tables`, { userID, databaseName, globalStateString }) // add ${id} to route if we have multiple users
+      .post(`/api/tables`, { userID, databaseName, globalStateString, databaseUuid }) // add ${id} to route if we have multiple users
       .then(data => console.log("Save successful: ", data));
   };
 
@@ -41,6 +42,7 @@ const useDatabase = () => {
         console.log("Error loading: ", err);
       });
   };
+
   const loadDatabase = (databaseID) => {
     console.log(databaseID)
 
@@ -60,19 +62,22 @@ const useDatabase = () => {
 
   // get current user
 
-  const createDatabase = () => {
+  // creates new pgsql database, and blank tables
+  const createDatabase = async () => {
     const globalStateString = state;
+
     const userID = 1;
     console.log(globalStateString)
-    return axios
-      .put(`/api/databases`, { globalStateString })
-      .then(data => {
-        console.log('post createDB', data)
-      })
-      .catch(err => {
-        console.log("Error Creating DB", err)
-      })
-  }
+    return axios.all([
+      await axios.put(`/api/databases`, { globalStateString }),
+      // creates tables
+      await axios.put(`/api/virtualDatabases`, { globalStateString, userID })
+    ])
+      .then(axios.spread((createDBData, createTableData) => {
+        console.log('put createDB', createDBData)
+        console.log('put createTable', createTableData)
+      }))
+  };
 
 
   const getDatabases = () => {
@@ -87,6 +92,9 @@ const useDatabase = () => {
         console.log("Error loading: ", err);
       });
   }
+
+
+
 
 
 
