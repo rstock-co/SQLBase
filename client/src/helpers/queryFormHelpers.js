@@ -11,12 +11,12 @@
 
 const generateColumns = (aggregate, aggregateAs, columns, having) => {
   let columnString = '';
-  let havingString = '';
+  let havingString = 'HAVING ';
   if (columns.length > 0) {
     columns.forEach(col => {
       (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] + ", " : ', '}`);
       
-      (havingString += `${having.length > 0 ? "HAVING " + aggregate[columns.indexOf(col)] + '(' + col + ')' + having : ""}`); 
+      (havingString += `${having.length > 0 ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having : ""}`); 
     })
   } else {
     columnString += "*"
@@ -31,8 +31,20 @@ const generateFirstLine = (table, columns, distinct = false, aggregate, aggregat
   return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns, having).columnString} FROM ${table}`
 };
 
-const generateWhere = condition => {
-  return condition ? `WHERE ${condition}` : "";
+const generateWhere = (condition) => {
+  let whereString = 'WHERE ';
+  if (condition.length < 2) {
+    whereString += `${condition[0]}`
+  } else {
+    condition.forEach(con => {
+      if (condition.indexOf(con) !== condition.length - 1) {
+        whereString += `${con} AND `
+      } else {
+        whereString += `${con}`
+      }
+    })
+  }
+  return whereString
 }
   
 const generateLimit = limit => {
@@ -44,7 +56,19 @@ const generateOrder = (orderBy, order) => {
 }
 
 const generateGroupBy = (groupBy) => {
-  return groupBy ? `GROUP BY ${groupBy ? groupBy : ""}` : '';
+  let groupByString = 'GROUP BY ';
+  if (groupBy.length < 2) {
+    groupByString += `${groupBy[0]}`
+  } else {
+    groupBy.forEach(con => {
+      if (groupBy.indexOf(con) !== groupBy.length - 1) {
+        groupByString += `${con}, `
+      } else {
+        groupByString += `${con}`
+      }
+    })
+  }
+  return groupByString
 }
 
 
