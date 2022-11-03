@@ -12,9 +12,9 @@ const debug = require("debug")("express:server");
  */
 
 const db = require("./db");
-const virtualDatabase = require("./db");
+const virtualDB = require("./helpers/clientHelpers")
 const dbHelpers = require("./helpers/dbHelpers")(db);
-const dbSeedQueryHelpers = require("./helpers/virtualDBHelpers")(db)
+const dbSeedQueryHelpers = require("./helpers/virtualDBHelpers")(virtualDB)
 
 /**
  * Middleware setup
