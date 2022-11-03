@@ -23,8 +23,7 @@ module.exports = ({ createDB, queryDBParams, queryDB }) => {
     // //   port: 5432
     // // })
 
-    const dbName = `_DBNAME`
-
+    const dbName = originalDBName
     createDB(dbName)
       .then(data => {
         res.json(data);
@@ -46,6 +45,7 @@ module.exports = ({ createDB, queryDBParams, queryDB }) => {
         res.status(500).json({ error: err.message });
       });
   });
+
 
   return router;
 }

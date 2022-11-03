@@ -20,13 +20,14 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const createDB = (dbname) => {
+  const createDB = (dbName) => {
     // await db.connect()
-    db.query(`DROP DATABASE IF EXISTS ${dbname};`)
-    return db.query(`CREATE DATABASE ${dbname};`)
+    db.query(`DROP DATABASE IF EXISTS ${dbName};`)
+    return db.query(`CREATE DATABASE ${dbName};`)
       .then(result => console.log(result))
       .catch(err => err)
   };
+
 
 
   // Boilerplate examples below (not currently used)

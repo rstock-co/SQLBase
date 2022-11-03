@@ -26,6 +26,7 @@ const CreateSchemaPage = () => {
     removeSchemaField,
     handleSchemaChange,
   } = useSchemaState();
+  console.log(state.databaseUuid)
 
   const { saveProgress, loadProgress, createDatabase } = useDatabase();
   const [isNameFocused, setIsNamedFocused] = useState(false);

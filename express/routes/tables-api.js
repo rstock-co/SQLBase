@@ -16,6 +16,22 @@ module.exports = ({ queryDBParams, queryDB }) => {
         res.status(500).json({ error: err.message });
       });
   });
+  router.post("/", (req, res) => {
+    const { userID, databaseName, globalStateString, databaseUuid } = req.body
+    queryDBParams(
+      `INSERT INTO databases (user_id, name,  global_state, database_uuid) VALUES ($1,$2,$3,$4) 
+        ON CONFLICT (database_uuid)
+        DO UPDATE SET global_state = ($3)      
+        RETURNING *;`,
+      [userID, databaseName, globalStateString, databaseUuid]
+    )
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  });
 
   router.get("/", (req, res) => {
     const { databaseID } = req.query

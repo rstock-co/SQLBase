@@ -12,7 +12,9 @@ const debug = require("debug")("express:server");
  */
 
 const db = require("./db");
+const virtualDatabase = require("./db");
 const dbHelpers = require("./helpers/dbHelpers")(db);
+const dbSeedQueryHelpers = require("./helpers/virtualDBHelpers")(db)
 
 /**
  * Middleware setup
@@ -33,6 +35,7 @@ app.use(cookieParser());
 // API Routes
 const tableApiRoutes = require("./routes/tables-api");
 const userDatabaseApiRoutes = require("./routes/user-database-api");
+const virtualDatabaseApiRoutes = require("./routes/virtual-database-api");
 
 // Render Routes
 // const dishesRoutes = require("./routes/dishes");
@@ -48,6 +51,7 @@ const userDatabaseApiRoutes = require("./routes/user-database-api");
 
 // API Routes
 app.use("/api/databases", userDatabaseApiRoutes(dbHelpers));
+app.use("/api/virtualDatabases", virtualDatabaseApiRoutes(dbSeedQueryHelpers))
 app.use("/api/tables", tableApiRoutes(dbHelpers));
 
 // app.use("/api/dishes", dishesApiRoutes);
