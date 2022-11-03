@@ -56,7 +56,8 @@ const CreateSchemaPage = () => {
         loadProgress();
         break;
       case "createDB":
-        createDatabase();
+        let allStrings = generateSQL(state.schemaState);
+        createDatabase(allStrings.join(""));
         break;
       case "addTable":
         setIsOpen({ addTable: true, message: "Table Added" });

@@ -7,8 +7,9 @@ module.exports = client => {
 
 
   // create table
-  const createTable = async (databaseName, userID) => {
+  const createTable = async (databaseName, userID, schemaString) => {
     console.log('databaseName in create table', databaseName)
+    console.log('creating tables with:', schemaString)
 
     const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${databaseName}?sslmode=disable`;
     // create new client
@@ -21,9 +22,13 @@ module.exports = client => {
     newClient.connect();
     console.log(`12Connected to ${databaseName} on ${process.env.DB_HOST}`);
 
-    await newClient.query("CREATE TABLE test_table (id serial PRIMARY KEY NOT NULL, name VARCHAR(50) NOT NULL);")
+
+
+    await newClient.query(schemaString)
       .then(result => console.log('createdTB', result))
       .catch(err => err.message)
+
+    newClient.end();
 
     // return await newClient.end()
     //   .then(result => console.log(result))

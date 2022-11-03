@@ -63,7 +63,7 @@ const useDatabase = () => {
   // get current user
 
   // creates new pgsql database, and blank tables
-  const createDatabase = async () => {
+  const createDatabase = async (schemaString) => {
     const globalStateString = state;
 
     const userID = 1;
@@ -71,7 +71,7 @@ const useDatabase = () => {
     return axios.all([
       await axios.put(`/api/databases`, { globalStateString }),
       // creates tables
-      await axios.put(`/api/virtualDatabases`, { globalStateString, userID })
+      await axios.put(`/api/virtualDatabases`, { globalStateString, userID, schemaString })
     ])
       .then(axios.spread((createDBData, createTableData) => {
         console.log('put createDB', createDBData)

@@ -6,8 +6,11 @@ module.exports = ({ createTable, seedTable, queryTable }) => {
   router.put("/", (req, res) => {
     const userID = req.body.userID;
     const globalStateString = req.body.globalStateString;
-    const originalDBName = globalStateString.databaseName
-    createTable(originalDBName, userID)
+    const schemaString = req.body.schemaString;
+    const originalDBName = globalStateString.databaseName;
+    // const schemaString = globalStateString.schemaString
+    console.log('rsschemaString', schemaString)
+    createTable(originalDBName, userID, schemaString)
       .then(data => {
         res.json(data);
       })
