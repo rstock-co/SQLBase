@@ -19,8 +19,11 @@ const useDatabase = () => {
 
   const saveProgress = () => {
     const globalStateString = JSON.stringify(state);
+    const databaseName = state.databaseName;
+    const databaseUuid = state.databaseUuid
+    const userID = 1;
     return axios
-      .put(`/api/tables`, { globalStateString }) // add ${id} to route if we have multiple users
+      .post(`/api/tables`, { userID, databaseName, globalStateString, databaseUuid }) // add ${id} to route if we have multiple users
       .then(data => console.log("Save successful: ", data));
   };
 
@@ -40,10 +43,68 @@ const useDatabase = () => {
       });
   };
 
+  const loadDatabase = (databaseID) => {
+    console.log(databaseID)
+
+    return axios
+      .get(`/api/tables`, { params: { databaseID } }) // add ${id} to route if we have multiple users
+      .then(data => {
+        console.log(data.data)
+        console.log("Loading log: ", JSON.parse(data.data[0]["global_state"]));
+        const globalStateString = JSON.parse(data.data[0]["global_state"]);
+        loadData(globalStateString);
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  };
+
+
+  // get current user
+
+  // creates new pgsql database, and blank tables
+  const createDatabase = async (schemaString) => {
+    const globalStateString = state;
+
+    const userID = 1;
+    console.log(globalStateString)
+    return axios.all([
+      await axios.put(`/api/databases`, { globalStateString }),
+      // creates tables
+      await axios.put(`/api/virtualDatabases`, { globalStateString, userID, schemaString })
+    ])
+      .then(axios.spread((createDBData, createTableData) => {
+        console.log('put createDB', createDBData)
+        console.log('put createTable', createTableData)
+      }))
+  };
+
+
+  const getDatabases = () => {
+    console.log('getDatabase')
+    return axios
+      .get(`/api/databases`)
+      .then(data => {
+        // console.log(JSON.parse(data.data.global_state))
+        return data.data
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  }
+
+
+
+
+
+
   return {
     state,
     saveProgress,
     loadProgress,
+    loadDatabase,
+    createDatabase,
+    getDatabases
   };
 };
 

@@ -20,6 +20,16 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const createDB = (dbName) => {
+    // await db.connect()
+    db.query(`DROP DATABASE IF EXISTS ${dbName};`)
+    return db.query(`CREATE DATABASE ${dbName};`)
+      .then(result => console.log(result))
+      .catch(err => err)
+  };
+
+
+
   // Boilerplate examples below (not currently used)
 
   // const getUsers = () => queryDB("SELECT * FROM users");
@@ -42,5 +52,6 @@ module.exports = db => {
   return {
     queryDBParams,
     queryDB,
+    createDB
   };
 };
