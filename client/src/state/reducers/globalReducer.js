@@ -230,7 +230,9 @@ const globalReducer = (state, action) => {
         }
       }
       if (action.queryType === "whereCondition") {
-        queries[action.queryIndex].whereCondition[action.fieldIndex] = (action.queryName)
+        queries[action.queryIndex].whereCondition[action.fieldIndex] = action.queryName
+        console.log('bug fix', queries[action.queryIndex].whereCondition[action.fieldIndex])
+        console.log('bug fix 2', action.fieldIndex)
         queryState = [{
           ...queryState,
           queries,

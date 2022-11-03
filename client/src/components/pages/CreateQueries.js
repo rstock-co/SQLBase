@@ -16,10 +16,6 @@ const CreateQueriesPage = () => {
     removeQueryTable,
     selectTableHandler,
     setQueryParams,
-    saveSchemaProgress,
-    loadSchemaProgress,
-    getTableNames,
-    getColumnList,
   } = useQueryState();
 
   console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
@@ -45,7 +41,6 @@ const CreateQueriesPage = () => {
                   table={table}
                   tableIndex={tableIndex}
                   handleChange={selectTableHandler}
-                  addField={addField}
                   tableNameList={tableNameList}
                   removeQuery={removeQueryTable}
                   getColumnList={getColumnList}

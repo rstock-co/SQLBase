@@ -38,7 +38,7 @@ const generateWhere = (condition) => {
   } else {
     condition.forEach(con => {
       if (condition.indexOf(con) !== condition.length - 1) {
-        whereString += `${con} AND `
+        whereString += `${con ? con + ' AND ' : ""}`
       } else {
         whereString += `${con}`
       }
