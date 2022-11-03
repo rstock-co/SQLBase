@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import "./SchemaForm.scss";
+import "./QueriesForm.scss";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { FormInputText } from "../fields/FormInputText";
@@ -10,6 +10,7 @@ import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 
 const QueriesForm = ({
   table,
+  queries,
   tableIndex,
   handleChange,
   addField,
@@ -32,6 +33,7 @@ const QueriesForm = ({
         label={"Table Select"}
         menuOptions={tableNameList}
         handleChange={e => handleChange(e, tableIndex)}
+        value={table.table}
       />
       {table.fields.map((field, fieldIndex) => {
         return (
@@ -45,6 +47,7 @@ const QueriesForm = ({
               handleChange={e =>
                 handleQuery(e, tableIndex, 'columns')
               }
+              value={queries[tableIndex].columns[fieldIndex]}
             />
             <FormInputDropdown
               uniqueID={`distinct-${fieldIndex}`}
@@ -58,15 +61,64 @@ const QueriesForm = ({
               handleChange={e =>
                 handleQuery(e, tableIndex, 'distinct')
               }
+              value={queries[tableIndex].distinct}
             />
+            <FormInputDropdown
+              uniqueID={`aggregate-${fieldIndex}`}
+              name={"aggregate"}
+              control={control}
+              label={"Aggregate"}
+              menuOptions={[
+                { label: "Sum", value: 'SUM' },
+                { label: "Average", value: 'AVG' },
+                { label: "Count", value: 'COUNT' },
+                { label: "Max", value: 'MAX' },
+                { label: "Min", value: 'MIN' },
+              ]}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'aggregate', fieldIndex)
+              }
+              value={queries[tableIndex].aggregate[fieldIndex]}
+            />
+            {queries[tableIndex].aggregate.length > 0 && <FormInputText
+              uniqueID={`aggregateAs-${fieldIndex}`}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'aggregateAs', fieldIndex)
+              }
+              name={"aggregateAs"}
+              control={control}
+              label={"As"}
+            />}
+            {queries[tableIndex].aggregate.length > 0 && <FormInputDropdown
+              uniqueID={`groupBy-${fieldIndex}`}
+              name={"groupBy"}
+              control={control}
+              label={"Group By"}
+              menuOptions={getColumnList(table)}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'groupBy', fieldIndex)
+              }
+              value={queries[tableIndex].groupBy[fieldIndex]}
+            />}
+            {queries[tableIndex].aggregate.length > 0 && <FormInputText
+              uniqueID={`having-${fieldIndex}`}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'having', fieldIndex)
+              }
+              name={"having"}
+              control={control}
+              label={"Having Condition"}
+              value={queries[tableIndex].having[fieldIndex]}
+            />}
             <FormInputText
               uniqueID={`condition-${fieldIndex}`}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'condition')
+                handleQuery(e, tableIndex, 'whereCondition', fieldIndex)
               }
-              name={"condition"}
+              name={"whereCondition"}
               control={control}
               label={"Condition"}
+              value={queries[tableIndex].whereCondition[fieldIndex]}
             />
             <FormInputText
               uniqueID={`limit-${fieldIndex}`}
@@ -76,13 +128,31 @@ const QueriesForm = ({
               name={"limit"}
               control={control}
               label={"Limit"}
+              value={queries[tableIndex].limit === 1000 ? "" : queries[tableIndex].limit}
             />
-            <Button
-              key={`Remove-${fieldIndex}`}
-              onClick={() => removeField(tableIndex, fieldIndex)}
-            >
-              <ClearIcon />
-            </Button>
+            <FormInputDropdown
+              uniqueID={`orderBy-${fieldIndex}`}
+              name={"orderBy"}
+              control={control}
+              label={"Order by"}
+              menuOptions={getColumnList(table)}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'orderBy')
+              }
+            />
+            {queries[tableIndex].orderBy && <FormInputDropdown
+              uniqueID={`order-${fieldIndex}`}
+              name={"order"}
+              control={control}
+              label={"Asc/Desc"}
+              menuOptions={[
+                { label: "Ascending", value: 'ASC' },
+                { label: "Descending", value: 'DESC' },
+              ]}
+              handleChange={e =>
+                handleQuery(e, tableIndex, 'order')
+              }
+            />}
           </div>
         );
       })}

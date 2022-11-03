@@ -156,36 +156,28 @@ const globalReducer = (state, action) => {
           schemas.pop();
           return [...schemas, tableObj];
         }
-        return [...schemas, tableObj];
-      };
-      schemas = insertQueryTable(table);
-      queryState = [
-        {
-          ...queryState,
-          schemas,
-        },
-      ];
-      // queryState = [queryState]
+        return [...schemas, tableObj]
+      }
+      schemas = insertQueryTable(table)
+      queryState = [{
+        ...queryState,
+        schemas,
+      }]
       return {
         ...newState,
         queryState,
       };
     },
     SET_QUERY_PARAMS: state => {
-      //state(obj)--> queryState(arr)--> queries(arr) ||schemas(arr)
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
       let queries = queryState.queries;
       if (action.queryType === "name") {
         queries[action.queryIndex].table = action.queryName;
-        queryState = [
-          {
-            ...queryState,
-            queries,
-          },
-        ];
-        // queryState = [queryState]
-        // console.warn(queryState)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
         return {
           ...newState,
           queryState,
@@ -204,7 +196,63 @@ const globalReducer = (state, action) => {
           queryState,
         };
       }
-
+      if (action.queryType === "aggregate") {
+        queries[action.queryIndex].aggregate[action.fieldIndex] = (action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "aggregateAs") {
+        queries[action.queryIndex].aggregateAs[action.fieldIndex] = (action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "having") {
+        queries[action.queryIndex].having[action.fieldIndex] = (action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "whereCondition") {
+        queries[action.queryIndex].whereCondition[action.fieldIndex] = action.queryName
+        console.log('bug fix', queries[action.queryIndex].whereCondition[action.fieldIndex])
+        console.log('bug fix 2', action.fieldIndex)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
+      if (action.queryType === "groupBy") {
+        queries[action.queryIndex].groupBy[action.fieldIndex] = (action.queryName)
+        queryState = [{
+          ...queryState,
+          queries,
+        }]
+        return {
+          ...newState,
+          queryState,
+        }
+      }
       queries[action.queryIndex][action.queryType] = action.queryName;
       queryState = [
         {

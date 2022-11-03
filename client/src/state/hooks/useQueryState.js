@@ -34,9 +34,9 @@ const useQueryState = () => {
     );
   };
 
-  const setQueryParams = (event, queryIndex, queryType) => {
+  const setQueryParams = (event, queryIndex, queryType, fieldIndex) => {
     const queryName = event.target.value;
-    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType });
+    dispatch({ type: SET_QUERY_PARAMS, queryName, queryIndex, queryType, fieldIndex });
   };
 
   return {
