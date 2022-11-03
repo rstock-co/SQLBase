@@ -80,6 +80,12 @@ const globalReducer = (state, action) => {
     SCHEMA_HANDLE_CHANGE: state => {
       const newState = deepCopy(state);
       const schemaState = newState.schemaState;
+      if (action.fieldType === "databaseName") {
+        newState.databaseName = action.event.target.value;
+        return {
+          ...newState,
+        };
+      }
       if (action.fieldType === "tableName") {
         schemaState[action.tableIndex].table = action.event.target.value;
         return {

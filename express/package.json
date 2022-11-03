@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "dev": "npm run dev",
+    "dev": "nodemon --exec npm start",
     "db:reset": "node ./db/reset.js"
   },
   "dependencies": {
