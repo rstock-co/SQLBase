@@ -15,6 +15,7 @@ import {
 import PageSplitter from "../../styles/components/PageSplitter";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 import "../forms/SchemaForm.scss";
+import EditableField from "../fields/EditableField";
 
 const CreateSchemaPage = () => {
   const {
@@ -26,8 +27,8 @@ const CreateSchemaPage = () => {
     handleSchemaChange,
   } = useSchemaState();
 
-  const { saveProgress, loadProgress } = useDatabase();
-
+  const { saveProgress, loadProgress, createDatabase } = useDatabase();
+  const [isNameFocused, setIsNamedFocused] = useState(false);
   const [isOpen, setIsOpen] = useState({
     modal: false,
     copy: false,
@@ -53,6 +54,9 @@ const CreateSchemaPage = () => {
         setIsOpen({ load: true, message: "Load Success!" });
         loadProgress();
         break;
+      case "createDB":
+        createDatabase();
+        break;
       case "addTable":
         setIsOpen({ addTable: true, message: "Table Added" });
         addSchemaTable();
@@ -63,6 +67,7 @@ const CreateSchemaPage = () => {
     console.log("openState", isOpen);
   };
   const handleClose = () => isOpen && setIsOpen(false);
+  const handleEditableField = (focused) => setIsNamedFocused(focused);
 
   const copyHandler = () => {
     let allStrings = generateSQL(state.schemaState);
@@ -72,6 +77,7 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
+      <EditableField focused={isNameFocused} handleChange={handleSchemaChange} focus={handleEditableField} state={state} />
       <div id="container">
         {isOpen.modal && (
           <ERDModal
@@ -136,6 +142,9 @@ const CreateSchemaPage = () => {
         </Button>
         <Button primary="true" onClick={() => buttonHandler("load")}>
           Load Progress
+        </Button>
+        <Button primary="true" onClick={() => buttonHandler("createDB")}>
+          Create Database
         </Button>
         <Button primary="true" onClick={() => buttonHandler("modal")}>
           Generate ERD

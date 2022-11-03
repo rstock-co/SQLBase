@@ -32,6 +32,7 @@ app.use(cookieParser());
 
 // API Routes
 const tableApiRoutes = require("./routes/tables-api");
+const userDatabaseApiRoutes = require("./routes/user-database-api");
 
 // Render Routes
 // const dishesRoutes = require("./routes/dishes");
@@ -46,6 +47,7 @@ const tableApiRoutes = require("./routes/tables-api");
  */
 
 // API Routes
+app.use("/api/databases", userDatabaseApiRoutes(dbHelpers));
 app.use("/api/tables", tableApiRoutes(dbHelpers));
 
 // app.use("/api/dishes", dishesApiRoutes);
