@@ -11,6 +11,7 @@ import {
 import SeedsForm from "../forms/SeedsForm";
 import SeedsModal from "../modal/SeedsModal";
 import { CopyBlock, monokai } from "react-code-blocks";
+import { generateSeedSQL } from "../../helpers/seedFormHelpers";
 
 const CreateSeedsPage = () => {
   const { state, employeeSeed, companySeed, productSeed, generateSeedState } =
@@ -75,7 +76,7 @@ const CreateSeedsPage = () => {
           <CopyBlock
             key={`CopyBlock-seeds`}
             language="sql"
-            text={'generated SQL String Here'}
+            text={generateSeedSQL(seeds)}
             theme={monokai}
             wrapLines={true}
             codeBlock
