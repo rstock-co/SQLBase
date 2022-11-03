@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { Button } from "@mui/material";
 import QueriesForm from "../forms/QueriesForm";
 import "../forms/SchemaForm.scss";
@@ -9,8 +9,8 @@ import {
   numRowsDropdown,
   seedFormData,
 } from "../../state/data_structures/seedState"; // delete seedFormData once form is built
-
 const CreateSeedsPage = () => {
+  const [isNameFocused, setIsNamedFocused] = useState(false);
   const { state, employeeSeed, companySeed, productSeed, generateSeedState } =
     useSeedState();
   const { getTableNames, getColumnList } = useGlobalState();

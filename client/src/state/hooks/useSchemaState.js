@@ -21,13 +21,14 @@ const useSchemaState = () => {
     dispatch({ type: SCHEMA_ADD_FIELD, tableIndex });
   const removeSchemaField = (tableIndex, fieldIndex) =>
     dispatch({ type: SCHEMA_REMOVE_FIELD, tableIndex, fieldIndex });
-  const handleSchemaChange = (event, fieldType, tableIndex, fieldIndex) =>
+  const handleSchemaChange = (event, fieldType, tableIndex, fieldIndex, dbState) =>
     dispatch({
       type: SCHEMA_HANDLE_CHANGE,
       event,
       fieldType,
       tableIndex,
       fieldIndex,
+      dbState
     });
 
   return {
