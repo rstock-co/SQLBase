@@ -6,14 +6,14 @@ import PageSplitter from "../../styles/components/PageSplitter";
 import "../forms/SchemaForm.scss";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
 import useQueryState from "../../state/hooks/useQueryState";
+import useDatabase from "../../state/hooks/useDatabase";
+import useGlobalState from "../../state/hooks/useGlobalState";
 
 const CreateQueriesPage = () => {
   const {
     state,
     addQueryTable,
     removeQueryTable,
-    addField,
-    removeField,
     selectTableHandler,
     setQueryParams,
     saveSchemaProgress,
@@ -24,9 +24,14 @@ const CreateQueriesPage = () => {
 
   console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
 
+  const { getTableNames, getColumnList } = useGlobalState();
+  const { saveProgress, loadProgress } = useDatabase();
+
+  console.log("QUERY PAGE STATE: ", state);
+
   const tableNameList = getTableNames();
-  let schemas = state.queryState[0].schemas
-  let queries = state.queryState[0].queries
+  let schemas = state.queryState[0].schemas;
+  let queries = state.queryState[0].queries;
 
   return (
     <main>
@@ -65,10 +70,10 @@ const CreateQueriesPage = () => {
         <Button id="add-table" primary="true" onClick={() => addQueryTable()}>
           Add Table
         </Button>
-        <Button primary="true" onClick={() => saveSchemaProgress()}>
+        <Button primary="true" onClick={() => saveProgress()}>
           Save Progress
         </Button>
-        <Button primary="true" onClick={() => loadSchemaProgress()}>
+        <Button primary="true" onClick={() => loadProgress()}>
           Load Progress
         </Button>
       </div>

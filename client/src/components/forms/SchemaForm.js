@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { FormInputText } from "../fields/FormInputText";
 import { FormInputDropdown } from "../fields/FormInputDropdown";
-import ClearIcon from '@mui/icons-material/Clear';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ClearIcon from "@mui/icons-material/Clear";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 
 const SchemaForm = ({
@@ -16,49 +16,63 @@ const SchemaForm = ({
   addField,
   removeField,
   references,
-  removeTable
+  removeTable,
 }) => {
   const {
     formState: { errors },
     control,
   } = useForm();
 
-  const hasProperty = (fieldProperty) => {
-    return (fieldProperty || false)
-  }
+  const hasProperty = fieldProperty => {
+    return fieldProperty || false;
+  };
 
-  console.log('tableschemaform', table)
   const [isOpen, setIsOpen] = useState({
     addField: false,
     removeTable: false,
     removeField: false,
     isError: false,
-    message: null
+    message: null,
   });
   const buttonHandler = (target, tableIndex, fieldIndex) => {
     switch (target) {
       case "addField":
-        setIsOpen({ removeTable: true, message: 'Field Added!' });
-        addField(tableIndex)
+        setIsOpen({ removeTable: true, message: "Field Added!" });
+        addField(tableIndex);
         break;
       case "removeTable":
-        setIsOpen({ removeTable: true, message: 'Table Deleted!', isError: true });
-        removeTable(tableIndex)
+        setIsOpen({
+          removeTable: true,
+          message: "Table Deleted!",
+          isError: true,
+        });
+        removeTable(tableIndex);
         break;
       case "removeField":
-        setIsOpen({ removeField: true, message: 'Field Deleted!', isError: true })
-        removeField(tableIndex, fieldIndex)
+        setIsOpen({
+          removeField: true,
+          message: "Field Deleted!",
+          isError: true,
+        });
+        removeField(tableIndex, fieldIndex);
         break;
       default:
         return false;
     }
-    console.log('openState', isOpen)
-  }
-  const handleClose = () => (isOpen && setIsOpen(false));
+    console.log("openState", isOpen);
+  };
+  const handleClose = () => isOpen && setIsOpen(false);
 
   return (
     <div className="table">
-      {((isOpen && !isOpen.modal) && <SuccessSnackbar open={isOpen} handleClose={handleClose} message={isOpen.message} isError={isOpen.isError} />)}
+      {isOpen && !isOpen.modal && (
+        <SuccessSnackbar
+          open={isOpen}
+          handleClose={handleClose}
+          message={isOpen.message}
+          isError={isOpen.isError}
+        />
+      )}
       <FormInputText
         unqiueID={`${table}-${tableIndex}`}
         handleChange={e => handleChange(e, "tableName", tableIndex)}
@@ -80,7 +94,6 @@ const SchemaForm = ({
               control={control}
               label={"Field"}
               value={field.fieldName}
-
             />
             <FormInputDropdown
               uniqueID={`Datatype-${fieldIndex}`}
@@ -99,7 +112,8 @@ const SchemaForm = ({
                 { label: "DATE", value: "DATE" },
               ]}
               handleChange={e =>
-                handleChange(e, "dataType", tableIndex, fieldIndex)}
+                handleChange(e, "dataType", tableIndex, fieldIndex)
+              }
             />
             {field.dataType === "VARCHAR" && <FormInputText
               uniqueID={`varcharSize-${fieldIndex}`}
@@ -150,12 +164,11 @@ const SchemaForm = ({
               control={control}
               label={"Reference"}
               menuOptions={references}
-              handleChange={e =>
-                handleChange(e, "reference", tableIndex, fieldIndex)
+              handleChange={
+                e => handleChange(e, "reference", tableIndex, fieldIndex)
                 // does not change state or nullify anything
                 // handleChange={e => handleChangeAndNullify(e, "reference", tableIndex, fieldIndex, "dataType")
               }
-
             />
             <FormInputText
               uniqueID={`Default-${fieldIndex}`}
@@ -169,7 +182,9 @@ const SchemaForm = ({
             />
             <Button
               key={`Remove-${fieldIndex}`}
-              onClick={() => buttonHandler('removeField', tableIndex, fieldIndex)}
+              onClick={() =>
+                buttonHandler("removeField", tableIndex, fieldIndex)
+              }
             >
               <ClearIcon />
             </Button>
@@ -181,14 +196,14 @@ const SchemaForm = ({
         <Button
           key={`Add-${tableIndex}`}
           primary="true"
-          onClick={() => buttonHandler('addField', tableIndex)}
+          onClick={() => buttonHandler("addField", tableIndex)}
         >
           Add Field +
         </Button>
         <Button
           key={`Remove-${tableIndex}`}
           primary="true"
-          onClick={() => buttonHandler('removeTable', tableIndex)}
+          onClick={() => buttonHandler("removeTable", tableIndex)}
         >
           <DeleteForeverIcon /> Delete Table
         </Button>

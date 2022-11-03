@@ -4,6 +4,7 @@ import { Button, Snackbar } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
 import useSchemaState from "../../state/hooks/useSchemaState";
+import useDatabase from "../../state/hooks/useDatabase";
 import ERDModal from "../modal/ERDModal";
 
 import {
@@ -11,9 +12,9 @@ import {
   generateReferenceObject,
 } from "../../helpers/schemaFormHelpers";
 
-import "../forms/SchemaForm.scss";
 import PageSplitter from "../../styles/components/PageSplitter";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
+import "../forms/SchemaForm.scss";
 
 const CreateSchemaPage = () => {
   const {
@@ -23,11 +24,9 @@ const CreateSchemaPage = () => {
     addSchemaField,
     removeSchemaField,
     handleSchemaChange,
-    saveSchemaProgress,
-    loadSchemaProgress,
   } = useSchemaState();
 
-  console.log("SCHEMA PAGE STATE: ", state);
+  const { saveProgress, loadProgress } = useDatabase();
 
   const [isOpen, setIsOpen] = useState({
     modal: false,
@@ -35,90 +34,101 @@ const CreateSchemaPage = () => {
     save: false,
     load: false,
     addTable: false,
-    message: null
+    message: null,
   });
-  const buttonHandler = (target) => {
+  const buttonHandler = target => {
     switch (target) {
       case "modal":
         setIsOpen({ modal: true });
         break;
       case "copy":
-        setIsOpen({ copy: true, message: 'Copy Success!' })
-        copyHandler()
+        setIsOpen({ copy: true, message: "Copy Success!" });
+        copyHandler();
         break;
       case "save":
-        setIsOpen({ save: true, message: 'Save Success!' })
-        saveSchemaProgress()
+        setIsOpen({ save: true, message: "Save Success!" });
+        saveProgress();
         break;
       case "load":
-        setIsOpen({ load: true, message: 'Load Success!' })
-        loadSchemaProgress()
+        setIsOpen({ load: true, message: "Load Success!" });
+        loadProgress();
         break;
       case "addTable":
-        setIsOpen({ addTable: true, message: 'Table Added' })
-        addSchemaTable()
+        setIsOpen({ addTable: true, message: "Table Added" });
+        addSchemaTable();
         break;
       default:
         return false;
     }
-    console.log('openState', isOpen)
-  }
-  const handleClose = () => (isOpen && setIsOpen(false));
-
-
+    console.log("openState", isOpen);
+  };
+  const handleClose = () => isOpen && setIsOpen(false);
 
   const copyHandler = () => {
+    let allStrings = generateSQL(state.schemaState);
 
-    let allStrings = generateSQL(state.schemaState)
-
-    return navigator.clipboard.writeText(allStrings.join(""))
-  }
-
+    return navigator.clipboard.writeText(allStrings.join(""));
+  };
 
   return (
     <main onClick={handleClose}>
       <div id="container">
-        {(isOpen.modal && <ERDModal open={isOpen} table={state.schemaState} onClick={handleClose} />)}
-        {((isOpen && !isOpen.modal) && <SuccessSnackbar open={isOpen} table={state} handleClose={handleClose} message={isOpen.message} />)}
-        {
-          state.schemaState.map((table, tableIndex) => {
-            return (
-              <div id="row-container">
-                <form>
-                  <SchemaForm
-                    key={`SchemaForm - ${tableIndex}`}
-                    table={table}
-                    tableIndex={tableIndex}
-                    handleChange={handleSchemaChange}
-                    removeField={removeSchemaField}
-                    addField={addSchemaField}
-                    references={generateReferenceObject(state.schemaState, table)}
-                    removeTable={removeSchemaTable}
-                  />
-                </form>
-                <div className="tables">
-                  <SchemaTable
-                    key={`table-${tableIndex}`}
-                    table={table.table}
-                    fields={table.fields}
-                  />
-                </div>
-                <div className="demo">
-                  <CopyBlock
-                    key={`CopyBlock-${tableIndex}`}
-                    language="sql"
-                    text={generateSQL(state.schemaState)[tableIndex]}
-                    theme={monokai}
-                    wrapLines={true}
-                    codeBlock
-                  />
-                </div>
+        {isOpen.modal && (
+          <ERDModal
+            open={isOpen}
+            table={state.schemaState}
+            onClick={handleClose}
+          />
+        )}
+        {isOpen && !isOpen.modal && (
+          <SuccessSnackbar
+            open={isOpen}
+            table={state}
+            handleClose={handleClose}
+            message={isOpen.message}
+          />
+        )}
+        {state.schemaState.map((table, tableIndex) => {
+          return (
+            <div id="row-container">
+              <form>
+                <SchemaForm
+                  key={`SchemaForm - ${tableIndex}`}
+                  table={table}
+                  tableIndex={tableIndex}
+                  handleChange={handleSchemaChange}
+                  removeField={removeSchemaField}
+                  addField={addSchemaField}
+                  references={generateReferenceObject(state.schemaState, table)}
+                  removeTable={removeSchemaTable}
+                />
+              </form>
+              <div className="tables">
+                <SchemaTable
+                  key={`table-${tableIndex}`}
+                  table={table.table}
+                  fields={table.fields}
+                />
               </div>
-            );
-          })
-        }
+              <div className="demo">
+                <CopyBlock
+                  key={`CopyBlock-${tableIndex}`}
+                  language="sql"
+                  text={generateSQL(state.schemaState)[tableIndex]}
+                  theme={monokai}
+                  wrapLines={true}
+                  codeBlock
+                />
+              </div>
+            </div>
+          );
+        })}
 
-        <Button id="add-table" primary="true" onClick={() => buttonHandler("addTable")}>
+        <Button
+          id="add-table"
+          primary="true"
+          onClick={() => buttonHandler("addTable")}
+        >
           Add Table
         </Button>
         <Button primary="true" onClick={() => buttonHandler("save")}>
@@ -135,7 +145,7 @@ const CreateSchemaPage = () => {
         </Button>
       </div>
       <PageSplitter src="body-purple.png" id="tables-bottom" />
-    </main >
+    </main>
   );
 };
 

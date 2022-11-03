@@ -5,7 +5,7 @@ CREATE TABLE databases(
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   name VARCHAR(255),
-  schema_string TEXT,
+  global_state TEXT,
   query_string TEXT,
   seed_string TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -6,6 +6,7 @@ import Layout from "./components/routes/Layout";
 import Home from "./components/pages/Home";
 import CreateSchemaPage from "./components/pages/CreateSchema";
 import CreateQueriesPage from "./components/pages/CreateQueries";
+import CreateSeedsPage from "./components/pages/CreateSeeds";
 import GlobalProvider from "./state/GlobalStateProvider";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="tables" element={<CreateSchemaPage />} />
             <Route path="queries" element={<CreateQueriesPage />} />
+            <Route path="seeds" element={<CreateSeedsPage />} />
           </Route>
         </Routes>
       </GlobalProvider>

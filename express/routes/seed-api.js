@@ -3,11 +3,11 @@ const router = express.Router();
 
 module.exports = ({ queryDBParams, queryDB }) => {
   router.put("/", (req, res) => {
-    const globalStateString = req.body.globalStateString;
+    const schemaString = req.body.schemaString;
 
     queryDBParams(
-      `INSERT INTO databases (global_state) VALUES ($1) RETURNING *;`,
-      [globalStateString]
+      `INSERT INTO databases (schema_string) VALUES ($1) RETURNING *;`,
+      [schemaString]
     )
       .then(data => {
         res.json(data);
@@ -19,7 +19,7 @@ module.exports = ({ queryDBParams, queryDB }) => {
 
   router.get("/", (req, res) => {
     queryDB(
-      `SELECT global_state FROM databases ORDER BY created_at DESC LIMIT 1;`
+      `SELECT schema_string FROM databases ORDER BY created_at DESC LIMIT 1;`
     )
       .then(data => {
         res.json(data);
