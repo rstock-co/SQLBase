@@ -61,6 +61,7 @@ const QueriesForm = ({
               handleChange={e =>
                 handleQuery(e, tableIndex, 'distinct')
               }
+              value={queries[tableIndex].distinct}
             />
             <FormInputDropdown
               uniqueID={`aggregate-${fieldIndex}`}
@@ -77,8 +78,9 @@ const QueriesForm = ({
               handleChange={e =>
                 handleQuery(e, tableIndex, 'aggregate', fieldIndex)
               }
+              value={queries[tableIndex].aggregate[fieldIndex]}
             />
-            {queries[tableIndex].aggregate && <FormInputText
+            {queries[tableIndex].aggregate.length > 0 && <FormInputText
               uniqueID={`aggregateAs-${fieldIndex}`}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'aggregateAs', fieldIndex)
@@ -87,17 +89,18 @@ const QueriesForm = ({
               control={control}
               label={"As"}
             />}
-            {queries[tableIndex].aggregate && <FormInputDropdown
+            {queries[tableIndex].aggregate.length > 0 && <FormInputDropdown
               uniqueID={`groupBy-${fieldIndex}`}
               name={"groupBy"}
               control={control}
               label={"Group By"}
               menuOptions={getColumnList(table)}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'groupBy')
+                handleQuery(e, tableIndex, 'groupBy', fieldIndex)
               }
+              value={queries[tableIndex].groupBy[fieldIndex]}
             />}
-            {queries[tableIndex].aggregate && <FormInputText
+            {queries[tableIndex].aggregate.length > 0 && <FormInputText
               uniqueID={`having-${fieldIndex}`}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'having', fieldIndex)
@@ -105,15 +108,17 @@ const QueriesForm = ({
               name={"having"}
               control={control}
               label={"Having Condition"}
+              value={queries[tableIndex].having[fieldIndex]}
             />}
             <FormInputText
               uniqueID={`condition-${fieldIndex}`}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'whereCondition')
+                handleQuery(e, tableIndex, 'whereCondition', fieldIndex)
               }
               name={"whereCondition"}
               control={control}
               label={"Condition"}
+              value={queries[tableIndex].whereCondition[fieldIndex]}
             />
             <FormInputText
               uniqueID={`limit-${fieldIndex}`}
@@ -123,6 +128,7 @@ const QueriesForm = ({
               name={"limit"}
               control={control}
               label={"Limit"}
+              value={queries[tableIndex].limit === 1000 ? "" : queries[tableIndex].limit}
             />
             <FormInputDropdown
               uniqueID={`orderBy-${fieldIndex}`}
