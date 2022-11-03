@@ -153,12 +153,6 @@ const QueriesForm = ({
                 handleQuery(e, tableIndex, 'order')
               }
             />}
-            <Button
-              key={`Remove-${fieldIndex}`}
-              onClick={() => removeField(tableIndex, fieldIndex)}
-            >
-              <ClearIcon />
-            </Button>
           </div>
         );
       })}

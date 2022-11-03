@@ -40,7 +40,6 @@ const CreateQueriesPage = () => {
                   table={table}
                   tableIndex={tableIndex}
                   handleChange={selectTableHandler}
-                  removeField={removeField}
                   addField={addField}
                   tableNameList={tableNameList}
                   removeQuery={removeQueryTable}

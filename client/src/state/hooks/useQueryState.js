@@ -14,8 +14,6 @@ import { deepCopy } from "../../helpers/schemaFormHelpers";
 const useQueryState = () => {
   const [state, dispatch] = useContext(GlobalContext);
 
-  // console.log("GLOBAL STATE: ", state);
-
   const addQueryTable = () => {
     console.log("Add Table function triggered");
     dispatch({ type: QUERY_ADD_TABLE });
