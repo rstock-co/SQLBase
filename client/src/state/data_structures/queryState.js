@@ -11,11 +11,7 @@ export const initialQueries = {
   aggregate: "", // one of 3 choices:  sum, avg, count
 };
 
-const initialQueryState = {
+export const initialQueryState = {
   schemas: [initialSchemaState],
   queries: [initialQueries],
 };
-
-
-
-export default initialQueryState;

@@ -5,9 +5,10 @@ import "../forms/SchemaForm.scss";
 import useSeedState from "../../state/hooks/useSeedState";
 import useDatabase from "../../state/hooks/useDatabase";
 import useGlobalState from "../../state/hooks/useGlobalState";
+import { numRowsDropdown } from "../../state/data_structures/seedState";
 
 const CreateSeedsPage = () => {
-  const { productName, companyName, productDesc } = useSeedState();
+  const { state, productName, companyName, productDesc } = useSeedState();
   const { getTableNames, getColumnList } = useGlobalState();
   const { saveProgress, loadProgress } = useDatabase();
   const h1style = {
@@ -18,8 +19,18 @@ const CreateSeedsPage = () => {
     marginLeft: "75px",
   };
 
+  console.log("STATE from SEEDS: ", state);
+  console.log(
+    "TABLE: ",
+    state.schemaState.filter(table => table.table === "users")[0]
+  );
   const product = productName();
   const tableNameList = getTableNames();
+  const usersTable = state.schemaState.filter(
+    table => table.table === "users"
+  )[0];
+  const columnList = getColumnList(usersTable).map(user => user.label);
+  console.log(columnList);
 
   return (
     <>
@@ -38,6 +49,12 @@ const CreateSeedsPage = () => {
         </p> */}
         <p>
           <b>Tables:</b> {JSON.stringify(tableNameList)}
+        </p>
+        <p>
+          <b>Num Rows Dropdown:</b> {JSON.stringify(numRowsDropdown)}
+        </p>
+        <p>
+          <b>Columns for users table:</b> {JSON.stringify(columnList)}
         </p>
       </div>
       <Button primary="true" onClick={() => saveProgress()}>
