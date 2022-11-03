@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
-import QueriesForm from "../forms/QueriesForm";
-import "../forms/SchemaForm.scss";
+import "../forms/SeedsForm.scss";
 import useSeedState from "../../state/hooks/useSeedState";
 import useDatabase from "../../state/hooks/useDatabase";
 import useGlobalState from "../../state/hooks/useGlobalState";
@@ -9,6 +8,9 @@ import {
   numRowsDropdown,
   seedFormData,
 } from "../../state/data_structures/seedState"; // delete seedFormData once form is built
+import SeedsForm from "../forms/SeedsForm";
+import SeedsModal from "../modal/SeedsModal";
+import { CopyBlock, monokai } from "react-code-blocks";
 
 const CreateSeedsPage = () => {
   const { state, employeeSeed, companySeed, productSeed, generateSeedState } =
@@ -22,51 +24,63 @@ const CreateSeedsPage = () => {
   };
 
   console.log("STATE from SEEDS: ", state);
-  console.log(
-    "TABLE: ",
-    state.schemaState.filter(table => table.table === "users")[0]
-  );
+  // console.log(
+  //   "TABLE: ",
+  //   state.schemaState.filter((table) => table.table === "users")[0]
+  // );
 
   const tableNameList = getTableNames();
-  const usersTable = state.schemaState.filter(
-    table => table.table === "users"
-  )[0];
-  const columnList = getColumnList(usersTable).map(user => user.label);
-  console.log(columnList);
+  // const usersTable = state.schemaState.filter(
+  //   (table) => table.table === "users"
+  // )[0];
+  // const columnList = getColumnList(usersTable).map((user) => user.label);
+  // console.log(columnList);
+
+  const table = state.schemaState;
+  const seeds = state.seedState;
+
+  const [isOpen, setIsOpen] = useState({
+    modal: false,
+    table: null,
+  });
+
+  const buttonHandler = (table) => {
+    setIsOpen({ modal: true, table: table });
+  };
+
+  const handleClose = () => isOpen && setIsOpen(false);
 
   return (
-    <>
-      {/* <div style={h1style}>
-        <h1>Fake Company Generation</h1>
-      </div> */}
-      <div style={style}>
-        {/* <p>
-          <b>Company Name:</b> {companyName(10)}
-        </p>
-        <p>
-          <b>Product Name:</b> {product}
-        </p>
-        <p>
-          <b>Product Desc:</b> {productDesc(product, 2)}
-        </p> */}
-        <p>
-          <b>Tables List:</b> {JSON.stringify(tableNameList)}
-        </p>
-        <p>
-          <b>Num Rows Dropdown:</b> {JSON.stringify(numRowsDropdown)}
-        </p>
-        <p>
-          <b>Columns for users table:</b> {JSON.stringify(columnList)}
-        </p>
-        <p>
-          <b>Random Employee:</b> {JSON.stringify(employeeSeed(1))}
-        </p>
-        <p>
-          <b>Random Company:</b> {JSON.stringify(companySeed(1))}
-        </p>
-        <p>
-          <b>Random Product:</b> {JSON.stringify(productSeed(1))}
-        </p>
+    <main id="seedsMain">
+      {isOpen.modal && (
+        <SeedsModal
+          open={isOpen}
+          onClick={handleClose}
+          table={isOpen.table}
+          seeds={seeds}
+        />
+      )}
+      <div id="seedsContainer">
+        <form id="seedsForm">
+        <label id='seedsFormTitle'>Seeds Databse</label>
+          <SeedsForm
+            key={`SeedsForm`}
+            tableNameList={tableNameList}
+            numRowsDropdown={numRowsDropdown}
+            table={table}
+            buttonHandler={buttonHandler}
+          />
+        </form>
+        <div id="seedsDemo">
+          <CopyBlock
+            key={`CopyBlock-seeds`}
+            language="sql"
+            text={'generated SQL String Here'}
+            theme={monokai}
+            wrapLines={true}
+            codeBlock
+          />
+        </div>
       </div>
       <Button primary="true" onClick={() => generateSeedState(seedFormData)}>
         Seed into State
@@ -77,7 +91,7 @@ const CreateSeedsPage = () => {
       <Button primary="true" onClick={() => loadProgress()}>
         Load Progress
       </Button>
-    </>
+    </main>
     /* // <main>
     //   <div id="container">
     //     {schemas.map((table, tableIndex) =>
