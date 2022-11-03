@@ -11,10 +11,10 @@ const useDatabase = () => {
     dispatch({ type: LOAD_DB_TO_STATE, loadedData });
 
   /**
-   * Save/load progress:  User can save the current state of their schema or load last saved at any time
+   * Save/load progress:  User can save the current global state (all schema, queries, seeds)
    * @param {integer} id the user's id (**STRETCH**)
    * @param {object} state the tables data
-   * @returns an axios call to save/load current progress (table data)
+   * @returns an axios call to save/load current progress
    */
 
   const saveProgress = () => {

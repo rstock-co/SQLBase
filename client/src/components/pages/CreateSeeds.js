@@ -8,12 +8,10 @@ import useGlobalState from "../../state/hooks/useGlobalState";
 import { numRowsDropdown } from "../../state/data_structures/seedState";
 
 const CreateSeedsPage = () => {
-  const { state, productName, companyName, productDesc } = useSeedState();
+  const { state, employeeSeed, companySeed, productSeed } = useSeedState();
   const { getTableNames, getColumnList } = useGlobalState();
   const { saveProgress, loadProgress } = useDatabase();
-  const h1style = {
-    marginLeft: "50px",
-  };
+
   const style = {
     fontSize: "25px",
     marginLeft: "75px",
@@ -24,7 +22,7 @@ const CreateSeedsPage = () => {
     "TABLE: ",
     state.schemaState.filter(table => table.table === "users")[0]
   );
-  const product = productName();
+
   const tableNameList = getTableNames();
   const usersTable = state.schemaState.filter(
     table => table.table === "users"
@@ -48,13 +46,22 @@ const CreateSeedsPage = () => {
           <b>Product Desc:</b> {productDesc(product, 2)}
         </p> */}
         <p>
-          <b>Tables:</b> {JSON.stringify(tableNameList)}
+          <b>Tables List:</b> {JSON.stringify(tableNameList)}
         </p>
         <p>
           <b>Num Rows Dropdown:</b> {JSON.stringify(numRowsDropdown)}
         </p>
         <p>
           <b>Columns for users table:</b> {JSON.stringify(columnList)}
+        </p>
+        <p>
+          <b>Random Employee:</b> {JSON.stringify(employeeSeed(1))}
+        </p>
+        <p>
+          <b>Random Company:</b> {JSON.stringify(companySeed(1))}
+        </p>
+        <p>
+          <b>Random Product:</b> {JSON.stringify(productSeed(1))}
         </p>
       </div>
       <Button primary="true" onClick={() => saveProgress()}>
