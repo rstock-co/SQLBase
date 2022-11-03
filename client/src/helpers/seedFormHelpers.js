@@ -38,15 +38,15 @@ export const generateSeedSQL = seedState => {
             : (firstLine[i] += `'${field}', `);
         }
         if (k === 0) {
-          console.log("CURRENT VALUE (k === 0): ", value);
+          // console.log("CURRENT VALUE (k === 0): ", value);
           values[i] += ` ('${value}', `;
         } else if (k === Object.keys(dataset).length - 1) {
-          console.log("CURRENT VALUE (k === end of object): ", value);
+          // console.log("CURRENT VALUE (k === end of object): ", value);
           j === seedData.length - 1
             ? (values[i] += `'${value}')`)
             : (values[i] += `'${value}'),`);
         } else {
-          console.log("CURRENT VALUE (normal): ", value);
+          // console.log("CURRENT VALUE (normal): ", value);
           values[i] += `'${value}', `;
         }
       });
