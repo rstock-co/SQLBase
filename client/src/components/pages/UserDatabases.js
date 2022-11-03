@@ -20,13 +20,12 @@ const UserDatabases = () => {
   // let databases = getDatabases()
 
   const loadHandler = (listIndex) => {
-    const databaseID = listIndex + 1;
+    const databaseID = (list.length - listIndex);
     loadDatabase(databaseID);
     navigate("/tables");
 
   }
 
-  console.log('list', list)
   return (
     <div>
       {list && list.map((data, listIndex) => {
