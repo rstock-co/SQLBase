@@ -29,6 +29,7 @@ const generateReferenceObject = (tables, i) => {
       output.push(obj);
     }
   });
+  output.push({ label: "None", value: "" })
   return output;
 };
 
