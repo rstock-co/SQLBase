@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
-import { Button, Snackbar } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
 import SchemaTable from "../tables/SchemaTable";
 import useSchemaState from "../../state/hooks/useSchemaState";
@@ -85,13 +85,14 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
-      <EditableField
-        focused={isNameFocused}
-        handleChange={handleSchemaChange}
-        focus={handleEditableField}
-        state={state}
-      />
+
       <div id="container">
+        <EditableField
+          focused={isNameFocused}
+          handleChange={handleSchemaChange}
+          focus={handleEditableField}
+          state={state}
+        />
         {isOpen.modal && (
           <ERDModal
             open={isOpen}
@@ -107,6 +108,7 @@ const CreateSchemaPage = () => {
             message={isOpen.message}
           />
         )}
+
         {state.schemaState.map((table, tableIndex) => {
           return (
             <div id="row-container">
@@ -122,13 +124,13 @@ const CreateSchemaPage = () => {
                   removeTable={removeSchemaTable}
                 />
               </form>
-              <div className="tables">
+              {/* <div className="tables">
                 <SchemaTable
                   key={`table-${tableIndex}`}
                   table={table.table}
                   fields={table.fields}
                 />
-              </div>
+              </div> */}
               <div className="demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
@@ -143,12 +145,24 @@ const CreateSchemaPage = () => {
           );
         })}
 
-        <Button
-          id="add-table"
-          primary="true"
-          onClick={() => buttonHandler("addTable")}
-        >
-          Add Table
+        <Box>
+          <Button
+            id="add-table"
+            primary="true"
+            onClick={() => buttonHandler("addTable")}
+          >
+            Add Table
+          </Button>
+          <Button id="copy-all" primary="true" onClick={() => buttonHandler("copy")}>
+            Copy All Schema
+          </Button>
+        </Box>
+
+      </div>
+      <Box id="schema-buttons">
+
+        <Button primary="true" onClick={() => buttonHandler("modal")}>
+          Generate ERD
         </Button>
         <Button primary="true" onClick={() => buttonHandler("save")}>
           Save Progress
@@ -156,22 +170,16 @@ const CreateSchemaPage = () => {
         <Button primary="true" onClick={() => buttonHandler("createDB")}>
           Create Database
         </Button>
-        <Button primary="true" onClick={() => buttonHandler("modal")}>
-          Generate ERD
-        </Button>
-        <Button primary="true" onClick={() => buttonHandler("copy")}>
-          Copy All Schema
-        </Button>
-        <Button primary="true" onClick={() => buttonHandler("seed")}>
-          Seed Database
-        </Button>
-        <Button
-          primary="true"
-          onClick={() => generateAllSeedState(seedFormData)}
-        >
-          Generate Seeds
-        </Button>
-      </div>
+        {/* <Button
+            primary="true"
+            onClick={() => generateAllSeedState(seedFormData)}
+            >
+            Generate Seeds
+          </Button> */}
+      </Box>
+      <Button primary="true" onClick={() => buttonHandler("seed")}>
+        Seed Database
+      </Button>
       <PageSplitter src="body-purple.png" id="tables-bottom" />
     </main>
   );

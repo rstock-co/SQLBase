@@ -126,42 +126,42 @@ const SeedsModal = (props) => {
     >
       <Box sx={style}>
         <TableContainer id='tableContainer' ref={tableRef} sx={{ color: 'white' }}>
-        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', height: '90%' }}>
-          <TableHead>
-            <TableRow>
-              {props.table.fields.map((field) => (
-                <TableCell
-                  key={field.fieldName}
-                  align={field.align}
-                  style={{ minWidth: 170 }}
-                  sx={{fontSize: '1.3em'}}
-                >
-                  {field.fieldName}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.seeds[props.table.table]
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                    {props.table.fields.map((field) => {
-                      const value = row[field.fieldName];
-                      return (
-                        <TableCell key={field.id} align={field.align} sx={{color: 'white', fontSize: '1em'}}>
-                          {field.format && typeof value === 'number'
-                            ? field.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', height: '90%' }}>
+            <TableHead>
+              <TableRow>
+                {props.table.fields.map((field) => (
+                  <TableCell
+                    key={field.fieldName}
+                    align={field.align}
+                    style={{ minWidth: 170 }}
+                    sx={{ fontSize: '1.3em' }}
+                  >
+                    {field.fieldName}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.seeds[0][props.table.table]
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
+                      {props.table.fields.map((field) => {
+                        const value = row[field.fieldName];
+                        return (
+                          <TableCell key={field.id} align={field.align} sx={{ color: 'white', fontSize: '1em' }}>
+                            {field.format && typeof value === 'number'
+                              ? field.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     </Modal>
   );

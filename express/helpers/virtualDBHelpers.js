@@ -70,7 +70,7 @@ module.exports = ({ createClientFromState }) => {
   }
 
   //query table
-  const queryTable = (databaseName, queryString) => {
+  const queryTable = async (databaseName, queryString) => {
     console.log('databaseName in query table', databaseName)
     console.log('querying tables with:', queryString)
     const newClient = createClientFromState(databaseName);

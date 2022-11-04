@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Typography, TextField } from '@mui/material'
+import { Typography, TextField, Box } from '@mui/material'
 import { FormInputText } from './FormInputText';
 
 const EditableField = (props) => {
@@ -9,17 +9,20 @@ const EditableField = (props) => {
   const databaseName = props.state.databaseName
 
 
-  // const style = {
-  //   fontSize: "50px",
-  //   margin: 14
-  // }
+  const style = {
+    fontSize: "24px",
+    margin: 0,
+    position: 'absolute',
+    left: 38,
+    p: 0
+  }
   return (
-    <div className="App">
+    <Box>
       {!isNameFocused ? (
         <Typography
-          sx={{
-            // style
-          }}
+          sx={
+            style
+          }
           // className={classes.name}
           onClick={() => {
             handleEditableField(true);
@@ -29,19 +32,13 @@ const EditableField = (props) => {
         </Typography>
       ) : (
         <TextField
+          sx={style}
           autoFocus
           value={databaseName}
           onChange={e => props.handleChange(e, "databaseName")}
           onBlur={e => handleEditableField(false)} />
-        // <FormInputText
-        // // autoFocus
-        // // // inputProps={{ className: classes.name }}
-        // // value={props.state.databaseName}
-        // // handleChange={e => props.handleChange(e, "databaseName")}
-        // // onBlur={e => props.focus(false)}
-        // />
       )}
-    </div>
+    </Box>
   );
 }
 

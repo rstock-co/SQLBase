@@ -35,7 +35,7 @@ app.use(cookieParser());
 // API Routes
 const tableApiRoutes = require("./routes/tables-api");
 const seedApiRoutes = require("./routes/seed-api");
-const seedApiRoutes = require("./routes/query-api");
+const queryApiRoutes = require("./routes/query-api");
 const userDatabaseApiRoutes = require("./routes/user-database-api");
 const virtualDatabaseApiRoutes = require("./routes/virtual-database-api");
 
