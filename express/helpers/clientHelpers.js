@@ -8,7 +8,7 @@ const createClientFromState = (databaseName) => {
   const newClient = new Client({
     connectionString: connectionString
   })
-  console.log('newclient created', newClient)
+
 
   return newClient
 }

@@ -17,7 +17,7 @@ const UserDatabases = () => {
     handleSchemaChange,
   } = useSchemaState()
 
-  const { saveProgress, loadProgress, loadDatabase, createDatabase, getDatabases } = useDatabase();
+  const { saveProgress, loadProgress, loadDatabase, createDatabase, deleteDatabase, getDatabases } = useDatabase();
   const [list, setList] = useState([]);
   const navigate = useNavigate()
 
@@ -32,33 +32,51 @@ const UserDatabases = () => {
   }, []);
   // let databases = getDatabases()
 
-  const loadHandler = (listIndex) => {
-    const databaseID = (list.length - listIndex);
-    loadDatabase(databaseID);
-    navigate("/tables");
+  const buttonHandler = (target, uuid, listIndex, databaseName) => {
+    console.log('listlength', list.length)
+    // if (listIndex === list.length) listIndex -= 1
+    // if (listIndex === 0) listIndex -= 1
+    // const databaseID = (list.length - listIndex);
 
+    if (target === "load") {
+      console.log('button uuid,', uuid)
+      loadDatabase(uuid);
+      navigate("/tables");
+    }
+    if (target === "delete") {
+      // console.log('delete', buttonParams)
+      console.log('deleteddb', uuid)
+      deleteDatabase(databaseName, uuid);
+      const newList = [...list]
+      newList.splice(listIndex, 1)
+      setList(newList);
+    }
   }
+
 
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth='false'>
-
-
         <Button>Create Database</Button>
         <div>
           {list && list.map((data, listIndex) => {
+            let uuid = JSON.parse(data.global_state).databaseUuid
+            console.log(uuid)
+
+            let databaseName = JSON.parse(data.global_state).databaseName
+            console.log(databaseName)
             return (
               <Box sx={{ margin: 4 }}>
                 <Paper>
                   <Typography>
 
-                    {JSON.parse(data.global_state).databaseName}
+                    {databaseName}
                   </Typography>
 
-                  <Button onClick={() => { loadHandler(listIndex) }}>
+                  <Button onClick={() => { buttonHandler("load", uuid) }}>
                     Load Database
                   </Button>
-                  <Button onClick={() => { loadHandler(listIndex) }}>
+                  <Button onClick={() => { buttonHandler("delete", uuid, listIndex, databaseName) }}>
                     Delete Database
                   </Button>
                 </Paper>

@@ -43,11 +43,11 @@ const useDatabase = () => {
       });
   };
 
-  const loadDatabase = (databaseID) => {
-    console.log(databaseID)
+  const loadDatabase = (uuid) => {
+    console.log(uuid)
 
     return axios
-      .get(`/api/tables`, { params: { databaseID } }) // add ${id} to route if we have multiple users
+      .get(`/api/tables`, { params: { uuid } }) // add ${id} to route if we have multiple users
       .then(data => {
         console.log(data.data)
         console.log("Loading log: ", JSON.parse(data.data[0]["global_state"]));
@@ -77,7 +77,24 @@ const useDatabase = () => {
         console.log('put createDB', createDBData)
         console.log('put createTable', createTableData)
       }))
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
   };
+
+  const deleteDatabase = async (databaseName, databaseUuid) => {
+    return axios.all([
+      await axios.post(`api/databases`, { databaseName }),
+      await axios.delete(`api/tables`, { params: { databaseUuid } })
+    ])
+      .then(axios.spread((dropDBData, removeStateData) => {
+        console.log('post dropDBData', dropDBData)
+        console.log('delete removeStateData', removeStateData)
+      }))
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  }
 
 
   const getDatabases = () => {
@@ -104,7 +121,8 @@ const useDatabase = () => {
     loadProgress,
     loadDatabase,
     createDatabase,
-    getDatabases
+    getDatabases,
+    deleteDatabase
   };
 };
 

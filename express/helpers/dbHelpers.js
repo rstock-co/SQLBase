@@ -22,11 +22,18 @@ module.exports = db => {
 
   const createDB = (dbName) => {
     // await db.connect()
-    db.query(`DROP DATABASE IF EXISTS ${dbName};`)
+    dropDB(dbName);
     return db.query(`CREATE DATABASE ${dbName};`)
       .then(result => console.log(result))
       .catch(err => err)
   };
+
+
+  const dropDB = (dbName) => {
+    return db.query(`DROP DATABASE IF EXISTS ${dbName};`)
+      .then(result => console.log(result))
+      .catch(err => err)
+  }
 
 
 
@@ -52,6 +59,7 @@ module.exports = db => {
   return {
     queryDBParams,
     queryDB,
-    createDB
+    createDB,
+    dropDB
   };
 };
