@@ -118,6 +118,7 @@ const useDatabase = () => {
   return {
     state,
     saveProgress,
+    loadData,
     loadProgress,
     loadDatabase,
     createDatabase,
