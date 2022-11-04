@@ -36,7 +36,7 @@ module.exports = ({ createDB, dropDB, queryDBParams, queryDB }) => {
   })
   router.get("/", (req, res) => {
     queryDB(
-      `SELECT global_state FROM databases WHERE user_id = 1 ORDER BY created_at DESC;`
+      `SELECT global_state FROM databases WHERE user_id = 1 ORDER BY updated_at DESC;`
     )
       .then(data => {
         res.json(data);

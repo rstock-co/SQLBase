@@ -9,6 +9,7 @@ const useDatabase = () => {
 
   const loadData = loadedData =>
     dispatch({ type: LOAD_DB_TO_STATE, loadedData });
+  //creates new unique state with uuid
   const createNewState = uuid =>
     dispatch({ type: CREATE_NEW_STATE, uuid });
 
@@ -19,6 +20,7 @@ const useDatabase = () => {
    * @returns an axios call to save/load current progress
    */
 
+  //save state progress
   const saveProgress = () => {
     const globalStateString = JSON.stringify(state);
     const databaseName = state.databaseName;
@@ -28,7 +30,7 @@ const useDatabase = () => {
       .post(`/api/tables`, { userID, databaseName, globalStateString, databaseUuid }) // add ${id} to route if we have multiple users
       .then(data => console.log("Save successful: ", data));
   };
-
+  // unused: loads last created state into state
   const loadProgress = () => {
     return axios
       .get(`/api/tables`) // add ${id} to route if we have multiple users
@@ -45,6 +47,7 @@ const useDatabase = () => {
       });
   };
 
+  //loads target database/saved state into state
   const loadDatabase = (uuid) => {
     console.log(uuid)
 
@@ -64,7 +67,7 @@ const useDatabase = () => {
 
   // get current user
 
-  // creates new pgsql database, and blank tables
+  // saves progress, creates new pgsql database, and creates tables from schema string
   const createDatabase = async (schemaString) => {
     const globalStateString = state;
     saveProgress();
@@ -98,6 +101,8 @@ const useDatabase = () => {
         console.log("Error loading: ", err);
       });
   }
+
+  //inserts into virtual database
   const seedDatabase = async (databaseName, seedString) => {
     return axios.put('/api/seed', { databaseName, seedString })
       .then(data => {
@@ -109,7 +114,20 @@ const useDatabase = () => {
       });
   }
 
+  //runs query from virtual database
+  const queryDatabase = async (databaseName, queryString) => {
+    return axios.get('/api/query', { params: { databaseName, queryString } })
+      .then(data => {
+        // console.log(JSON.parse(data.data.global_state))
+        return data.data
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  }
 
+
+  //Retrieves List of databases found in Core database
   const getDatabases = () => {
     console.log('getDatabase')
     return axios
@@ -136,6 +154,7 @@ const useDatabase = () => {
     loadDatabase,
     createDatabase,
     seedDatabase,
+    queryDatabase,
     getDatabases,
     deleteDatabase
   };

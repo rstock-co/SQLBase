@@ -35,6 +35,7 @@ app.use(cookieParser());
 // API Routes
 const tableApiRoutes = require("./routes/tables-api");
 const seedApiRoutes = require("./routes/seed-api");
+const seedApiRoutes = require("./routes/query-api");
 const userDatabaseApiRoutes = require("./routes/user-database-api");
 const virtualDatabaseApiRoutes = require("./routes/virtual-database-api");
 
@@ -54,6 +55,7 @@ const virtualDatabaseApiRoutes = require("./routes/virtual-database-api");
 app.use("/api/databases", userDatabaseApiRoutes(dbHelpers));
 app.use("/api/virtualDatabases", virtualDatabaseApiRoutes(dbSeedQueryHelpers))
 app.use("/api/seed", seedApiRoutes(dbSeedQueryHelpers))
+app.use("/api/query", queryApiRoutes(dbSeedQueryHelpers))
 app.use("/api/tables", tableApiRoutes(dbHelpers));
 
 // app.use("/api/dishes", dishesApiRoutes);

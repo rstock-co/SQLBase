@@ -10,7 +10,7 @@ CREATE TABLE databases(
   query_string TEXT,
   seed_string TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uuid_constraint UNIQUE (database_uuid)
 );
 CREATE TABLE schema_forms(
