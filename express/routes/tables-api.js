@@ -33,10 +33,24 @@ module.exports = ({ queryDBParams, queryDB }) => {
       });
   });
 
+  router.delete("/", (req, res) => {
+    const { databaseUuid } = req.query
+    console.log(req)
+    queryDB(
+      `DELETE FROM databases WHERE database_uuid = '${databaseUuid}' RETURNING *;`
+    ).then(data => {
+      res.json(data);
+    })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  })
+
   router.get("/", (req, res) => {
-    const { databaseID } = req.query
-    console.log('id', databaseID)
-    if (!databaseID) {
+    const { uuid } = req.query
+    console.log('tables-api uuid', uuid)
+    // console.log('id', databaseID)
+    if (!uuid) {
       queryDB(
         `SELECT global_state FROM databases ORDER BY created_at DESC LIMIT 1;`
       ).then(data => {
@@ -46,9 +60,11 @@ module.exports = ({ queryDBParams, queryDB }) => {
         .catch(err => {
           res.status(500).json({ error: err.message });
         });
-    } else {
-      queryDB(
-        `SELECT global_state FROM databases WHERE ID = ${databaseID} LIMIT 1;`
+    }
+    else {
+      queryDB(`
+        SELECT global_state FROM databases WHERE database_uuid = '${uuid}';      
+      `
       ).then(data => {
         res.json(data);
         console.log(data)

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-module.exports = ({ createDB, queryDBParams, queryDB }) => {
+module.exports = ({ createDB, dropDB, queryDBParams, queryDB }) => {
 
   //creates db
   router.put("/", (req, res) => {
@@ -45,6 +45,19 @@ module.exports = ({ createDB, queryDBParams, queryDB }) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  router.post("/", (req, res) => {
+    const originalDBName = req.body.databaseName
+
+    dropDB(originalDBName)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        console.log('vda', err.message)
+        res.status(500).json({ error: err.message });
+      });
+  })
 
 
   return router;

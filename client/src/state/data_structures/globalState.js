@@ -5,7 +5,7 @@ import { initialSeedState } from "./seedState";
 import uuid from 'react-uuid'
 
 export const initialGlobalState = {
-  databaseName: 'database Name',
+  databaseName: 'database_name',
   databaseUuid: uuid(),
   schemaState: [initialSchemaState],
   queryState: [initialQueryState],

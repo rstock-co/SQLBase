@@ -1,12 +1,25 @@
 import { React, useState, useEffect } from 'react';
-import { Button, Box } from '@mui/material'
+import { Button, Box, Container, Paper, Typography } from '@mui/material'
 import useDatabase from '../../state/hooks/useDatabase';
 import { useNavigate } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import theme from "../../styles/theme/theme.js";
+import EditableField from '../fields/EditableField';
+import useSchemaState from '../../state/hooks/useSchemaState';
 
 const UserDatabases = () => {
-  const navigate = useNavigate()
-  const { saveProgress, loadProgress, loadDatabase, createDatabase, getDatabases } = useDatabase();
+  const {
+    state,
+    addSchemaTable,
+    removeSchemaTable,
+    addSchemaField,
+    removeSchemaField,
+    handleSchemaChange,
+  } = useSchemaState()
+
+  const { saveProgress, loadProgress, loadDatabase, createDatabase, deleteDatabase, getDatabases } = useDatabase();
   const [list, setList] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchDatabaseList = async () => {
@@ -19,24 +32,60 @@ const UserDatabases = () => {
   }, []);
   // let databases = getDatabases()
 
-  const loadHandler = (listIndex) => {
-    const databaseID = (list.length - listIndex);
-    loadDatabase(databaseID);
-    navigate("/tables");
+  const buttonHandler = (target, uuid, listIndex, databaseName) => {
+    console.log('listlength', list.length)
+    // if (listIndex === list.length) listIndex -= 1
+    // if (listIndex === 0) listIndex -= 1
+    // const databaseID = (list.length - listIndex);
 
+    if (target === "load") {
+      console.log('button uuid,', uuid)
+      loadDatabase(uuid);
+      navigate("/tables");
+    }
+    if (target === "delete") {
+      // console.log('delete', buttonParams)
+      console.log('deleteddb', uuid)
+      deleteDatabase(databaseName, uuid);
+      const newList = [...list]
+      newList.splice(listIndex, 1)
+      setList(newList);
+    }
   }
 
+
   return (
-    <div>
-      {list && list.map((data, listIndex) => {
-        return (
-          <Box>
-            {JSON.parse(data.global_state).databaseName}
-            <Button onClick={() => { loadHandler(listIndex) }}>Load Database</Button>
-          </Box>
-        )
-      })}
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth='false'>
+        <Button>Create Database</Button>
+        <div>
+          {list && list.map((data, listIndex) => {
+            let uuid = JSON.parse(data.global_state).databaseUuid
+            console.log(uuid)
+
+            let databaseName = JSON.parse(data.global_state).databaseName
+            console.log(databaseName)
+            return (
+              <Box sx={{ margin: 4 }}>
+                <Paper>
+                  <Typography>
+
+                    {databaseName}
+                  </Typography>
+
+                  <Button onClick={() => { buttonHandler("load", uuid) }}>
+                    Load Database
+                  </Button>
+                  <Button onClick={() => { buttonHandler("delete", uuid, listIndex, databaseName) }}>
+                    Delete Database
+                  </Button>
+                </Paper>
+              </Box>
+            )
+          })}
+        </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 
