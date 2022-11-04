@@ -305,8 +305,11 @@ const globalReducer = (state, action) => {
     },
     SEED_FAKE_DATA: state => {
       const newState = deepCopy(state);
-      const seedState = newState.seedState;
-      seedState[action.tableName] = action.seedData;
+      let seedState = newState.seedState[0];
+      seedState[action.tableName] = action.seedData
+      seedState = [{
+        ...seedState,
+      }]
       return {
         ...newState,
         seedState,

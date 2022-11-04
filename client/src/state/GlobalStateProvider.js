@@ -6,7 +6,7 @@ export const GlobalContext = createContext(initialGlobalState);
 
 const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(globalReducer, initialGlobalState);
-
+  console.log('STATE LOGGGG', state)
   return (
     <GlobalContext.Provider value={[state, dispatch]}>
       {children}

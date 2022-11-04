@@ -20,12 +20,13 @@ export const generateSeedSQL = seedState => {
   let seedStrings = [];
   let firstLine = [];
   let values = [];
-
-  Object.entries(seedState).forEach(([table, seedData], i) => {
+  console.log('seedState TESTEST', Object.entries(seedState[0]))
+  Object.entries(seedState[0]).forEach(([table, seedData], i) => {
     // console.log("I: ", i);
+    console.log('table', table)
+    console.log('seedData', seedData)
     firstLine[i] = `INSERT INTO ${table}(`;
     values[i] = `VALUES`;
-
     seedData.forEach((dataset, j) => {
       // console.log("J: ", j);
 
@@ -60,4 +61,3 @@ export const generateSeedSQL = seedState => {
   return seedStringLinebreak;
 };
 
-generateSeedSQL(sampleSeedState);
