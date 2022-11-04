@@ -13,7 +13,7 @@ const useGlobalState = () => {
   };
 
   const getColumnList = table => {
-    let columnNames = [];
+    let columnNames = [{label: "None", value: "none"}];
     table.fields.map(field =>
       columnNames.push({
         label: field.fieldName,

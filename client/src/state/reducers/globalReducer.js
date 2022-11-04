@@ -119,17 +119,17 @@ const globalReducer = (state, action) => {
     QUERY_ADD_TABLE: state => {
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
-      let schema = queryState.schemas;
+      let schemas = queryState.schemas;
       let queries = queryState.queries;
       const newTable = deepCopy(initialSchemaState);
       const newQueries = deepCopy(initialQueries);
-      schema.push(newTable);
+      schemas.push(newTable);
       queries.push(newQueries);
 
       queryState = [
         {
           ...queryState,
-          schema,
+          schemas,
           queries,
         },
       ];
@@ -141,12 +141,12 @@ const globalReducer = (state, action) => {
     QUERY_REMOVE_TABLE: state => {
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
-      const schema = queryState.schemas;
-      schema.splice(action.tableIndex, 1);
+      const schemas = queryState.schemas;
+      schemas.splice(action.tableIndex, 1);
       queryState = [
         {
           ...queryState,
-          schema,
+          schemas,
         },
       ];
       return {
@@ -190,7 +190,11 @@ const globalReducer = (state, action) => {
       let queryState = newState.queryState[0];
       let queries = queryState.queries;
       if (action.queryType === "name") {
-        queries[action.queryIndex].table = action.queryName;
+        if (action.queryName !== "none") {
+          queries[action.queryIndex].table = action.queryName;
+        } else {
+          queries[action.queryIndex].table = ""
+        }
         queryState = [
           {
             ...queryState,
@@ -203,7 +207,11 @@ const globalReducer = (state, action) => {
         };
       }
       if (action.queryType === "columns") {
-        queries[action.queryIndex].columns.push(action.queryName);
+        if (action.queryName !== "none") {
+          queries[action.queryIndex].columns.push(action.queryName);
+        } else {
+          queries[action.queryIndex].columns.splice(action.fieldIndex, 1);
+        }
         queryState = [
           {
             ...queryState,
@@ -216,8 +224,12 @@ const globalReducer = (state, action) => {
         };
       }
       if (action.queryType === "aggregate") {
-        queries[action.queryIndex].aggregate[action.fieldIndex] =
+        if (action.queryName !== "none") {
+          queries[action.queryIndex].aggregate[action.fieldIndex] =
           action.queryName;
+        } else {
+          queries[action.queryIndex].aggregate.splice(action.fieldIndex, 1)
+        }
         queryState = [
           {
             ...queryState,
@@ -276,8 +288,30 @@ const globalReducer = (state, action) => {
         };
       }
       if (action.queryType === "groupBy") {
-        queries[action.queryIndex].groupBy[action.fieldIndex] =
+        if (action.queryName !== 'none') {
+          queries[action.queryIndex].groupBy[action.fieldIndex] =
           action.queryName;
+        } else {
+          queries[action.queryIndex].groupBy.splice(action.fieldIndex, 1)
+        }
+        queryState = [
+          {
+            ...queryState,
+            queries,
+          },
+        ];
+        return {
+          ...newState,
+          queryState,
+        };
+      }
+      if (action.queryType === "orderBy") {
+        if (action.queryName !== "none") {
+          queries[action.queryIndex].orderBy[action.fieldIndex] =
+          action.queryName;
+        } else {
+          queries[action.queryIndex].orderBy.splice(action.fieldIndex, 1)
+        }
         queryState = [
           {
             ...queryState,

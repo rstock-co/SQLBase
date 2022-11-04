@@ -10,6 +10,7 @@ export const initialQueries = {
   aggregateAs: [],
   having: [],
   groupBy: [],
+  orderBy: [],
 };
 
 export const initialQueryState = {

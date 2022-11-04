@@ -45,7 +45,7 @@ const QueriesForm = ({
               label={"Column"}
               menuOptions={getColumnList(table)}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'columns')
+                handleQuery(e, tableIndex, 'columns', fieldIndex)
               }
               value={queries[tableIndex].columns[fieldIndex]}
             />
@@ -74,6 +74,7 @@ const QueriesForm = ({
                 { label: "Count", value: 'COUNT' },
                 { label: "Max", value: 'MAX' },
                 { label: "Min", value: 'MIN' },
+                { label: "None", value: "none"}
               ]}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'aggregate', fieldIndex)
@@ -137,7 +138,7 @@ const QueriesForm = ({
               label={"Order by"}
               menuOptions={getColumnList(table)}
               handleChange={e =>
-                handleQuery(e, tableIndex, 'orderBy')
+                handleQuery(e, tableIndex, 'orderBy', fieldIndex)
               }
             />
             {queries[tableIndex].orderBy && <FormInputDropdown

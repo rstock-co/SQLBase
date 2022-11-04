@@ -126,7 +126,7 @@ const SeedsModal = (props) => {
     >
       <Box sx={style}>
         <TableContainer id='tableContainer' ref={tableRef} sx={{ color: 'white' }}>
-          <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', height: '90%' }}>
+          <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', height: '90%', display:"block", overflowX: "auto", whiteSpace: "nowrap" }}>
             <TableHead>
               <TableRow>
                 {props.table.fields.map((field) => (
@@ -149,7 +149,7 @@ const SeedsModal = (props) => {
                       {props.table.fields.map((field) => {
                         const value = row[field.fieldName];
                         return (
-                          <TableCell key={field.id} align={field.align} sx={{ color: 'white', fontSize: '1em' }}>
+                          <TableCell key={field.id} align={field.align} sx={{ color: 'white', fontSize: '1em', overflow:"hidden" ,whiteSpace: "nowrap" }}>
                             {field.format && typeof value === 'number'
                               ? field.format(value)
                               : value}

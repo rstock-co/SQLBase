@@ -41,7 +41,7 @@ export const generateSeedSQL = seedState => {
       });
     });
     seedStrings[i] = `${firstLine[i]}
-    ${values[i]};`.replace(/'/g, "\'");
+    ${values[i]};`.replace(/'/g, "\u0027");
   });
 
   let seedStringLinebreak = seedStrings.join("\r\n\n");
