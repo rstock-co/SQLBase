@@ -160,7 +160,6 @@ const CreateSchemaPage = () => {
 
       </div>
       <Box id="schema-buttons">
-
         <Button primary="true" onClick={() => buttonHandler("modal")}>
           Generate ERD
         </Button>

@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const debug = require("debug")("express:server");
+var bodyParser = require('body-parser');
 
 /**
  * Database setup
@@ -27,6 +28,8 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 /**
  * Define Routes

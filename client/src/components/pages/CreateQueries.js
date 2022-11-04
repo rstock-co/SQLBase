@@ -21,13 +21,21 @@ const CreateQueriesPage = () => {
   console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
 
   const { getTableNames, getColumnList } = useGlobalState();
-  const { saveProgress, loadProgress } = useDatabase();
+  const { saveProgress, loadProgress, queryDatabase } = useDatabase();
 
   console.log("QUERY PAGE STATE: ", state);
 
   const tableNameList = getTableNames();
   let schemas = state.queryState[0].schemas;
   let queries = state.queryState[0].queries;
+
+  const buttonHandler = async (target, tableIndex) => {
+    if (target === 'query') {
+      let result = await queryDatabase(state.databaseName, generateQuerySQL(queries)[tableIndex])
+
+      console.log(result)
+    }
+  }
 
   return (
     <main>
@@ -47,6 +55,9 @@ const CreateQueriesPage = () => {
                   handleQuery={setQueryParams}
                   queries={queries}
                 />
+                <Button onClick={() => buttonHandler('query', tableIndex)}>
+                  Query Database
+                </Button>
               </form>
               <div className="demo">
                 <CopyBlock
@@ -61,6 +72,7 @@ const CreateQueriesPage = () => {
             </div>
           );
         })}
+
 
         <Button id="add-table" primary="true" onClick={() => addQueryTable()}>
           Add Table

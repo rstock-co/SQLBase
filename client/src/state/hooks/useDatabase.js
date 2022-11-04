@@ -116,10 +116,12 @@ const useDatabase = () => {
 
   //runs query from virtual database
   const queryDatabase = async (databaseName, queryString) => {
-    return axios.get('/api/query', { params: { databaseName, queryString } })
+    console.log(databaseName, queryString)
+    return axios.get('/api/query', { params: { databaseName: databaseName, queryString: queryString } })
       .then(data => {
         // console.log(JSON.parse(data.data.global_state))
-        return data.data
+        console.log(data.data.rows)
+        return data.data.rows
       })
       .catch(err => {
         console.log("Error loading: ", err);

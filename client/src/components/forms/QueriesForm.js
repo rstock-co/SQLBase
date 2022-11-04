@@ -74,7 +74,7 @@ const QueriesForm = ({
                 { label: "Count", value: 'COUNT' },
                 { label: "Max", value: 'MAX' },
                 { label: "Min", value: 'MIN' },
-                { label: "None", value: "none"}
+                { label: "None", value: "none" }
               ]}
               handleChange={e =>
                 handleQuery(e, tableIndex, 'aggregate', fieldIndex)
@@ -159,6 +159,7 @@ const QueriesForm = ({
       })}
 
       <div className="add-remove-button">
+
         <Button
           key={`Remove-${tableIndex}`}
           primary="true"

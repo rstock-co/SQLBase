@@ -60,13 +60,13 @@ module.exports = ({ createClientFromState }) => {
     newClient.connect();
     console.log(`12Connected to ${databaseName} on ${process.env.DB_HOST}`);
 
-
-
-    await newClient.query(seedString)
-      .then(result => console.log('insertTB', result))
+    return await newClient.query(seedString)
+      .then(result => {
+        console.log('insertTB', result)
+        newClient.end();
+      })
       .catch(err => err.message)
 
-    newClient.end();
   }
 
   //query table
@@ -77,11 +77,15 @@ module.exports = ({ createClientFromState }) => {
     newClient.connect();
     console.log(`12Connected to ${databaseName} on ${process.env.DB_HOST}`);
 
-    await newClient.query(queryString)
-      .then(result => console.log('queryTB', result))
+    return await newClient.query(queryString)
+      .then(result => {
+        console.log('queryTB', result)
+
+        newClient.end();
+        return result
+      })
       .catch(err => err.message)
 
-    newClient.end();
   }
   return {
     createTable,
