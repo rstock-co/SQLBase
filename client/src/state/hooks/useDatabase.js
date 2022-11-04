@@ -65,6 +65,7 @@ const useDatabase = () => {
   // creates new pgsql database, and blank tables
   const createDatabase = async (schemaString) => {
     const globalStateString = state;
+    saveProgress();
 
     const userID = 1;
     console.log(globalStateString)
@@ -118,6 +119,7 @@ const useDatabase = () => {
   return {
     state,
     saveProgress,
+    loadData,
     loadProgress,
     loadDatabase,
     createDatabase,

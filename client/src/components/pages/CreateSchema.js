@@ -55,10 +55,6 @@ const CreateSchemaPage = () => {
         setIsOpen({ save: true, message: "Save Success!" });
         saveProgress();
         break;
-      case "load":
-        setIsOpen({ load: true, message: "Load Success!" });
-        loadProgress();
-        break;
       case "createDB":
         let allStrings = generateSQL(state.schemaState);
         createDatabase(allStrings.join(""));
@@ -150,9 +146,6 @@ const CreateSchemaPage = () => {
         </Button>
         <Button primary="true" onClick={() => buttonHandler("save")}>
           Save Progress
-        </Button>
-        <Button primary="true" onClick={() => buttonHandler("load")}>
-          Load Progress
         </Button>
         <Button primary="true" onClick={() => buttonHandler("createDB")}>
           Create Database

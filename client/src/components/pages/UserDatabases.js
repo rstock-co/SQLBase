@@ -6,7 +6,7 @@ import { ThemeProvider } from '@emotion/react';
 import theme from "../../styles/theme/theme.js";
 import EditableField from '../fields/EditableField';
 import useSchemaState from '../../state/hooks/useSchemaState';
-
+import { initialGlobalState } from '../../state/data_structures/globalState';
 const UserDatabases = () => {
   const {
     state,
@@ -17,7 +17,14 @@ const UserDatabases = () => {
     handleSchemaChange,
   } = useSchemaState()
 
-  const { saveProgress, loadProgress, loadDatabase, createDatabase, deleteDatabase, getDatabases } = useDatabase();
+  const {
+    saveProgress,
+    loadData,
+    loadProgress,
+    loadDatabase,
+    createDatabase,
+    deleteDatabase,
+    getDatabases } = useDatabase();
   const [list, setList] = useState([]);
   const navigate = useNavigate()
 
@@ -51,13 +58,17 @@ const UserDatabases = () => {
       newList.splice(listIndex, 1)
       setList(newList);
     }
+    if (target === "create") {
+      loadData(initialGlobalState)
+      navigate("/tables");
+    }
   }
 
 
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth='false'>
-        <Button>Create Database</Button>
+        <Button onClick={() => { buttonHandler("create") }}>Create Database</Button>
         <div>
           {list && list.map((data, listIndex) => {
             let uuid = JSON.parse(data.global_state).databaseUuid
