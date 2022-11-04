@@ -88,12 +88,12 @@ const useSeedState = () => {
           (num_employees *
             num_products *
             randFloat({ min: 1, max: 2, fraction: 2 })) /
-            1000
+          1000
         ) * 1000;
 
       companies.push({
         name: randBrand(),
-        CEO: randFullName(),
+        ceo: randFullName(),
         num_employees,
         num_products,
         annual_revenue,
@@ -118,7 +118,7 @@ const useSeedState = () => {
         Math.round(
           (30000 +
             years_exp * 5000 * randFloat({ min: 1, max: 2, fraction: 2 })) /
-            1000
+          1000
         ) * 1000;
       let address = `${employee.address.street}, ${employee.address.city}, ${employee.address.country}`;
       let first_name = employee.firstName;
@@ -155,8 +155,8 @@ const useSeedState = () => {
       let product = randProduct();
       let name = product.title;
       let sku = product.id;
-      let rating = product.rating.rate;
-      let rating_count = product.rating.count;
+      let rating = Number(product.rating.rate);
+      let rating_count = Number(product.rating.count);
       let msrp = Math.round(randNumber({ min: 20, max: 1000 }) / 5) * 5;
       let cost = randFloat({ min: 5, max: msrp - msrp * 0.1, fraction: 2 });
       let profit_margin = ((msrp - cost) / cost) * 100;
