@@ -14,8 +14,6 @@ import {
   randBrand,
   randFullName,
   randProduct,
-  randProductDescription,
-  randProductCategory,
 } from "@ngneat/falso";
 
 import { SEED_ALL_FAKE_DATA, SEED_FAKE_DATA } from "../reducers/globalReducer";
@@ -155,22 +153,24 @@ const useSeedState = () => {
     const products = [];
     for (let i = 0; i < numDataPoints; i++) {
       let product = randProduct();
+      let name = product.title;
       let sku = product.id;
       let rating = product.rating.rate;
       let rating_count = product.rating.count;
-      let retail = Math.round(randNumber({ min: 20, max: 1000 }) / 5) * 5;
-      let cost = randFloat({ min: 5, max: retail - retail * 0.1, fraction: 2 });
-      let profit_margin = ((retail - cost) / cost) * 100;
+      let msrp = Math.round(randNumber({ min: 20, max: 1000 }) / 5) * 5;
+      let cost = randFloat({ min: 5, max: msrp - msrp * 0.1, fraction: 2 });
+      let profit_margin = ((msrp - cost) / cost) * 100;
 
-      ["id", "rating"].forEach(i => delete product[i]);
+      ["id", "title", "price", "image", "rating"].forEach(
+        i => delete product[i]
+      );
 
       products.push({
+        ...product,
         manufacturer: randBrand(),
-        name: "name",
+        name,
         sku,
-        description: randProductDescription(),
-        category: randProductCategory(),
-        retail,
+        msrp,
         cost,
         profit_margin,
         rating,
