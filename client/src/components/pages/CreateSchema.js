@@ -7,9 +7,7 @@ import useSchemaState from "../../state/hooks/useSchemaState";
 import useDatabase from "../../state/hooks/useDatabase";
 import ERDModal from "../modal/ERDModal";
 import useSeedState from "../../state/hooks/useSeedState";
-import {
-  seedFormData,
-} from "../../state/data_structures/seedState";
+import { seedFormData } from "../../state/data_structures/seedState";
 import {
   generateSQL,
   generateReferenceObject,
@@ -30,11 +28,9 @@ const CreateSchemaPage = () => {
     handleSchemaChange,
   } = useSchemaState();
 
-  const { generateSeedState } =
-    useSeedState();
+  const { generateAllSeedState } = useSeedState();
 
-
-  console.log(state.databaseUuid)
+  console.log(state.databaseUuid);
 
   const { saveProgress, loadProgress, createDatabase } = useDatabase();
   const [isNameFocused, setIsNamedFocused] = useState(false);
@@ -77,7 +73,7 @@ const CreateSchemaPage = () => {
     console.log("openState", isOpen);
   };
   const handleClose = () => isOpen && setIsOpen(false);
-  const handleEditableField = (focused) => setIsNamedFocused(focused);
+  const handleEditableField = focused => setIsNamedFocused(focused);
 
   const copyHandler = () => {
     let allStrings = generateSQL(state.schemaState);
@@ -87,7 +83,12 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
-      <EditableField focused={isNameFocused} handleChange={handleSchemaChange} focus={handleEditableField} state={state} />
+      <EditableField
+        focused={isNameFocused}
+        handleChange={handleSchemaChange}
+        focus={handleEditableField}
+        state={state}
+      />
       <div id="container">
         {isOpen.modal && (
           <ERDModal
@@ -162,7 +163,10 @@ const CreateSchemaPage = () => {
         <Button primary="true" onClick={() => buttonHandler("copy")}>
           Copy All Schema
         </Button>
-        <Button primary="true" onClick={() => generateSeedState(seedFormData)}>
+        <Button
+          primary="true"
+          onClick={() => generateAllSeedState(seedFormData)}
+        >
           Generate Seeds
         </Button>
       </div>

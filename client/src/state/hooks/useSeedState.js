@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalStateProvider";
-import { numRowsDropdown } from "../data_structures/seedState";
 
 import {
   randNumber,
@@ -19,7 +18,7 @@ import {
   randProductCategory,
 } from "@ngneat/falso";
 
-import { SEED_FAKE_DATA } from "../reducers/globalReducer";
+import { SEED_ALL_FAKE_DATA, SEED_FAKE_DATA } from "../reducers/globalReducer";
 
 // helper functions (can move later)
 
@@ -77,12 +76,6 @@ const useSeedState = () => {
    * @returns an array of objects (1 array/table) containing the seed data
    */
 
-  // DB Seed example:
-  // INSERT INTO users(first_name, last_name, email, password)
-  // VALUES ('Mario', 'Bros', 'mario@nintendo.com', 'test'),
-  // ('Luigi', 'Bros', 'luigi@nintendo.com', 'test'),
-  // ('Donkey', 'Kong', 'donkey@nintendo.com', 'test');
-
   /**
    * COMPANIES (name, # of employees, # of products, # of countries, CEO, head office location)
    */
@@ -116,19 +109,6 @@ const useSeedState = () => {
   /**
    * EMPLOYEES
    */
-
-  // const employee = {
-  // address: "1376 Hilma Mills, Opalbury, Congo";
-  // age: 45;
-  // email: "xiaoping-svoboda715@googlemail.com";
-  // first_name: "Xiaoping";
-  // job_title: "Customer Security Manager";
-  // last_name: "Svoboda";
-  // office: "West Everardo, Czech Republic";
-  // phone: "+380(33)118 36 68";
-  // salary: 280000;
-  // years_exp: 25;
-  // }
 
   const employeeSeed = numDataPoints => {
     const employees = [];
@@ -200,7 +180,7 @@ const useSeedState = () => {
     return products;
   };
 
-  const generateSeedState = seedFormData => {
+  const generateAllSeedState = seedFormData => {
     const tableToSeedFn = {
       companies: companySeed,
       employees: employeeSeed,
@@ -210,7 +190,20 @@ const useSeedState = () => {
     seedFormData.forEach(table => {
       seedState[table[0]] = tableToSeedFn[table[0]](table[1]);
     });
-    dispatch({ type: SEED_FAKE_DATA, seedState });
+    dispatch({ type: SEED_ALL_FAKE_DATA, seedState });
+  };
+
+  const generateSeedState = (tableName, numDataPoints) => {
+    const tableToSeedFn = {
+      companies: companySeed,
+      employees: employeeSeed,
+      products: productSeed,
+    };
+    let seedData = {};
+    seedData = tableToSeedFn[tableName](numDataPoints);
+    console.log("SEED DATA FOR DISPATCH: ", seedData);
+
+    dispatch({ type: SEED_FAKE_DATA, seedData, tableName });
   };
 
   return {
@@ -218,6 +211,7 @@ const useSeedState = () => {
     companySeed,
     employeeSeed,
     productSeed,
+    generateAllSeedState,
     generateSeedState,
   };
 };

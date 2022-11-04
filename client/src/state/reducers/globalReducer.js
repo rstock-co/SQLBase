@@ -23,6 +23,7 @@ export const SET_QUERY_PARAMS = "SET_QUERY_PARAMS";
 
 // seed
 export const SEED_FAKE_DATA = "SEED_FAKE_DATA";
+export const SEED_ALL_FAKE_DATA = "SEED_ALL_FAKE_DATA";
 
 /**
  * The reducer function from the 'useReducer' hook, specifies the actions (functions to execute) to update the state object
@@ -294,9 +295,18 @@ const globalReducer = (state, action) => {
       };
     },
     //--------------------------------------- SEED REDUCERS
-    SEED_FAKE_DATA: state => {
+    SEED_ALL_FAKE_DATA: state => {
       const newState = deepCopy(state);
       const seedState = action.seedState;
+      return {
+        ...newState,
+        seedState,
+      };
+    },
+    SEED_FAKE_DATA: state => {
+      const newState = deepCopy(state);
+      const seedState = newState.seedState;
+      seedState[action.tableName] = action.seedData;
       return {
         ...newState,
         seedState,

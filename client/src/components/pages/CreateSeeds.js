@@ -14,9 +14,8 @@ import { CopyBlock, monokai } from "react-code-blocks";
 import { generateSeedSQL } from "../../helpers/seedFormHelpers";
 
 const CreateSeedsPage = () => {
-  const { state, employeeSeed, companySeed, productSeed, generateSeedState } =
-    useSeedState();
-  const { getTableNames, getColumnList } = useGlobalState();
+  const { state, generateSeedState, generateAllSeedState } = useSeedState();
+  const { getTableNames } = useGlobalState();
   const { saveProgress, loadProgress } = useDatabase();
 
   const style = {
@@ -31,6 +30,7 @@ const CreateSeedsPage = () => {
   // );
 
   const tableNameList = getTableNames();
+  console.log("Table Name List", tableNameList);
   // const usersTable = state.schemaState.filter(
   //   (table) => table.table === "users"
   // )[0];
@@ -45,15 +45,11 @@ const CreateSeedsPage = () => {
     table: null,
   });
 
-  const buttonHandler = (table) => {
+  const buttonHandler = table => {
     setIsOpen({ modal: true, table: table });
   };
 
   const handleClose = () => isOpen && setIsOpen(false);
-
-  const dropDownHandler = (event) => {
-    
-  }
 
   return (
     <main id="seedsMain">
@@ -67,14 +63,14 @@ const CreateSeedsPage = () => {
       )}
       <div id="seedsContainer">
         <form id="seedsForm">
-        <label id='seedsFormTitle'>Seeds Databse</label>
+          <label id="seedsFormTitle">Seeds Databse</label>
           <SeedsForm
             key={`SeedsForm`}
             tableNameList={tableNameList}
             numRowsDropdown={numRowsDropdown}
             table={table}
             buttonHandler={buttonHandler}
-            dropDownHandler={dropDownHandler}
+            dropDownHandler={generateSeedState}
           />
         </form>
         <div id="seedsDemo">
@@ -88,7 +84,7 @@ const CreateSeedsPage = () => {
           />
         </div>
       </div>
-      <Button primary="true" onClick={() => generateSeedState(seedFormData)}>
+      <Button primary="true" onClick={() => generateAllSeedState(seedFormData)}>
         Seed into State
       </Button>
       <Button primary="true" onClick={() => saveProgress()}>
