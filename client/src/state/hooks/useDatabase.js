@@ -98,6 +98,16 @@ const useDatabase = () => {
         console.log("Error loading: ", err);
       });
   }
+  const seedDatabase = async (databaseName, seedString) => {
+    return axios.put('/api/seed', { databaseName, seedString })
+      .then(data => {
+        // console.log(JSON.parse(data.data.global_state))
+        return data.data
+      })
+      .catch(err => {
+        console.log("Error loading: ", err);
+      });
+  }
 
 
   const getDatabases = () => {
@@ -125,6 +135,7 @@ const useDatabase = () => {
     loadProgress,
     loadDatabase,
     createDatabase,
+    seedDatabase,
     getDatabases,
     deleteDatabase
   };

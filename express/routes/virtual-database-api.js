@@ -18,8 +18,9 @@ module.exports = ({ createTable, dropDB, seedTable, queryTable }) => {
         console.log('vda', err.message)
         res.status(500).json({ error: err.message });
       });
-
   })
+
+
   router.post("/", (req, res) => {
     const globalStateString = req.body.globalStateString;
     const originalDBName = globalStateString.databaseName;

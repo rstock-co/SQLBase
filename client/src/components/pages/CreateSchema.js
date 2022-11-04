@@ -8,6 +8,7 @@ import useDatabase from "../../state/hooks/useDatabase";
 import ERDModal from "../modal/ERDModal";
 import useSeedState from "../../state/hooks/useSeedState";
 import { seedFormData } from "../../state/data_structures/seedState";
+import { generateSeedSQL } from "../../helpers/seedFormHelpers";
 import {
   generateSQL,
   generateReferenceObject,
@@ -32,7 +33,7 @@ const CreateSchemaPage = () => {
 
   console.log(state.databaseUuid);
 
-  const { saveProgress, loadProgress, createDatabase } = useDatabase();
+  const { saveProgress, loadProgress, createDatabase, seedDatabase } = useDatabase();
   const [isNameFocused, setIsNamedFocused] = useState(false);
   const [isOpen, setIsOpen] = useState({
     modal: false,
@@ -58,6 +59,11 @@ const CreateSchemaPage = () => {
       case "createDB":
         let allStrings = generateSQL(state.schemaState);
         createDatabase(allStrings.join(""));
+        break;
+      case "seed":
+        let seedString = generateSeedSQL(state.seedState);
+        console.log(seedString)
+        seedDatabase(state.databaseName, seedString);
         break;
       case "addTable":
         setIsOpen({ addTable: true, message: "Table Added" });
@@ -155,6 +161,9 @@ const CreateSchemaPage = () => {
         </Button>
         <Button primary="true" onClick={() => buttonHandler("copy")}>
           Copy All Schema
+        </Button>
+        <Button primary="true" onClick={() => buttonHandler("seed")}>
+          Seed Database
         </Button>
         <Button
           primary="true"
