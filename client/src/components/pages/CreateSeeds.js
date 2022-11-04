@@ -55,6 +55,7 @@ const CreateSeedsPage = () => {
     <main id="seedsMain">
       {isOpen.modal && (
         <SeedsModal
+          id="seedsModal"
           open={isOpen}
           onClick={handleClose}
           table={isOpen.table}
