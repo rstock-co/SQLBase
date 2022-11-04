@@ -38,7 +38,7 @@ const useSeedState = () => {
       (✓) there should be a 'load progress' button for user to load their schema
       (✓) provide list of tables in state to the Seed Form for rendering
       (✓) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
-      (Lawrence?) build SeedForm in UI
+      (Lawrence) build SeedForm in UI
       (user) user will make selections and then click button 'Seed Data' at bottom of form
       (✘ ) build a click handler function for the 'Seed Data' button which will execute seed proces
 
@@ -49,8 +49,10 @@ const useSeedState = () => {
              Build a set of helper functions which take in (colName, numDataPoints)
              and return an array of objects (1 per table) containing the seed data
 
-    ------------------------ | REMAINING TASKS | ----------------------------------
-      (✘ ) Save the seed data into seedState globally (need to determine data structure)
+      (✓) Save the seed data into seedState globally (need to determine data structure)
+
+      ------------------------ | REMAINING TASKS | ----------------------------------
+      (✘ ) Convert seedState object to SQL language for seeding tables
       (✘ ) Render the seeded data as tables on the screen (so user can verify no errors / make changes to schema)
       (✘ ) user will finish seed process and then click "Generate Database" when done
 
@@ -111,11 +113,10 @@ const useSeedState = () => {
     return companies;
   };
 
-  // console.log("Companies: ", companySeed(15));
-
   /**
    * EMPLOYEES
    */
+
   // const employee = {
   // address: "1376 Hilma Mills, Opalbury, Congo";
   // age: 45;
@@ -166,8 +167,6 @@ const useSeedState = () => {
     return employees;
   };
 
-  // console.log("Employees: ", employeeSeed(15));
-
   /**
    * PRODUCTS (name, description, price, status, level (subscription plan), product_line, ...[look at falso library])
    */
@@ -200,8 +199,6 @@ const useSeedState = () => {
     }
     return products;
   };
-
-  // console.log("Products: ", productSeed(15));
 
   const generateSeedState = seedFormData => {
     const tableToSeedFn = {

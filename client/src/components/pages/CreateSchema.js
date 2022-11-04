@@ -6,7 +6,10 @@ import SchemaTable from "../tables/SchemaTable";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import useDatabase from "../../state/hooks/useDatabase";
 import ERDModal from "../modal/ERDModal";
-
+import useSeedState from "../../state/hooks/useSeedState";
+import {
+  seedFormData,
+} from "../../state/data_structures/seedState";
 import {
   generateSQL,
   generateReferenceObject,
@@ -26,6 +29,11 @@ const CreateSchemaPage = () => {
     removeSchemaField,
     handleSchemaChange,
   } = useSchemaState();
+
+  const { generateSeedState } =
+    useSeedState();
+
+
   console.log(state.databaseUuid)
 
   const { saveProgress, loadProgress, createDatabase } = useDatabase();
@@ -153,6 +161,9 @@ const CreateSchemaPage = () => {
         </Button>
         <Button primary="true" onClick={() => buttonHandler("copy")}>
           Copy All Schema
+        </Button>
+        <Button primary="true" onClick={() => generateSeedState(seedFormData)}>
+          Generate Seeds
         </Button>
       </div>
       <PageSplitter src="body-purple.png" id="tables-bottom" />
