@@ -51,6 +51,10 @@ const CreateSeedsPage = () => {
 
   const handleClose = () => isOpen && setIsOpen(false);
 
+  const dropDownHandler = (event) => {
+    
+  }
+
   return (
     <main id="seedsMain">
       {isOpen.modal && (
@@ -70,6 +74,7 @@ const CreateSeedsPage = () => {
             numRowsDropdown={numRowsDropdown}
             table={table}
             buttonHandler={buttonHandler}
+            dropDownHandler={dropDownHandler}
           />
         </form>
         <div id="seedsDemo">
@@ -93,60 +98,6 @@ const CreateSeedsPage = () => {
         Load Progress
       </Button>
     </main>
-    /* // <main>
-    //   <div id="container">
-    //     {schemas.map((table, tableIndex) =>
-    //       console.warn(queries[tableIndex]);
-    //       return (
-    //         <div id="row-container">
-    //           <form>
-    //             <QueriesForm
-    //               key={`QueriesForm - ${tableIndex}`}
-    //               table={table}
-    //               tableIndex={tableIndex}
-    //               handleChange={selectTableHandler}
-    //               removeField={removeField}
-    //               addField={addField}
-    //               tableNameList={tableNameList}
-    //               removeQuery={removeQueryTable}
-    //               getColumnList={getColumnList}
-    //               handleQuery={setQueryParams}
-    //             />
-    //           </form>
-    //           <div className="tables">
-    //             {/* <SchemaTable
-    //               key={`table-${tableIndex}`}
-    //               table={table.table}
-    //               fields={table.fields}
-    //             />
-    //           </div>
-    //           <div className="demo">
-    //             <CopyBlock
-    //               key={`CopyBlock-${tableIndex}`}
-    //               language="sql"
-    //               text={generateQuerySQL(queries[tableIndex])}
-    //               theme={monokai}
-    //               wrapLines={true}
-    //               codeBlock
-    //             />
-    //           </div>
-    //         </div>
-    //       );
-    //     })}
-
-    //     <Button id="add-table" primary="true" onClick={() => addQueryTable()}>
-    //       Add Table
-    //     </Button>
-    //     <Button primary="true" onClick={() => saveSchemaProgress()}>
-    //       Save Progress
-    //     </Button>
-    //     <Button primary="true" onClick={() => loadSchemaProgress()}>
-    //       Load Progress
-    //     </Button>
-    //   </div>
-    //   <PageSplitter src="body-purple.png" id="tables-bottom" />
-    // </main>
-    */
   );
 };
 export default CreateSeedsPage;

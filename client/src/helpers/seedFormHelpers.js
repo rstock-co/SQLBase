@@ -30,32 +30,34 @@ export const generateSeedSQL = seedState => {
       // console.log("J: ", j);
 
       Object.entries(dataset).forEach(([field, value], k) => {
-        console.log("K: ", k);
 
         if (j === 0) {
           k === Object.keys(dataset).length - 1
-            ? (firstLine[i] += `'${field}')`)
-            : (firstLine[i] += `'${field}', `);
+            ? (firstLine[i] += `"${field}")`)
+            : (firstLine[i] += `"${field}", `);
         }
         if (k === 0) {
           // console.log("CURRENT VALUE (k === 0): ", value);
-          values[i] += ` ('${value}', `;
+          values[i] += ` (${typeof value === 'number' ? value : '"' + value + '"'}, `;
         } else if (k === Object.keys(dataset).length - 1) {
           // console.log("CURRENT VALUE (k === end of object): ", value);
           j === seedData.length - 1
-            ? (values[i] += `'${value}')`)
-            : (values[i] += `'${value}'),`);
+            ? (values[i] += `${typeof value === 'number' ? value : '"' + value + '"'})`)
+            : (values[i] += `${typeof value === 'number' ? value : '"' + value + '"'}),\n                  `);
         } else {
           // console.log("CURRENT VALUE (normal): ", value);
-          values[i] += `'${value}', `;
+          values[i] += `${typeof value === 'number' ? value : '"' + value + '"'}, `;
         }
       });
     });
-    seedStrings[i] = `${firstLine[i]} ${values[i]}`;
+    seedStrings[i] = `${firstLine[i]} 
+    ${values[i]};`.replace(/'/g, '');
   });
 
-  console.log(seedStrings);
-  return seedStrings;
+  console.log('seedStrings', seedStrings);
+  let seedStringLinebreak = seedStrings.join('\r\n\n')
+
+  return seedStringLinebreak;
 };
 
 generateSeedSQL(sampleSeedState);
