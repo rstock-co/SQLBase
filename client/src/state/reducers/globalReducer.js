@@ -3,10 +3,13 @@ import {
   schemaTableFields,
   initialSchemaState,
 } from "../data_structures/schemaState";
+import { initialGlobalState } from "../data_structures/globalState";
 import { initialQueries } from "../data_structures/queryState";
+import uuid from 'react-uuid'
 
 // database
 export const LOAD_DB_TO_STATE = "LOAD_DB_TO_STATE";
+export const CREATE_NEW_STATE = "CREATE_NEW_STATE";
 
 // schema
 export const SCHEMA_ADD_TABLE = "SCHEMA_ADD_TABLE";
@@ -35,6 +38,10 @@ export const SEED_ALL_FAKE_DATA = "SEED_ALL_FAKE_DATA";
 const globalReducer = (state, action) => {
   const reducers = {
     LOAD_DB_TO_STATE: state => action.loadedData,
+    CREATE_NEW_STATE: state => {
+      initialGlobalState.databaseUuid = uuid();
+      return initialGlobalState;
+    },
     SCHEMA_ADD_TABLE: state => {
       const newState = deepCopy(state);
       const schemaState = newState.schemaState;

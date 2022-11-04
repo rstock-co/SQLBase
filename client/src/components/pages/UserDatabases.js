@@ -19,7 +19,7 @@ const UserDatabases = () => {
 
   const {
     saveProgress,
-    loadData,
+    createNewState,
     loadProgress,
     loadDatabase,
     createDatabase,
@@ -59,7 +59,8 @@ const UserDatabases = () => {
       setList(newList);
     }
     if (target === "create") {
-      loadData(initialGlobalState)
+
+      createNewState()
       navigate("/tables");
     }
   }

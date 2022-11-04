@@ -2,13 +2,15 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalStateProvider";
 import axios from "axios";
 
-import { LOAD_DB_TO_STATE } from "../reducers/globalReducer";
+import { LOAD_DB_TO_STATE, CREATE_NEW_STATE } from "../reducers/globalReducer";
 
 const useDatabase = () => {
   const [state, dispatch] = useContext(GlobalContext);
 
   const loadData = loadedData =>
     dispatch({ type: LOAD_DB_TO_STATE, loadedData });
+  const createNewState = uuid =>
+    dispatch({ type: CREATE_NEW_STATE, uuid });
 
   /**
    * Save/load progress:  User can save the current global state (all schema, queries, seeds)
@@ -119,7 +121,7 @@ const useDatabase = () => {
   return {
     state,
     saveProgress,
-    loadData,
+    createNewState,
     loadProgress,
     loadDatabase,
     createDatabase,
