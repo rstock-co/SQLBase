@@ -9,6 +9,7 @@ import CreateQueriesPage from "./components/pages/CreateQueries";
 import CreateSeedsPage from "./components/pages/CreateSeeds";
 import GlobalProvider from "./state/GlobalStateProvider";
 import UserDatabases from "./components/pages/UserDatabases";
+import CreateChartsPage from "./components/pages/CreateCharts";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="queries" element={<CreateQueriesPage />} />
             <Route path="user-databases" element={<UserDatabases />} />
             <Route path="seeds" element={<CreateSeedsPage />} />
+            <Route path="charts" element={<CreateChartsPage />} />
           </Route>
         </Routes>
       </GlobalProvider>

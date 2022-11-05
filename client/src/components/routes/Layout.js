@@ -22,6 +22,9 @@ const Layout = () => {
           <li>
             <Link to="queries">Create Queries</Link>
           </li>
+          <li>
+            <Link to="charts">Charts</Link>
+          </li>
         </ul>
       </nav>
       <Outlet />
