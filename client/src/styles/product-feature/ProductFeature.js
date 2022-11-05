@@ -5,13 +5,13 @@ import HoverVideoPlayer from 'react-hover-video-player'
 
 const ProductFeature = () => {
 
-  const hoverVideoRef = useRef();
+  // const hoverVideoRef = useRef();
 
-  useEffect(() => {
-    const videoElement = hoverVideoRef.current;
+  // useEffect(() => {
+  //   const videoElement = hoverVideoRef.current;
 
-    videoElement.playbackRate = 2.5;
-  }, []);
+  //   videoElement.playbackRate = 2.5;
+  // }, []);
 
   return (
     <>

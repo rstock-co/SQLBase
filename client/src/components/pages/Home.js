@@ -35,7 +35,7 @@ const Home = () => {
 
             <PageSplitter
               className="page-splitter"
-              src="tealbanner-body.jpeg"
+              src="tealbanner-body.jpg"
               alt="banner-split"
 
             />
