@@ -140,7 +140,7 @@ const CreateQueriesPage = () => {
             }}
             onClick={() => loadProgress()}
           >
-          <DownloadIcon /> <div>  Load Progress</div>
+          <DownloadIcon /> <div>  Load </div>
           </Button>
         </Box>
       <PageSplitter src="body-purple.png" id="tables-bottom" />
