@@ -70,7 +70,7 @@ const UserDatabases = () => {
   return (
     <main>
       <ThemeProvider theme={theme}>
-        <Container id='user-database-container' maxWidth="false">
+        <Container id="user-database-container" maxWidth="false">
           <Button
             onClick={() => {
               buttonHandler("create");
@@ -78,7 +78,7 @@ const UserDatabases = () => {
           >
             Create Database
           </Button>
-          <div>
+          <div id="database-list">
             {list &&
               list.map((data, listIndex) => {
                 let uuid = JSON.parse(data.global_state).databaseUuid;
@@ -87,11 +87,18 @@ const UserDatabases = () => {
                 let databaseName = JSON.parse(data.global_state).databaseName;
                 console.log(databaseName);
                 return (
-                  <Box sx={{ margin: 4 }}>
-                    <Paper>
-                      <Typography>{databaseName}</Typography>
-
+                  <div className="database-items">
+                    <div classname="database-name">
+                      <h3>{databaseName}</h3>
+                    </div>
+                    <div className="database-buttons">
                       <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#5755a1",
+                          ":hover": { backgroundColor: "#7776a3" },
+                        }}
+                        size='small'
                         onClick={() => {
                           buttonHandler("load", uuid);
                         }}
@@ -99,6 +106,12 @@ const UserDatabases = () => {
                         Load Database
                       </Button>
                       <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#C41E3A",
+                          ":hover": { backgroundColor: "#DE3163" },
+                        }}
+                        size='small'
                         onClick={() => {
                           buttonHandler(
                             "delete",
@@ -110,8 +123,8 @@ const UserDatabases = () => {
                       >
                         Delete Database
                       </Button>
-                    </Paper>
-                  </Box>
+                    </div>
+                  </div>
                 );
               })}
           </div>

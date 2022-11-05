@@ -19,3 +19,35 @@ main {
     }
   }
 }
+
+#database-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .database-items {
+    width: 60%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(227, 227, 227);
+    padding: 1%;
+    border-radius: 1.5em;
+    .database-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .database-buttons {
+      display: flex;
+      flex-direction: row;
+      button {
+        margin-left: 3%;
+      }
+    }
+  }
+}
+
