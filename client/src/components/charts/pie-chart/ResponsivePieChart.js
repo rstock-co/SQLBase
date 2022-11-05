@@ -20,7 +20,12 @@ const ResponsivePieChart = ({
     [setActiveIndex]
   );
 
-  const chartTitle = `${tableName} - ${colName}`;
+  const chartTitle = `${
+    tableName.charAt(0).toUpperCase() + tableName.slice(1)
+  }, categorized by "${colName.charAt(0).toUpperCase() + colName.slice(1)}"`;
+  // const chartTitle = titleString.replace(/(^\w{1})|(\s+\w{1})/g, letter =>
+  //   letter.toUpperCase()
+  // );
 
   return (
     <>

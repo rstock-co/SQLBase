@@ -18,53 +18,37 @@ import {
 
 import { SEED_ALL_FAKE_DATA, SEED_FAKE_DATA } from "../reducers/globalReducer";
 
-// helper functions (can move later)
-
-const uniqueArray = array => {
-  const unique = (value, index, self) => self.indexOf(value) === index;
-  return array.filter(unique);
-};
-
 const useSeedState = () => {
   const [state, dispatch] = useContext(GlobalContext);
-
-  // console.log("dropdown: ", numRowsDropdown);
 
   /** Form UI
     -------
       (✓) there should be a 'load progress' button for user to load their schema
       (✓) provide list of tables in state to the Seed Form for rendering
       (✓) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
-      (Lawrence) build SeedForm in UI
-      (user) user will make selections and then click button 'Seed Data' at bottom of form
-      (✘ ) build a click handler function for the 'Seed Data' button which will execute seed proces
+      (✓) build SeedForm in UI
+      (✓) user will select # of fields from a dropdown box and code block will adjust in real time
 
     Seed process
     ------------
       (✓) determine a list of columns for each table (as ARRAY of strings)
       (✓) For each table, generate the selected amount of fake data points for each column.
-             Build a set of helper functions which take in (colName, numDataPoints)
-             and return an array of objects (1 per table) containing the seed data
-
+          - Build a set of helper functions which take in (colName, numDataPoints)
+            and return an array of objects (1 per table) containing the seed data
       (✓) Save the seed data into seedState globally (need to determine data structure)
-
-      ------------------------ | REMAINING TASKS | ----------------------------------
-      (✘ ) Convert seedState object to SQL language for seeding tables
-      (✘ ) Render the seeded data as tables on the screen (so user can verify no errors / make changes to schema)
-      (✘ ) user will finish seed process and then click "Generate Database" when done
+      (✓) Convert seedState object to SQL language for seeding tables
+      (✓) Render the seeded data as tables on a modal (so user can verify no errors / make changes to schema)
+      (✓) user will finish seed process and then click "Generate Database" when done
 
     Database process
     ----------------
-      (✘ ) create the database
-      (✘ ) use the SQL schema language from App 1 (schemaState) to create tables
-      (✘ ) use the seed data from App 3 to seed tables
-      (✘ ) return the number of entries from each table to verify database is seeded properly
+      (✓) create the database
+      (✓) use the SQL schema language from App 1 (schemaState) to create tables
+      (✓) use the seed data from App 3 to seed tables
 
     Execute Queries
     ---------------
-      (✘ ) conditionally render a link to a new page "Execute queries". This is a new page
-           where the user can run the queries from App 2 on their seeded database
-      (✘ )
+      (✓) a button on each query form will allow the user to run the queries from App 2 on their seeded database
 */
 
   /**
@@ -88,7 +72,7 @@ const useSeedState = () => {
           (num_employees *
             num_products *
             randFloat({ min: 1, max: 2, fraction: 2 })) /
-          1000
+            1000
         ) * 1000;
 
       companies.push({
@@ -118,7 +102,7 @@ const useSeedState = () => {
         Math.round(
           (30000 +
             years_exp * 5000 * randFloat({ min: 1, max: 2, fraction: 2 })) /
-          1000
+            1000
         ) * 1000;
       let address = `${employee.address.street}, ${employee.address.city}, ${employee.address.country}`;
       let first_name = employee.firstName;
