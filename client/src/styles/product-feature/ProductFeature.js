@@ -40,11 +40,11 @@ const ProductFeature = () => {
           margin: 4,
         }} >
 
-          {/* <Image src='https://picsum.photos/450' height='450px' width='450px'
+          <Image src='https://picsum.photos/450' height='450px' width='450px'
             duration={1000}
             shift={"right"}
-          /> */}
-          <HoverVideoPlayer
+          />
+          {/* <HoverVideoPlayer
             videoRef={hoverVideoRef}
             videoSrc="./forms.mp4"
             restartOnPaused
@@ -68,7 +68,7 @@ const ProductFeature = () => {
               <div className="loading-overlay">
                 <div className="loading-spinner" />
               </div>
-            } />
+            } /> */}
 
           <Box className="section-text" width={300}>
             <Typography variant='h5'>Powerful Form Tools</Typography>
