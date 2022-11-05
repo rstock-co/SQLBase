@@ -11,14 +11,16 @@ const Layout = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
+            <Link to="user-databases">My Databases</Link>
+          </li>
+          <li>
             <Link to="tables">Create Tables</Link>
           </li>
           <li>
-            <Link to="queries">Create Queries</Link>
+            <Link to="seeds">Create Seeds</Link>
           </li>
           <li>
-            <Link to="user-databases">My Databases</Link>
-            <Link to="seeds">Create Seeds</Link>
+            <Link to="queries">Create Queries</Link>
           </li>
         </ul>
       </nav>

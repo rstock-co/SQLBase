@@ -145,15 +145,16 @@ const CreateSchemaPage = () => {
           );
         })}
 
-        <Box>
+        <Box id='add-copy-buttons'>
           <Button
             id="add-table"
             primary="true"
             onClick={() => buttonHandler("addTable")}
+            variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" } }}
           >
             Add Table
           </Button>
-          <Button id="copy-all" primary="true" onClick={() => buttonHandler("copy")}>
+          <Button id="copy-all" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("copy")}>
             Copy All Schema
           </Button>
         </Box>
@@ -161,25 +162,19 @@ const CreateSchemaPage = () => {
       </div>
       <Box id="schema-buttons">
 
-        <Button primary="true" onClick={() => buttonHandler("modal")}>
+        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("modal")}>
           Generate ERD
         </Button>
-        <Button primary="true" onClick={() => buttonHandler("save")}>
+        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("save")}>
           Save Progress
         </Button>
-        <Button primary="true" onClick={() => buttonHandler("createDB")}>
+        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("createDB")}>
           Create Database
         </Button>
-        {/* <Button
-            primary="true"
-            onClick={() => generateAllSeedState(seedFormData)}
-            >
-            Generate Seeds
-          </Button> */}
       </Box>
-      <Button primary="true" onClick={() => buttonHandler("seed")}>
+      {/* <Button primary="true" onClick={() => buttonHandler("seed")}>
         Seed Database
-      </Button>
+      </Button> */}
       <PageSplitter src="body-purple.png" id="tables-bottom" />
     </main>
   );

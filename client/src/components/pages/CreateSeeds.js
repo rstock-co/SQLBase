@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import "../forms/SeedsForm.scss";
 import useSeedState from "../../state/hooks/useSeedState";
 import useDatabase from "../../state/hooks/useDatabase";
@@ -45,7 +45,7 @@ const CreateSeedsPage = () => {
     table: null,
   });
 
-  const buttonHandler = table => {
+  const buttonHandler = (table) => {
     setIsOpen({ modal: true, table: table });
   };
 
@@ -85,15 +85,21 @@ const CreateSeedsPage = () => {
           />
         </div>
       </div>
-      <Button primary="true" onClick={() => generateAllSeedState(seedFormData)}>
-        Seed into State
-      </Button>
-      <Button primary="true" onClick={() => saveProgress()}>
-        Save Progress
-      </Button>
-      <Button primary="true" onClick={() => loadProgress()}>
-        Load Progress
-      </Button>
+      <Box id="seeds-buttons">
+        <Button
+          primary="true"
+          onClick={() => generateAllSeedState(seedFormData)}
+          variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }}
+        >
+          Seed into State
+        </Button>
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => saveProgress()}>
+          Save Progress
+        </Button>
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => loadProgress()}>
+          Load Progress
+        </Button>
+      </Box>
     </main>
   );
 };

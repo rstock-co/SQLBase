@@ -16,7 +16,7 @@ const generateColumns = (aggregate, aggregateAs, columns, having) => {
     columns.forEach(col => {
       (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] : ''}${columns.indexOf(col) === columns.length - 1 ? "" : ", "}`);
       
-      (havingString += `${having.length > 0 ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having : ""}`); 
+      (havingString += `${having[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having[columns.indexOf(col)] : ""}`); 
     })
   } else {
     columnString += "*"

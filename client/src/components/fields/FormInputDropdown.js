@@ -31,7 +31,7 @@ export const FormInputDropdown = ({
       control={control}
       name={name}
       render={({ field: { onChange, } }) => (
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
           <InputLabel>{label}</InputLabel>
           <Select
             key={uniqueID}

@@ -84,7 +84,7 @@ const SchemaForm = ({
       {table.fields.map((field, fieldIndex) => {
         return (
           <div className="field-inputs">
-            <label>Field {fieldIndex}</label>
+            {/* <label>Field {fieldIndex}</label> */}
             <FormInputText
               uniqueID={`Field-${fieldIndex}`}
               handleChange={e =>

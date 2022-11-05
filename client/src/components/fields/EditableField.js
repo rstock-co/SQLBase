@@ -17,12 +17,12 @@ const EditableField = (props) => {
     p: 0
   }
   return (
-    <Box>
+    <div id='schema-database-title'>
       {!isNameFocused ? (
         <Typography
-          sx={
-            style
-          }
+          // sx={
+          //   style
+          // }
           // className={classes.name}
           onClick={() => {
             handleEditableField(true);
@@ -32,13 +32,13 @@ const EditableField = (props) => {
         </Typography>
       ) : (
         <TextField
-          sx={style}
+          // sx={style}
           autoFocus
           value={databaseName}
           onChange={e => props.handleChange(e, "databaseName")}
           onBlur={e => handleEditableField(false)} />
       )}
-    </Box>
+    </div>
   );
 }
 
