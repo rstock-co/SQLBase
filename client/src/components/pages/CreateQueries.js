@@ -8,6 +8,12 @@ import generateQuerySQL from "../../helpers/queryFormHelpers";
 import useQueryState from "../../state/hooks/useQueryState";
 import useDatabase from "../../state/hooks/useDatabase";
 import useGlobalState from "../../state/hooks/useGlobalState";
+import SaveIcon from '@mui/icons-material/Save';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DownloadIcon from '@mui/icons-material/Download';
+
+
 
 const CreateQueriesPage = () => {
   const {
@@ -65,11 +71,11 @@ const CreateQueriesPage = () => {
                   queries={queries}
                   state={state}
                 />
-                <Button onClick={() => buttonHandler('query', tableIndex)}>
+                {/* <Button onClick={() => buttonHandler('query', tableIndex)}>
                   Query Database
-                </Button>
+                </Button> */}
               </form>
-              <div className="demo">
+              <div className="query-demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
@@ -84,28 +90,32 @@ const CreateQueriesPage = () => {
         })}
         <Box id="query-add-copy-buttons">
           <Button
-            id="add-table"
+            id='queries-add-table'
             variant="contained"
             sx={{
               backgroundColor: "#5755a1",
+              marginLeft: "20%",
+              marginRight: "5%",
               ":hover": { backgroundColor: "#7776a3" },
             }}
             primary="true"
             onClick={() => addQueryTable()}
           >
-            Add Table
+          <AddCircleIcon /> <div> Add Table </div>
           </Button>
           <Button
-            id="add-table"
+            id='queries-copy-all'
             variant="contained"
             sx={{
               backgroundColor: "#5755a1",
+              marginLeft: "8%",
+              width: "5%",
               ":hover": { backgroundColor: "#7776a3" },
             }}
             primary="true"
             onClick={() => copyHandler()}
           >
-            Copy All Queries
+          <ContentCopyIcon />  <div>Copy All Queries</div>
           </Button>
         </Box>
         </div>
@@ -119,7 +129,7 @@ const CreateQueriesPage = () => {
             }}
             onClick={() => saveProgress()}
           >
-            Save Progress
+          <SaveIcon /> <div>Save</div> 
           </Button>
           <Button
             primary="true"
@@ -130,7 +140,7 @@ const CreateQueriesPage = () => {
             }}
             onClick={() => loadProgress()}
           >
-            Load Progress
+          <DownloadIcon /> <div>  Load Progress</div>
           </Button>
         </Box>
       <PageSplitter src="body-purple.png" id="tables-bottom" />

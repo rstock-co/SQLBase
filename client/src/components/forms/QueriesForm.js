@@ -11,6 +11,9 @@ import useDatabase from "../../state/hooks/useDatabase";
 import useQueryState from "../../state/hooks/useQueryState";
 import generateQuerySQL from "../../helpers/queryFormHelpers";
 import QueryModal from "../modal/QueryModal";
+import StorageIcon from '@mui/icons-material/Storage';
+
+
 const QueriesForm = ({
   table,
   queries,
@@ -47,7 +50,7 @@ const QueriesForm = ({
 
 
   return (
-    <div className="table" onClick={handleClose}>
+    <div className="query-table" onClick={handleClose}>
       {isOpen.modal && (<QueryModal open={isOpen.modal} result={isOpen.result} onClick={handleClose} />)}
       <FormInputDropdown
         name={"TableSelect"}
@@ -182,7 +185,7 @@ const QueriesForm = ({
 
       <div className="add-remove-button">
         <Button onClick={() => buttonHandler('query', tableIndex)}>
-          Query Database
+          <StorageIcon /> <div>Query Database</div>
         </Button>
 
         <Button
@@ -190,7 +193,7 @@ const QueriesForm = ({
           primary="true"
           onClick={() => removeQuery(tableIndex)}
         >
-          <DeleteForeverIcon /> Delete Query
+          <DeleteForeverIcon /> <div>Delete Query</div>
         </Button>
       </div>
     </div>

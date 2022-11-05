@@ -9,6 +9,9 @@ import useSchemaState from "../../state/hooks/useSchemaState";
 import { initialGlobalState } from "../../state/data_structures/globalState";
 import "./UserDatabases.scss";
 import PageSplitter from "../../styles/components/PageSplitter";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DownloadIcon from '@mui/icons-material/Download';
+
 
 const UserDatabases = () => {
   const {
@@ -96,6 +99,7 @@ const UserDatabases = () => {
                         variant="contained"
                         sx={{
                           backgroundColor: "#5755a1",
+                          boxShadow: '0 11px 32px -6px #7170a4',
                           ":hover": { backgroundColor: "#7776a3" },
                         }}
                         size='small'
@@ -103,13 +107,14 @@ const UserDatabases = () => {
                           buttonHandler("load", uuid);
                         }}
                       >
-                        Load Database
+                        <DownloadIcon /> Load Database
                       </Button>
                       <Button
                         variant="contained"
                         sx={{
-                          backgroundColor: "#C41E3A",
-                          ":hover": { backgroundColor: "#DE3163" },
+                          backgroundColor: "#D2042D",
+                          boxShadow: '0 8px 20px -6px #DE3163',
+                          ":hover": { backgroundColor: "#C41E3A" },
                         }}
                         size='small'
                         onClick={() => {
@@ -121,7 +126,7 @@ const UserDatabases = () => {
                           );
                         }}
                       >
-                        Delete Database
+                        <DeleteForeverIcon /> Delete Database
                       </Button>
                     </div>
                   </div>
@@ -129,7 +134,7 @@ const UserDatabases = () => {
               })}
           </div>
         </Container>
-        <PageSplitter src="body-purple.png" id="tables-bottom" />
+        <PageSplitter src="body-purple.png" id="database-tables-bottom" />
       </ThemeProvider>
     </main>
   );

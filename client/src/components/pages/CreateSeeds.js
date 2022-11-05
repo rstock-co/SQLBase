@@ -12,6 +12,11 @@ import SeedsForm from "../forms/SeedsForm";
 import SeedsModal from "../modal/SeedsModal";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { generateSeedSQL } from "../../helpers/seedFormHelpers";
+import PageSplitter from "../../styles/components/PageSplitter";
+import SaveIcon from '@mui/icons-material/Save';
+import DownloadIcon from '@mui/icons-material/Download';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+
 
 const CreateSeedsPage = () => {
   const { state, generateSeedState, generateAllSeedState } = useSeedState();
@@ -91,15 +96,16 @@ const CreateSeedsPage = () => {
           onClick={() => generateAllSeedState(seedFormData)}
           variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }}
         >
-          Seed into State
+        <AutoFixHighIcon/> <div>  Seed </div>
         </Button>
         <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => saveProgress()}>
-          Save Progress
+        <SaveIcon />  <div>Save</div>
         </Button>
         <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => loadProgress()}>
-          Load Progress
+        <DownloadIcon /> <div> Load </div>
         </Button>
       </Box>
+      <PageSplitter src="body-purple.png" id="seeds-tables-bottom" />
     </main>
   );
 };
