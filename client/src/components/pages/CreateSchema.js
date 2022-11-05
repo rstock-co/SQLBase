@@ -2,12 +2,9 @@ import { React, useState } from "react";
 import { CopyBlock, monokai } from "react-code-blocks";
 import { Button, Box } from "@mui/material";
 import SchemaForm from "../forms/SchemaForm";
-import SchemaTable from "../tables/SchemaTable";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import useDatabase from "../../state/hooks/useDatabase";
 import ERDModal from "../modal/ERDModal";
-import useSeedState from "../../state/hooks/useSeedState";
-import { seedFormData } from "../../state/data_structures/seedState";
 import { generateSeedSQL } from "../../helpers/seedFormHelpers";
 import {
   generateSQL,
@@ -18,10 +15,10 @@ import PageSplitter from "../../styles/components/PageSplitter";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 import "../forms/SchemaForm.scss";
 import EditableField from "../fields/EditableField";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import SaveIcon from '@mui/icons-material/Save';
-import LanIcon from '@mui/icons-material/Lan';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import SaveIcon from "@mui/icons-material/Save";
+import LanIcon from "@mui/icons-material/Lan";
 
 const CreateSchemaPage = () => {
   const {
@@ -33,11 +30,11 @@ const CreateSchemaPage = () => {
     handleSchemaChange,
   } = useSchemaState();
 
-  const { generateAllSeedState } = useSeedState();
+  const { saveProgress, loadProgress, createDatabase, seedDatabase } =
+    useDatabase();
 
-  console.log(state.databaseUuid);
+  console.log("SCHEMA STATE: ", state);
 
-  const { saveProgress, loadProgress, createDatabase, seedDatabase } = useDatabase();
   const [isNameFocused, setIsNamedFocused] = useState(false);
   const [isOpen, setIsOpen] = useState({
     modal: false,
@@ -66,7 +63,7 @@ const CreateSchemaPage = () => {
         break;
       case "seed":
         let seedString = generateSeedSQL(state.seedState);
-        console.log(seedString)
+        console.log(seedString);
         seedDatabase(state.databaseName, seedString);
         break;
       case "addTable":
@@ -89,7 +86,6 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
-
       <div id="container">
         <EditableField
           focused={isNameFocused}
@@ -128,13 +124,6 @@ const CreateSchemaPage = () => {
                   removeTable={removeSchemaTable}
                 />
               </form>
-              {/* <div className="tables">
-                <SchemaTable
-                  key={`table-${tableIndex}`}
-                  table={table.table}
-                  fields={table.fields}
-                />
-              </div> */}
               <div className="schema-demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
@@ -149,36 +138,68 @@ const CreateSchemaPage = () => {
           );
         })}
 
-        <Box id='add-copy-buttons'>
+        <Box id="add-copy-buttons">
           <Button
             id="add-table"
             primary="true"
             onClick={() => buttonHandler("addTable")}
-            variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" } }}
+            variant="contained"
+            sx={{
+              backgroundColor: "#5755a1",
+              ":hover": { backgroundColor: "#7776a3" },
+            }}
           >
-          <AddCircleIcon /> <div>Add Table</div>
+            <AddCircleIcon /> <div>Add Table</div>
           </Button>
-          <Button id="copy-all" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("copy")}>
+          <Button
+            id="copy-all"
+            variant="contained"
+            sx={{
+              backgroundColor: "#5755a1",
+              ":hover": { backgroundColor: "#7776a3" },
+            }}
+            primary="true"
+            onClick={() => buttonHandler("copy")}
+          >
             <ContentCopyIcon /> <div>Copy All Schema</div>
           </Button>
         </Box>
-
       </div>
       <Box id="schema-buttons">
-
-        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("modal")}>
-        <LanIcon /> <div> View ERD</div>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#5755a1",
+            ":hover": { backgroundColor: "#7776a3" },
+          }}
+          primary="true"
+          onClick={() => buttonHandler("modal")}
+        >
+          <LanIcon /> <div> View ERD</div>
         </Button>
-        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("save")}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#5755a1",
+            ":hover": { backgroundColor: "#7776a3" },
+          }}
+          primary="true"
+          onClick={() => buttonHandler("save")}
+        >
           <SaveIcon /> <div>Save</div>
         </Button>
-        <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("createDB")}>
-        <AddCircleIcon /> <div> Create</div>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#5755a1",
+            ":hover": { backgroundColor: "#7776a3" },
+          }}
+          primary="true"
+          onClick={() => buttonHandler("createDB")}
+        >
+          <AddCircleIcon /> <div> Create</div>
         </Button>
       </Box>
-      {/* <Button primary="true" onClick={() => buttonHandler("seed")}>
-        Seed Database
-      </Button> */}
       <PageSplitter src="body-purple.png" id="tables-bottom" />
     </main>
   );
