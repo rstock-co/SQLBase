@@ -80,7 +80,6 @@ module.exports = ({ createClientFromState }) => {
     return await newClient.query(queryString)
       .then(result => {
         console.log('queryTB', result)
-
         newClient.end();
         return result
       })

@@ -7,7 +7,10 @@ import { FormInputDropdown } from "../fields/FormInputDropdown";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
-
+import useDatabase from "../../state/hooks/useDatabase";
+import useQueryState from "../../state/hooks/useQueryState";
+import generateQuerySQL from "../../helpers/queryFormHelpers";
+import QueryModal from "../modal/QueryModal";
 const QueriesForm = ({
   table,
   queries,
@@ -25,8 +28,27 @@ const QueriesForm = ({
     control,
   } = useForm();
 
+  const { state } = useQueryState()
+  const { queryDatabase } = useDatabase()
+  const buttonHandler = async (target, tableIndex) => {
+    console.log('state', state)
+    if (target === 'query') {
+      let result = await queryDatabase(state.databaseName, generateQuerySQL(queries)[tableIndex])
+      console.log(result)
+      setIsOpen({ modal: true, result: result })
+    }
+  }
+
+  const [isOpen, setIsOpen] = useState({
+    modal: false,
+    result: null,
+  });
+  const handleClose = () => isOpen && setIsOpen(false);
+
+
   return (
-    <div className="table">
+    <div className="table" onClick={handleClose}>
+      {isOpen.modal && (<QueryModal open={isOpen.modal} result={isOpen.result} onClick={handleClose} />)}
       <FormInputDropdown
         name={"TableSelect"}
         control={control}
@@ -159,6 +181,9 @@ const QueriesForm = ({
       })}
 
       <div className="add-remove-button">
+        <Button onClick={() => buttonHandler('query', tableIndex)}>
+          Query Database
+        </Button>
 
         <Button
           key={`Remove-${tableIndex}`}

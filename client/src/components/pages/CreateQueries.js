@@ -54,6 +54,7 @@ const CreateQueriesPage = () => {
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
                   queries={queries}
+                  state={state}
                 />
                 <Button onClick={() => buttonHandler('query', tableIndex)}>
                   Query Database
