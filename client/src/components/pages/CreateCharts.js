@@ -1,54 +1,42 @@
 import React, { useState } from "react";
-import ResponsivePieChart from "../charts/pie-chart/ResponsivePieChart";
-import { FormInputDropdown } from "../fields/FormInputDropdown";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useSchemaState from "../../state/hooks/useSchemaState";
-import { useForm } from "react-hook-form";
-import { Card } from "@mui/material";
+import PieChartCard from "../charts/pie-chart/PieChartCard";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
   const { state } = useSchemaState();
-  const tableNameList = getTableNames();
+  const allTables = state.schemaState;
 
   const [activeTableIndex, setActiveTableIndex] = useState(0);
+  const [activeColIndex, setActiveColIndex] = useState(0);
+
+  const tableNameList = getTableNames();
+  const columnList = getColumnList(allTables[activeTableIndex]);
+
   const selectTableHandler = event => {
     setActiveTableIndex(
       tableNameList.map(table => table.value).indexOf(event.target.value)
     );
+    setActiveColIndex(0);
   };
 
-  console.log("CHART STATE: ", state);
-  console.log("CHART TABLES: ", tableNameList);
-  console.log("CURRENT TABLE: ", tableNameList[activeTableIndex].value);
-  const {
-    formState: { errors },
-    control,
-  } = useForm();
+  const selectColumnHandler = event => {
+    setActiveColIndex(
+      columnList.map(col => col.value).indexOf(event.target.value)
+    );
+  };
 
   return (
     <main>
-      <Card>
-        <div class="dropdown">
-          <FormInputDropdown
-            name={"TableSelect"}
-            control={control}
-            label={"Table Select"}
-            menuOptions={tableNameList}
-            handleChange={event => selectTableHandler(event)}
-            value={tableNameList[activeTableIndex].value}
-          />
-        </div>
-        <div class="chart">
-          <ResponsivePieChart
-            width={500}
-            height={500}
-            chartColor={"#e68209"}
-            textColor1={"#e68209"}
-            textColor2={"#fcba03"}
-          />
-        </div>
-      </Card>
+      <PieChartCard
+        tableNameList={tableNameList}
+        columnList={columnList}
+        activeTableIndex={activeTableIndex}
+        activeColIndex={activeColIndex}
+        selectTableHandler={selectTableHandler}
+        selectColumnHandler={selectColumnHandler}
+      />
     </main>
   );
 };
