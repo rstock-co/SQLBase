@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <Box>
 
-      <Container maxWidth="lg" sx={{ p: 6, pb: 2 }}>
+      <Container maxWidth="lg" sx={{ p: 12, pb: 2, mb: 12 }}>
         <Box className="section-title" sx={{
           display: 'flex',
           flexDirection: 'row',

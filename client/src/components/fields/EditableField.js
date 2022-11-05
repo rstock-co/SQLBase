@@ -30,7 +30,9 @@ const EditableField = props => {
         </Typography>
       ) : (
         <TextField
-          // sx={style}
+          sx={{
+            color: '#000'
+          }}
           autoFocus
           value={databaseName}
           onChange={e => props.handleChange(e, "databaseName")}

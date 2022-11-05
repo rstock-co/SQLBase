@@ -6,7 +6,7 @@ main {
   width: 98%;
   margin-top:0px;
   margin-left: 1%;
-  background: linear-gradient(180deg, rgba(87,85,161,1) 0%, rgba(255,255,255,1) 91%);
+  background: linear-gradient(180deg, rgba(84,129,161,1) 0%, rgba(255,255,255,1) 91%);
   // justify-content: space-between;
   box-shadow: 0.2em 0 0.2em -4px gray, -0.2em 0 0.2em -4px gray;
   #container {
@@ -123,9 +123,10 @@ main {
     color: white;
   }
   div {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
-    color: white;
+    color: black;
+
 
   }
 }

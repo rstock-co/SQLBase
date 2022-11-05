@@ -1,7 +1,8 @@
 import "./Home.scss";
-import { useEffect, useCallback, useRef } from "react";
+import { React } from "react";
 import { Paper, Container } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { Button } from "@mui/material";
 import theme from "../../styles/theme/theme.js";
 import Banner from "../../styles/banner/Banner";
 import ProductFeature from "../../styles/product-feature/ProductFeature";
@@ -9,32 +10,8 @@ import TargetUsers from "../../styles/product-feature/TargetUsers";
 import TestimonialCarousel from "../../styles/product-feature/TestimonialCarousel";
 import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
-import { useSpring } from "@react-spring/web";
 
 const Home = () => {
-  const contentContainerRef = useRef(null);
-
-  const clientHeightRef = useRef(0);
-  const [scrollYOffsetSpring, scrollYOffsetSpringApi] = useSpring(() => ({
-    yOffset: 0,
-  }));
-
-  const onScroll = useCallback(event => {
-    const yOffset = event.currentTarget.scrollTop;
-
-    scrollYOffsetSpringApi.start({
-      yOffset,
-    });
-  }, []);
-
-  useEffect(() => {
-    clientHeightRef.current = document.documentElement.clientHeight;
-    contentContainerRef.current?.addEventListener("scroll", onScroll);
-
-    return () => {
-      contentContainerRef.current?.removeEventListener("scroll", onScroll);
-    };
-  }, [onScroll]);
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="false">
@@ -45,23 +22,38 @@ const Home = () => {
             borderRadius: 4,
             marginBottom: 4,
             zIndex: 1,
+            height: '100%',
+            component: 'div'
           }}
         >
-          <Banner />
+          <div style={{
+            overflowY: 'auto',
+            scrollSnapType: 'y mandatory'
+          }}>
 
-          <PageSplitter
-            className="page-splitter"
-            src="banner-body.jpeg"
-            alt="banner-split"
-          />
-          <ProductFeature />
-          <PageSplitter src="body-purple.png" />
-          <TargetUsers />
-          <PageSplitter src="purple-white.png" />
-          <TestimonialCarousel />
-          <PageSplitter src="body-purple.png" />
-          <PageSplitter src="purple-white.png" />
-          <AboutUs />
+            <Banner style={{ scrollSnapAlign: 'center' }} />
+
+            <PageSplitter
+              className="page-splitter"
+              src="tealbanner-body.jpeg"
+              alt="banner-split"
+
+            />
+            <ProductFeature style={{ scrollSnapAlign: 'center' }} />
+            <PageSplitter src="body-teal.png" />
+            <TargetUsers style={{ scrollSnapAlign: 'center' }} />
+            <PageSplitter src="teal-white.png" />
+            <TestimonialCarousel style={{ scrollSnapAlign: 'center' }} />
+            <PageSplitter src="body-teal.png" />
+            <PageSplitter src="teal-white.png" />
+            <AboutUs style={{ scrollSnapAlign: 'center' }} />
+            <PageSplitter src="body-teal.png" />
+            <Button sx={{
+              position: 'fixed'
+            }}>
+              Back to Top
+            </Button>
+          </div>
         </Paper>
       </Container>
     </ThemeProvider>

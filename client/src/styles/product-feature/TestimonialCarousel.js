@@ -17,7 +17,12 @@ import { Box, Container } from "@mui/material";
 import Testimonial from "./Testimonial";
 
 
-
+const testimonials = [
+  { img: './andy.jpeg', name: 'Andy Lindsay', review: '-\"It\'s better than my robot car!\"' },
+  { img: './francis.jpg', name: 'Francis Bourgouin', review: '-\"This DOES sound good everybody.\"' },
+  { img: './nally.jpg', name: 'Christian Nally', review: '-\"You have a solid project on your hands.\"' },
+  { img: './vasiliy.jpeg', name: 'Vasiliy Klimkin', review: '-\"You probably will use this!\"' },
+]
 
 export default function TestimonialCarousel() {
 
@@ -32,9 +37,9 @@ export default function TestimonialCarousel() {
         justifyContent: 'center',
         margin: 6,
       }}>
-        <Typography variant='h4'>Meet SQLBase</Typography>
+        <Typography variant='h4'>Top Reviews</Typography>
       </Box>
-      <Box sx={{m:6}}>
+      <Box sx={{ m: 12 }}>
 
         <Swiper
           slidesPerView={1}
@@ -50,10 +55,15 @@ export default function TestimonialCarousel() {
           modules={[Pagination, Navigation, Lazy, Autoplay]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <Testimonial />
-          </SwiperSlide>
-          <SwiperSlide>
+          {testimonials.map((testimonial) => {
+            return (
+
+              <SwiperSlide>
+                <Testimonial img={testimonial.img} name={testimonial.name} review={testimonial.review} />
+              </SwiperSlide>
+            )
+          })}
+          {/* <SwiperSlide>
             <Card sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -64,8 +74,8 @@ export default function TestimonialCarousel() {
                 marginBottom: 6,
               }}>
 
-                <Typography variant='h5' textAlign='center'>Person's Name</Typography>
-                <Typography variant='body2' textAlign='center'>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
+                <Typography variant='h5' textAlign='center' sx={{ mt: 6 }}>Person's Name</Typography>
+                <Typography variant='body2' textAlign='center' sx={{ mt: 6 }}>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
               </Box>
             </Card>
           </SwiperSlide>
@@ -100,7 +110,7 @@ export default function TestimonialCarousel() {
                 <Typography variant='body2' textAlign='center'>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
               </Box>
             </Card>
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
       </Box>
     </Container>
