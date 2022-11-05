@@ -34,11 +34,37 @@ const PieChartCard = ({
       <div id="title">
         <h2>Pie Chart</h2>
       </div>
-      <div id="dropdown">
+      <div id="dropdown-row-1">
         <FormInputDropdown
           name={"TableSelect"}
           control={control}
           label={"Select Table"}
+          menuOptions={tableNameList}
+          handleChange={event => selectTableHandler(event)}
+          value={tableNameList[activeTableIndex].value}
+        />
+        <FormInputDropdown
+          name={"ColumnSelect"}
+          control={control}
+          label={"Select Column"}
+          menuOptions={columnList}
+          handleChange={event => selectColumnHandler(event)}
+          value={columnList[activeColIndex].value}
+        />
+        <FormInputDropdown
+          name={"ValueColumnSelect"}
+          control={control}
+          label={"Select Value"}
+          menuOptions={valueList}
+          handleChange={event => selectValueHandler(event)}
+          value={valueList[activeValueIndex].value}
+        />
+      </div>
+      <div id="dropdown-row-2">
+        <FormInputDropdown
+          name={"RelationSelect"}
+          control={control}
+          label={"Select Relation"}
           menuOptions={tableNameList}
           handleChange={event => selectTableHandler(event)}
           value={tableNameList[activeTableIndex].value}

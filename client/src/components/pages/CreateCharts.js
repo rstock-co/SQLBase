@@ -7,56 +7,57 @@ import PieChartCard from "../charts/pie-chart/PieChartCard";
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
   const { getUniqueValues } = useChartsState();
-
-  const [activeTableIndex, setActiveTableIndex] = useState(0);
-  const [activeColIndex, setActiveColIndex] = useState(1);
-  const [activeValueIndex, setActiveValueIndex] = useState(0);
-  const [valueList, setValueList] = useState([
-    {
-      label: "none",
-      value: "none",
-    },
-  ]);
-
   const { state } = useSchemaState();
   const allTables = state.schemaState;
 
+  const [indexes, setIndexes] = useState({
+    tableIndex: 0,
+    colIndex: 1,
+    valIndex: 0,
+    relIndex: 0,
+  });
+
+  const [valueList, setValueList] = useState([
+    { label: "none", value: "none" },
+  ]);
+
   const tableList = getTableNames();
-  const columnList = getColumnList(allTables[activeTableIndex]);
+  const columnList = getColumnList(allTables[indexes.tableIndex]);
 
   useEffect(() => {
     setValueList(prev =>
       getUniqueValues(
-        String(tableList[activeTableIndex].value),
-        String(columnList[activeColIndex].value)
+        String(tableList[indexes.tableIndex].value),
+        String(columnList[indexes.colIndex].value)
       )
     );
-  }, [activeColIndex, activeTableIndex]);
+  }, [indexes.colIndex, indexes.tableIndex]);
 
   const selectTableHandler = event => {
-    setActiveTableIndex(
-      tableList.map(table => table.value).indexOf(event.target.value)
-    );
-    setActiveColIndex(0);
+    setIndexes(prev => ({
+      ...prev,
+      tableIndex: tableList
+        .map(table => table.value)
+        .indexOf(event.target.value),
+    }));
+    setIndexes(prev => ({
+      ...prev,
+      colIndex: 0,
+    }));
   };
 
   const selectColumnHandler = event => {
-    setActiveColIndex(prev =>
-      columnList.map(col => col.value).indexOf(event.target.value)
-    );
-
-    setValueList(prev =>
-      getUniqueValues(
-        String(tableList[activeTableIndex].value),
-        String(columnList[activeColIndex].value)
-      )
-    );
+    setIndexes(prev => ({
+      ...prev,
+      colIndex: columnList.map(col => col.value).indexOf(event.target.value),
+    }));
   };
 
   const selectValueHandler = event => {
-    setActiveValueIndex(
-      valueList.map(value => value.value).indexOf(event.target.value)
-    );
+    setIndexes(prev => ({
+      ...prev,
+      valIndex: valueList.map(val => val.value).indexOf(event.target.value),
+    }));
   };
 
   return (
@@ -65,9 +66,9 @@ const CreateChartsPage = () => {
         tableNameList={tableList}
         columnList={columnList}
         valueList={valueList}
-        activeTableIndex={activeTableIndex}
-        activeColIndex={activeColIndex}
-        activeValueIndex={activeValueIndex}
+        activeTableIndex={indexes.tableIndex}
+        activeColIndex={indexes.colIndex}
+        activeValueIndex={indexes.valIndex}
         selectTableHandler={selectTableHandler}
         selectColumnHandler={selectColumnHandler}
         selectValueHandler={selectValueHandler}
@@ -83,18 +84,18 @@ export default CreateChartsPage;
 
     Chart UI
     -------
-      (✓)  create a card per chart (render 2 or 4 charts on the page)
-      (✓)  create dependent dropdowns (schema state -> tables list -> col list)
+      (✘ )  create a card per chart (render 2 or 4 charts on the page)
+      (✓)  create dependent dropdowns (schema state -> tables list -> col list -> val list)
       (✓)  create a dynamic chart title based on the user's selected table / col
-      (✘ ) create a dynamic dropdown box for selecting the "UNIQUE" seeded values for the table
+      (✓) create a dynamic dropdown box for selecting the "UNIQUE" seeded values for the table
           (ie: for companies, 'NIKE', 'TESLA', etc)
 
     Chart Data Prep
     ---------------
-      (✓) create 2-3 "pre-built scenarios" per chart, and a "matcher" object that contains their associated categories.
-      (✓) handleChange function for dropdowns will determine if the user has selected a combination that matches a pre-built scenario
-      (✓) inside the "useChartState" hook, design reducer functions that get the required data for each scenario from global "seedState".
-      (✓) place the reducer functions inside the matcher object as key/values, that fire when the user hits that specific scenario.
+      (✘ ) create 2-3 "pre-built scenarios" per chart, and a "matcher" object that contains their associated categories.
+      (✘ ) handleChange function for dropdowns will determine if the user has selected a combination that matches a pre-built scenario
+      (-O-) inside the "useChartState" hook, design reducer functions that get the required data for each scenario from global "seedState".
+      (✘ ) place the reducer functions inside the matcher object as key/values, that fire when the user hits that specific scenario.
 
 ------------------------
 | SCENARIOS - PIE CHART |
@@ -102,9 +103,9 @@ export default CreateChartsPage;
 
     `companies` table is selected, AND
     ---------
-      (✓)  Column is `num_employees`:  pie chart shows the age distribution of the selected company.
-      (✓)  Column is `
-      (✓)
+      (✘ )  Column is `num_employees`:  pie chart shows the age distribution of the selected company.
+      (✘ )  Column is `
+      (✘ )
 
       `employees` table is selected, AND
     ---------

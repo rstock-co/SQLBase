@@ -76,6 +76,7 @@ const useSeedState = () => {
         ) * 1000;
 
       companies.push({
+        id: i + 1,
         name: randBrand(),
         ceo: randFullName(),
         num_employees,
@@ -91,6 +92,8 @@ const useSeedState = () => {
   /**
    * EMPLOYEES
    */
+
+  const getNumCompanies = () => state.seedState[0].companies.length;
 
   const employeeSeed = numDataPoints => {
     const employees = [];
@@ -113,6 +116,10 @@ const useSeedState = () => {
 
       employees.push({
         ...employee,
+        company_id: randNumber({
+          min: 1,
+          max: getNumCompanies(),
+        }),
         first_name,
         last_name,
         address,
