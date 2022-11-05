@@ -33,8 +33,6 @@ const CreateSchemaPage = () => {
   const { saveProgress, loadProgress, createDatabase, seedDatabase } =
     useDatabase();
 
-  console.log("SCHEMA STATE: ", state);
-
   const [isNameFocused, setIsNamedFocused] = useState(false);
   const [isOpen, setIsOpen] = useState({
     modal: false,

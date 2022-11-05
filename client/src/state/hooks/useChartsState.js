@@ -1,56 +1,24 @@
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalStateProvider";
-
-import {
-  QUERY_ADD_TABLE,
-  INSERT_QUERY_TABLE,
-  SET_QUERY_PARAMS,
-  QUERY_REMOVE_TABLE,
-} from "../reducers/globalReducer";
+import { uniqueArray } from "../../helpers/chartFormHelpers";
 
 const useChartsState = () => {
   const [state, dispatch] = useContext(GlobalContext);
+  const seeds = state.seedState[0];
 
-  const addQueryTable = () => {
-    console.log("Add Table function triggered");
-    dispatch({ type: QUERY_ADD_TABLE });
-  };
-
-  const removeQueryTable = tableIndex => {
-    dispatch({ type: QUERY_REMOVE_TABLE, tableIndex });
-  };
-
-  const selectTableHandler = (event, queryIndex) => {
-    const tableName = event.target.value;
-    const queryName = event.target.value;
-    dispatch(
-      { type: INSERT_QUERY_TABLE, tableName },
-      dispatch({
-        type: SET_QUERY_PARAMS,
-        queryName,
-        queryIndex,
-        queryType: "name",
-      })
+  const getUniqueValues = (tableName, colName) => {
+    const uniqueValues = uniqueArray(
+      seeds[tableName].map(tableData => tableData[colName])
     );
-  };
-
-  const setQueryParams = (event, queryIndex, queryType, fieldIndex) => {
-    const queryName = event.target.value;
-    dispatch({
-      type: SET_QUERY_PARAMS,
-      queryName,
-      queryIndex,
-      queryType,
-      fieldIndex,
-    });
+    const uniqVals = uniqueValues.map(val => ({
+      label: val,
+      value: val,
+    }));
+    return uniqVals;
   };
 
   return {
-    state,
-    addQueryTable,
-    removeQueryTable,
-    selectTableHandler,
-    setQueryParams,
+    getUniqueValues,
   };
 };
 

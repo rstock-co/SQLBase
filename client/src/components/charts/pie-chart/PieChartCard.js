@@ -7,10 +7,13 @@ import { Card } from "@mui/material";
 const PieChartCard = ({
   tableNameList,
   columnList,
+  valueList,
   activeTableIndex,
   activeColIndex,
+  activeValueIndex,
   selectTableHandler,
   selectColumnHandler,
+  selectValueHandler,
 }) => {
   const {
     formState: { errors },
@@ -47,6 +50,14 @@ const PieChartCard = ({
           menuOptions={columnList}
           handleChange={event => selectColumnHandler(event)}
           value={columnList[activeColIndex].value}
+        />
+        <FormInputDropdown
+          name={"ValueColumnSelect"}
+          control={control}
+          label={"Select Value"}
+          menuOptions={valueList}
+          handleChange={event => selectValueHandler(event)}
+          value={valueList[activeValueIndex].value}
         />
       </div>
       <div id="chart">
