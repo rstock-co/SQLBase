@@ -29,11 +29,12 @@ const CreateSchemaPage = () => {
     handleSchemaChange,
   } = useSchemaState();
 
+  console.log("CURRENT GLOBAL STATE: ", state);
+
   const { generateAllSeedState } = useSeedState();
 
-  console.log(state.databaseUuid);
-
-  const { saveProgress, loadProgress, createDatabase, seedDatabase } = useDatabase();
+  const { saveProgress, loadProgress, createDatabase, seedDatabase } =
+    useDatabase();
   const [isNameFocused, setIsNamedFocused] = useState(false);
   const [isOpen, setIsOpen] = useState({
     modal: false,
@@ -62,7 +63,7 @@ const CreateSchemaPage = () => {
         break;
       case "seed":
         let seedString = generateSeedSQL(state.seedState);
-        console.log(seedString)
+        console.log(seedString);
         seedDatabase(state.databaseName, seedString);
         break;
       case "addTable":
@@ -85,7 +86,6 @@ const CreateSchemaPage = () => {
 
   return (
     <main onClick={handleClose}>
-
       <div id="container">
         <EditableField
           focused={isNameFocused}
@@ -153,14 +153,16 @@ const CreateSchemaPage = () => {
           >
             Add Table
           </Button>
-          <Button id="copy-all" primary="true" onClick={() => buttonHandler("copy")}>
+          <Button
+            id="copy-all"
+            primary="true"
+            onClick={() => buttonHandler("copy")}
+          >
             Copy All Schema
           </Button>
         </Box>
-
       </div>
       <Box id="schema-buttons">
-
         <Button primary="true" onClick={() => buttonHandler("modal")}>
           Generate ERD
         </Button>
