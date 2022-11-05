@@ -21,7 +21,7 @@ const CreateQueriesPage = () => {
   console.log("QUERY PAGE STATE: ", state.queryState[0].queries);
 
   const { getTableNames, getColumnList } = useGlobalState();
-  const { saveProgress, loadProgress } = useDatabase();
+  const { saveProgress, loadProgress, queryDatabase } = useDatabase();
 
   console.log("QUERY PAGE STATE: ", state);
 
@@ -34,6 +34,14 @@ const CreateQueriesPage = () => {
 
     return navigator.clipboard.writeText(allStrings.join(""));
   };
+
+  const buttonHandler = async (target, tableIndex) => {
+    if (target === 'query') {
+      let result = await queryDatabase(state.databaseName, generateQuerySQL(queries)[tableIndex])
+
+      console.log(result)
+    }
+  }
 
   return (
     <main>
@@ -55,7 +63,11 @@ const CreateQueriesPage = () => {
                   getColumnList={getColumnList}
                   handleQuery={setQueryParams}
                   queries={queries}
+                  state={state}
                 />
+                <Button onClick={() => buttonHandler('query', tableIndex)}>
+                  Query Database
+                </Button>
               </form>
               <div className="demo">
                 <CopyBlock

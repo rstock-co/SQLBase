@@ -3,10 +3,13 @@ const router = express.Router();
 
 module.exports = ({ queryTable }) => {
   router.get('/', (req, res) => {
-    let databaseName = req.params.databaseName;
-    let queryString = req.params.queryString
+    // console.log('query', req)
+    let databaseName = req.query.databaseName;
+    let queryString = req.query.queryString
+    console.log(databaseName)
     queryTable(databaseName, queryString)
       .then(data => {
+        console.log('returned Data', data)
         res.json(data);
       })
       .catch(err => {

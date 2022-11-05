@@ -12,6 +12,7 @@ module.exports = ({ createTable, dropDB, seedTable, queryTable }) => {
     console.log('rsschemaString', schemaString)
     createTable(originalDBName, userID, schemaString)
       .then(data => {
+        console.log(data)
         res.json(data);
       })
       .catch(err => {

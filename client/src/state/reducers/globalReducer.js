@@ -141,11 +141,13 @@ const globalReducer = (state, action) => {
     QUERY_REMOVE_TABLE: state => {
       const newState = deepCopy(state);
       let queryState = newState.queryState[0];
+      const queries = queryState.queries;
       const schemas = queryState.schemas;
       schemas.splice(action.tableIndex, 1);
+      queries.splice(action.tableIndex, 1);
       queryState = [
         {
-          ...queryState,
+          queries,
           schemas,
         },
       ];
@@ -226,7 +228,7 @@ const globalReducer = (state, action) => {
       if (action.queryType === "aggregate") {
         if (action.queryName !== "none") {
           queries[action.queryIndex].aggregate[action.fieldIndex] =
-          action.queryName;
+            action.queryName;
         } else {
           queries[action.queryIndex].aggregate.splice(action.fieldIndex, 1)
         }
@@ -290,7 +292,7 @@ const globalReducer = (state, action) => {
       if (action.queryType === "groupBy") {
         if (action.queryName !== 'none') {
           queries[action.queryIndex].groupBy[action.fieldIndex] =
-          action.queryName;
+            action.queryName;
         } else {
           queries[action.queryIndex].groupBy.splice(action.fieldIndex, 1)
         }
@@ -308,7 +310,7 @@ const globalReducer = (state, action) => {
       if (action.queryType === "orderBy") {
         if (action.queryName !== "none") {
           queries[action.queryIndex].orderBy[action.fieldIndex] =
-          action.queryName;
+            action.queryName;
         } else {
           queries[action.queryIndex].orderBy.splice(action.fieldIndex, 1)
         }
