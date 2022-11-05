@@ -15,15 +15,16 @@ const generateColumns = (aggregate, aggregateAs, columns, having) => {
   if (columns.length > 0) {
     columns.forEach(col => {
       (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] : ''}${columns.indexOf(col) === columns.length - 1 ? "" : ", "}`);
-      
-      (havingString += `${having.length > 0 ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having : ""}`); 
+
+      (havingString += `${having[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having[columns.indexOf(col)] : ""}`);
+
     })
   } else {
     columnString += "*"
   }
   return {
     columnString,
-    havingString 
+    havingString
   }
 }
 
@@ -46,7 +47,7 @@ const generateWhere = (condition) => {
   }
   return whereString
 }
-  
+
 const generateLimit = limit => {
   return (limit === 1000) ? "" : `LIMIT ${limit}`;
 }
@@ -74,7 +75,7 @@ const generateGroupBy = (groupBy) => {
 
 export default function generateQuerySQL(queries) {
   return queries.map(query => {
-    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition.length > 0 ?'\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy.length > 0 ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy.length > 0 ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
+    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition.length > 0 ? '\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy.length > 0 ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy.length > 0 ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
   })
 };
-  
+
