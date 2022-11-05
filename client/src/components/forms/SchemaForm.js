@@ -7,6 +7,7 @@ import { FormInputDropdown } from "../fields/FormInputDropdown";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const SchemaForm = ({
   table,
@@ -64,7 +65,7 @@ const SchemaForm = ({
   const handleClose = () => isOpen && setIsOpen(false);
 
   return (
-    <div className="table">
+    <div className="schema-table">
       {isOpen && !isOpen.modal && (
         <SuccessSnackbar
           open={isOpen}
@@ -198,7 +199,7 @@ const SchemaForm = ({
           primary="true"
           onClick={() => buttonHandler("addField", tableIndex)}
         >
-          Add Field +
+          <AddCircleIcon /> Add Field
         </Button>
         <Button
           key={`Remove-${tableIndex}`}

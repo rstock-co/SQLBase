@@ -33,7 +33,7 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: rgb(227, 227, 227);
+    background-color: rgb(240, 240, 240);
     padding: 1%;
     border-radius: 1.5em;
     .database-name {
@@ -51,3 +51,9 @@ main {
   }
 }
 
+#database-tables-bottom {
+  position: relative;
+  width: 100%;
+  opacity: 0.5;
+  bottom: 0%;
+}

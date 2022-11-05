@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { FormInputDropdown } from "../fields/FormInputDropdown";
 import { FormInputText } from "../fields/FormInputText";
 import { useForm } from "react-hook-form";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const SeedsForms = ({
   numRowsDropdown,
@@ -39,7 +40,7 @@ const SeedsForms = ({
                   menuOptions={numRowsDropdown}
                 />
                 <Button primary="true" onClick={() => buttonHandler(table)}>
-                  Preview
+                <VisibilityIcon /> <div> Preview</div>
                 </Button>
               </div>
             </>

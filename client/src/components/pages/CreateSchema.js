@@ -18,6 +18,10 @@ import PageSplitter from "../../styles/components/PageSplitter";
 import SuccessSnackbar from "../snackbars/SuccessSnackbar";
 import "../forms/SchemaForm.scss";
 import EditableField from "../fields/EditableField";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import SaveIcon from '@mui/icons-material/Save';
+import LanIcon from '@mui/icons-material/Lan';
 
 const CreateSchemaPage = () => {
   const {
@@ -131,7 +135,7 @@ const CreateSchemaPage = () => {
                   fields={table.fields}
                 />
               </div> */}
-              <div className="demo">
+              <div className="schema-demo">
                 <CopyBlock
                   key={`CopyBlock-${tableIndex}`}
                   language="sql"
@@ -152,10 +156,10 @@ const CreateSchemaPage = () => {
             onClick={() => buttonHandler("addTable")}
             variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" } }}
           >
-            Add Table
+          <AddCircleIcon /> <div>Add Table</div>
           </Button>
           <Button id="copy-all" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("copy")}>
-            Copy All Schema
+            <ContentCopyIcon /> <div>Copy All Schema</div>
           </Button>
         </Box>
 
@@ -163,13 +167,13 @@ const CreateSchemaPage = () => {
       <Box id="schema-buttons">
 
         <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("modal")}>
-          Generate ERD
+        <LanIcon /> <div> View ERD</div>
         </Button>
         <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("save")}>
-          Save Progress
+          <SaveIcon /> <div>Save</div>
         </Button>
         <Button variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} primary="true" onClick={() => buttonHandler("createDB")}>
-          Create Database
+        <AddCircleIcon /> <div> Create</div>
         </Button>
       </Box>
       {/* <Button primary="true" onClick={() => buttonHandler("seed")}>
