@@ -106,7 +106,7 @@ const useDatabase = () => {
   const seedDatabase = async (databaseName, seedString) => {
     return axios.put('/api/seed', { databaseName, seedString })
       .then(data => {
-        // console.log(JSON.parse(data.data.global_state))
+        console.log('hello', data.data)
         return data.data
       })
       .catch(err => {

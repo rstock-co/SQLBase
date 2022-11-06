@@ -59,11 +59,6 @@ const CreateSchemaPage = () => {
         let allStrings = generateSQL(state.schemaState);
         createDatabase(allStrings.join(""));
         break;
-      case "seed":
-        let seedString = generateSeedSQL(state.seedState);
-        console.log(seedString);
-        seedDatabase(state.databaseName, seedString);
-        break;
       case "addTable":
         setIsOpen({ addTable: true, message: "Table Added" });
         addSchemaTable();

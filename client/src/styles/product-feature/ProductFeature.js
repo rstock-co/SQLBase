@@ -1,17 +1,17 @@
 import { React, useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material'
 import Image from 'mui-image'
-// import HoverVideoPlayer from 'react-hover-video-player'
+import HoverVideoPlayer from 'react-hover-video-player'
 
 const ProductFeature = () => {
 
-  // const hoverVideoRef = useRef();
+  const hoverVideoRef = useRef();
 
-  // useEffect(() => {
-  //   const videoElement = hoverVideoRef.current;
+  useEffect(() => {
+    const videoElement = hoverVideoRef.current;
 
-  //   videoElement.playbackRate = 2.5;
-  // }, []);
+    videoElement.playbackRate = 1.5;
+  }, []);
 
   return (
     <>
@@ -40,13 +40,13 @@ const ProductFeature = () => {
           margin: 4,
         }} >
 
-          <Image src='https://picsum.photos/450' height='450px' width='450px'
+          {/* <Image src='https://picsum.photos/450' height='450px' width='450px'
             duration={1000}
             shift={"right"}
-          />
-          {/* <HoverVideoPlayer
+          /> */}
+          <HoverVideoPlayer
             videoRef={hoverVideoRef}
-            videoSrc="./forms.mp4"
+            videoSrc="./CreateAndSeed.mp4"
             restartOnPaused
             style={{
               width: '45%',
@@ -68,7 +68,7 @@ const ProductFeature = () => {
               <div className="loading-overlay">
                 <div className="loading-spinner" />
               </div>
-            } /> */}
+            } />
 
           <Box className="section-text" width={300}>
             <Typography variant='h5'>Powerful Form Tools</Typography>

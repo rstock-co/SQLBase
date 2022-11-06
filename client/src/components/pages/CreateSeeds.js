@@ -23,6 +23,7 @@ const CreateSeedsPage = () => {
 
   const table = state.schemaState;
   const seeds = state.seedState;
+  let seedString = generateSeedSQL(seeds);
 
   const [isOpen, setIsOpen] = useState({
     modal: false,
@@ -72,37 +73,15 @@ const CreateSeedsPage = () => {
       <Box id="seeds-buttons">
         <Button
           primary="true"
-          onClick={() =>
-            seedDatabase(state.databaseName, generateSeedSQL(state.seedState))
-          }
-          variant="contained"
-          sx={{
-            backgroundColor: "#4a748f",
-            ":hover": { backgroundColor: "#588bab" },
-          }}
+          onClick={() => seedDatabase(state.databaseName, seedString)}
+          variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": { backgroundColor: "#588bab" } }}
         >
-          <AutoFixHighIcon /> <div> Seed </div>
+          <AutoFixHighIcon /> <div>  Seed </div>
         </Button>
-        <Button
-          primary="true"
-          variant="contained"
-          sx={{
-            backgroundColor: "#4a748f",
-            ":hover": { backgroundColor: "#588bab" },
-          }}
-          onClick={() => saveProgress()}
-        >
-          <SaveIcon /> <div>Save</div>
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": { backgroundColor: "#588bab" } }} onClick={() => saveProgress()}>
+          <SaveIcon />  <div>Save</div>
         </Button>
-        <Button
-          primary="true"
-          variant="contained"
-          sx={{
-            backgroundColor: "#4a748f",
-            ":hover": { backgroundColor: "#588bab" },
-          }}
-          onClick={() => loadProgress()}
-        >
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": { backgroundColor: "#588bab" } }} onClick={() => loadProgress()}>
           <DownloadIcon /> <div> Load </div>
         </Button>
       </Box>
