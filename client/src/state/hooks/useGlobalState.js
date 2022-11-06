@@ -13,14 +13,14 @@ const useGlobalState = () => {
   };
 
   const getColumnList = table => {
-    let columnNames = [{label: "None", value: "none"}];
+    let columnList = [{ label: "None", value: "none" }];
     table.fields.map(field =>
-      columnNames.push({
+      columnList.push({
         label: field.fieldName,
         value: field.fieldName,
       })
     );
-    return columnNames;
+    return columnList;
   };
 
   return {

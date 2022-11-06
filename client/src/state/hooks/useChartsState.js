@@ -14,7 +14,7 @@ const useChartsState = () => {
       })
     );
 
-  const getRelations = tableName => {
+  const getRelTableList = tableName => {
     const allTables = ["companies", "employees", "products"];
     allTables.splice(allTables.indexOf(tableName), 1);
     return allTables.map(rel => ({
@@ -23,9 +23,29 @@ const useChartsState = () => {
     }));
   };
 
+  const getRelColList = tableName => {
+    let relColList = [{ label: "None", value: "none" }];
+    console.log("TABLE NAME from ZZZZ: ", tableName);
+    console.log(
+      "FILTER from ZZZZ: ",
+      state.schemaState.filter(table => table.table === tableName)
+    );
+    const relTable = state.schemaState.filter(
+      table => table.table === tableName
+    );
+    relTable[0].fields.map(field =>
+      relColList.push({
+        label: field.fieldName,
+        value: field.fieldName,
+      })
+    );
+    return relColList;
+  };
+
   return {
     getUniqueValues,
-    getRelations,
+    getRelTableList,
+    getRelColList,
   };
 };
 

@@ -5,3 +5,11 @@ export const pieChartData = [
   { name: "Ages 50-60", value: 200 },
   { name: "Ages 60-70", value: 100 },
 ];
+
+export const pieChartColors = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#eb4034",
+];

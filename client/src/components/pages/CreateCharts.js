@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
@@ -8,40 +8,48 @@ import { deepCopy } from "../../helpers/schemaFormHelpers";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
-  const { getUniqueValues, getRelations } = useChartsState();
+  const { getUniqueValues, getRelTableList, getRelColList } = useChartsState();
   const { state } = useSchemaState();
 
   const [indexes, setIndexes] = useState({
     tableIndex: 0,
     colIndex: 1,
     valIndex: 0,
-    relIndex: 0,
+    relTableIndex: 0,
+    relColIndex: 0,
   });
 
   let tableList = getTableNames();
+  let allTables = state.schemaState;
 
   const [columnList, setColumnList] = useState(
-    getColumnList(state.schemaState[indexes.tableIndex])
+    getColumnList(allTables[indexes.tableIndex])
   );
   const [valueList, setValueList] = useState(
     getUniqueValues(String(tableList[0].value), String(columnList[1].value))
   );
-  const [relationList, setRelationList] = useState(
-    getRelations(String(tableList[indexes.tableIndex].value))
+  const [relTableList, setRelTableList] = useState(
+    getRelTableList(String(tableList[indexes.tableIndex].value))
+  );
+  const [relColList, setRelColList] = useState(
+    getRelColList(String(relTableList[indexes.relTableIndex].value))
   );
 
   useEffect(() => {
-    setColumnList(prev => getColumnList(state.schemaState[indexes.tableIndex]));
-    setValueList(prev =>
+    setColumnList(getColumnList(allTables[indexes.tableIndex]));
+    setValueList(
       getUniqueValues(
         String(tableList[indexes.tableIndex].value),
         String(columnList[indexes.colIndex].value)
       )
     );
-    setRelationList(prev =>
-      getRelations(String(tableList[indexes.tableIndex].value))
+    setRelTableList(
+      getRelTableList(String(tableList[indexes.tableIndex].value))
     );
-  }, [indexes.colIndex, indexes.tableIndex]);
+    setRelColList(
+      getRelColList(String(relTableList[indexes.relTableIndex].value))
+    );
+  }, [indexes.colIndex, indexes.tableIndex, indexes.relTableIndex]);
 
   const selectHandler = (list, index, event) => {
     setIndexes(prev => {
@@ -57,7 +65,8 @@ const CreateChartsPage = () => {
         tableList={tableList}
         columnList={columnList}
         valueList={valueList}
-        relationList={relationList}
+        relTableList={relTableList}
+        relColList={relColList}
         indexes={indexes}
         setIndexes={setIndexes}
         selectHandler={selectHandler}
