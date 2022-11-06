@@ -17,8 +17,25 @@ const useChartsState = () => {
     return uniqVals;
   };
 
+  const getRelations = tableName => {
+    const allTables = ["companies", "employees", "products"];
+    allTables.splice(allTables.indexOf(tableName), 1);
+    console.log(
+      "Relations: ",
+      allTables.map(rel => ({
+        label: rel,
+        value: rel,
+      }))
+    );
+    return allTables.map(rel => ({
+      label: rel,
+      value: rel,
+    }));
+  };
+
   return {
     getUniqueValues,
+    getRelations,
   };
 };
 

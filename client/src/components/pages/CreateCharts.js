@@ -6,9 +6,10 @@ import PieChartCard from "../charts/pie-chart/PieChartCard";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
-  const { getUniqueValues } = useChartsState();
+  const { getUniqueValues, getRelations } = useChartsState();
   const { state } = useSchemaState();
   const allTables = state.schemaState;
+  const tableList = getTableNames();
 
   const [indexes, setIndexes] = useState({
     tableIndex: 0,
@@ -16,13 +17,14 @@ const CreateChartsPage = () => {
     valIndex: 0,
     relIndex: 0,
   });
+  const columnList = getColumnList(allTables[indexes.tableIndex]);
 
   const [valueList, setValueList] = useState([
     { label: "none", value: "none" },
   ]);
-
-  const tableList = getTableNames();
-  const columnList = getColumnList(allTables[indexes.tableIndex]);
+  const [relationList, setRelationList] = useState([
+    { label: "none", value: "none" },
+  ]);
 
   useEffect(() => {
     setValueList(prev =>
@@ -31,7 +33,13 @@ const CreateChartsPage = () => {
         String(columnList[indexes.colIndex].value)
       )
     );
+
+    setRelationList(prev =>
+      getRelations(String(tableList[indexes.tableIndex].value))
+    );
   }, [indexes.colIndex, indexes.tableIndex]);
+
+  console.log("RELATIONS LIST: ", relationList);
 
   const selectTableHandler = event => {
     setIndexes(prev => ({
@@ -60,18 +68,28 @@ const CreateChartsPage = () => {
     }));
   };
 
+  const selectRelHandler = event => {
+    setIndexes(prev => ({
+      ...prev,
+      relIndex: relationList.map(rel => rel.value).indexOf(event.target.value),
+    }));
+  };
+
   return (
     <main>
       <PieChartCard
-        tableNameList={tableList}
+        tableList={tableList}
         columnList={columnList}
         valueList={valueList}
+        relationList={relationList}
         activeTableIndex={indexes.tableIndex}
         activeColIndex={indexes.colIndex}
         activeValueIndex={indexes.valIndex}
+        activeRelIndex={indexes.relIndex}
         selectTableHandler={selectTableHandler}
         selectColumnHandler={selectColumnHandler}
         selectValueHandler={selectValueHandler}
+        selectRelHandler={selectRelHandler}
       />
     </main>
   );

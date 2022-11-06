@@ -5,15 +5,18 @@ import { useForm } from "react-hook-form";
 import { Card } from "@mui/material";
 
 const PieChartCard = ({
-  tableNameList,
+  tableList,
   columnList,
   valueList,
+  relationList,
   activeTableIndex,
   activeColIndex,
   activeValueIndex,
+  activeRelIndex,
   selectTableHandler,
   selectColumnHandler,
   selectValueHandler,
+  selectRelHandler,
 }) => {
   const {
     formState: { errors },
@@ -39,9 +42,9 @@ const PieChartCard = ({
           name={"TableSelect"}
           control={control}
           label={"Select Table"}
-          menuOptions={tableNameList}
+          menuOptions={tableList}
           handleChange={event => selectTableHandler(event)}
-          value={tableNameList[activeTableIndex].value}
+          value={tableList[activeTableIndex].value}
         />
         <FormInputDropdown
           name={"ColumnSelect"}
@@ -65,9 +68,9 @@ const PieChartCard = ({
           name={"RelationSelect"}
           control={control}
           label={"Select Relation"}
-          menuOptions={tableNameList}
-          handleChange={event => selectTableHandler(event)}
-          value={tableNameList[activeTableIndex].value}
+          menuOptions={relationList}
+          handleChange={event => selectRelHandler(event)}
+          value={relationList[activeRelIndex].value}
         />
         <FormInputDropdown
           name={"ColumnSelect"}
@@ -93,7 +96,7 @@ const PieChartCard = ({
           chartColor={"#e68209"}
           textColor1={"#e68209"}
           textColor2={"#fcba03"}
-          tableName={tableNameList[activeTableIndex].value}
+          tableName={tableList[activeTableIndex].value}
           colName={columnList[activeColIndex].value}
         />
       </div>
