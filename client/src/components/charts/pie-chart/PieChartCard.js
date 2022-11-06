@@ -9,19 +9,17 @@ const PieChartCard = ({
   columnList,
   valueList,
   relationList,
-  activeTableIndex,
-  activeColIndex,
-  activeValueIndex,
-  activeRelIndex,
-  selectTableHandler,
-  selectColumnHandler,
-  selectValueHandler,
-  selectRelHandler,
+  indexes,
+  setIndexes,
+  selectHandler,
 }) => {
   const {
     formState: { errors },
     control,
   } = useForm();
+
+  console.log("Indexes: ", indexes);
+  console.log("Table List: ", tableList);
 
   return (
     <Card
@@ -43,24 +41,30 @@ const PieChartCard = ({
           control={control}
           label={"Select Table"}
           menuOptions={tableList}
-          handleChange={event => selectTableHandler(event)}
-          value={tableList[activeTableIndex].value}
+          handleChange={event => {
+            selectHandler(tableList, "tableIndex", event);
+            setIndexes(prev => ({
+              ...prev,
+              colIndex: 0,
+            }));
+          }}
+          value={tableList[indexes.tableIndex].value}
         />
         <FormInputDropdown
           name={"ColumnSelect"}
           control={control}
           label={"Select Column"}
           menuOptions={columnList}
-          handleChange={event => selectColumnHandler(event)}
-          value={columnList[activeColIndex].value}
+          handleChange={event => selectHandler(columnList, "colIndex", event)}
+          value={columnList[indexes.colIndex].value}
         />
         <FormInputDropdown
           name={"ValueColumnSelect"}
           control={control}
           label={"Select Value"}
           menuOptions={valueList}
-          handleChange={event => selectValueHandler(event)}
-          value={valueList[activeValueIndex].value}
+          handleChange={event => selectHandler(valueList, "valIndex", event)}
+          value={valueList[indexes.valIndex].value}
         />
       </div>
       <div id="dropdown-row-2">
@@ -69,8 +73,8 @@ const PieChartCard = ({
           control={control}
           label={"Select Relation"}
           menuOptions={relationList}
-          handleChange={event => selectRelHandler(event)}
-          value={relationList[activeRelIndex].value}
+          handleChange={event => selectHandler(relationList, "relIndex", event)}
+          value={relationList[indexes.relIndex].value}
         />
         {/* <FormInputDropdown
           name={"ColumnSelect"}
@@ -96,8 +100,8 @@ const PieChartCard = ({
           chartColor={"#e68209"}
           textColor1={"#e68209"}
           textColor2={"#fcba03"}
-          tableName={tableList[activeTableIndex].value}
-          colName={columnList[activeColIndex].value}
+          tableName={tableList[indexes.tableIndex].value}
+          colName={columnList[indexes.colIndex].value}
         />
       </div>
     </Card>

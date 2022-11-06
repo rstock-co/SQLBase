@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
@@ -18,22 +18,26 @@ const CreateChartsPage = () => {
     relIndex: 0,
   });
 
-  const allTables = state.schemaState;
-  const tableList = getTableNames();
-  const columnList = getColumnList(allTables[indexes.tableIndex]);
+  let tableList = getTableNames();
 
-  const empty = { label: "none", value: "none" };
-  const [valueList, setValueList] = useState([empty]);
-  const [relationList, setRelationList] = useState([empty]);
+  const [columnList, setColumnList] = useState(
+    getColumnList(state.schemaState[indexes.tableIndex])
+  );
+  const [valueList, setValueList] = useState(
+    getUniqueValues(String(tableList[0].value), String(columnList[1].value))
+  );
+  const [relationList, setRelationList] = useState(
+    getRelations(String(tableList[indexes.tableIndex].value))
+  );
 
   useEffect(() => {
+    setColumnList(prev => getColumnList(state.schemaState[indexes.tableIndex]));
     setValueList(prev =>
       getUniqueValues(
         String(tableList[indexes.tableIndex].value),
         String(columnList[indexes.colIndex].value)
       )
     );
-
     setRelationList(prev =>
       getRelations(String(tableList[indexes.tableIndex].value))
     );
@@ -47,45 +51,6 @@ const CreateChartsPage = () => {
     });
   };
 
-  const selectColumnHandler = event =>
-    selectHandler(columnList, "colIndex", event);
-
-  const selectValueHandler = event =>
-    selectHandler(valueList, "valIndex", event);
-
-  const selectRelHandler = event =>
-    selectHandler(relationList, "relIndex", event);
-
-  const selectTableHandler = event => {
-    selectHandler(tableList, "tableIndex", event);
-
-    setIndexes(prev => ({
-      ...prev,
-      colIndex: 0,
-    }));
-  };
-
-  // const selectColumnHandler = event => {
-  //   setIndexes(prev => ({
-  //     ...prev,
-  //     colIndex: columnList.map(col => col.value).indexOf(event.target.value),
-  //   }));
-  // };
-
-  // const selectValueHandler = event => {
-  //   setIndexes(prev => ({
-  //     ...prev,
-  //     valIndex: valueList.map(val => val.value).indexOf(event.target.value),
-  //   }));
-  // };
-
-  // const selectRelHandler = event => {
-  //   setIndexes(prev => ({
-  //     ...prev,
-  //     relIndex: relationList.map(rel => rel.value).indexOf(event.target.value),
-  //   }));
-  // };
-
   return (
     <main>
       <PieChartCard
@@ -93,14 +58,9 @@ const CreateChartsPage = () => {
         columnList={columnList}
         valueList={valueList}
         relationList={relationList}
-        activeTableIndex={indexes.tableIndex}
-        activeColIndex={indexes.colIndex}
-        activeValueIndex={indexes.valIndex}
-        activeRelIndex={indexes.relIndex}
-        selectTableHandler={selectTableHandler}
-        selectColumnHandler={selectColumnHandler}
-        selectValueHandler={selectValueHandler}
-        selectRelHandler={selectRelHandler}
+        indexes={indexes}
+        setIndexes={setIndexes}
+        selectHandler={selectHandler}
       />
       <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
