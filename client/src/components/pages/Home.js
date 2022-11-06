@@ -27,7 +27,7 @@ const Home = () => {
           }}
         >
           <div style={{
-            overflowY: 'auto',
+            // overflowY: 'auto',
             scrollSnapType: 'y mandatory'
           }}>
 

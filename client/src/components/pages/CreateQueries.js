@@ -93,10 +93,10 @@ const CreateQueriesPage = () => {
             id='queries-add-table'
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
+              backgroundColor: "#4a748f",
               marginLeft: "20%",
               marginRight: "5%",
-              ":hover": { backgroundColor: "#7776a3" },
+              ":hover": { backgroundColor: "#588bab" },
             }}
             primary="true"
             onClick={() => addQueryTable()}
@@ -107,10 +107,10 @@ const CreateQueriesPage = () => {
             id='queries-copy-all'
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
+              backgroundColor: "#4a748f",
               marginLeft: "8%",
               width: "5%",
-              ":hover": { backgroundColor: "#7776a3" },
+              ":hover": { backgroundColor: "#588bab" },
             }}
             primary="true"
             onClick={() => copyHandler()}
@@ -124,8 +124,8 @@ const CreateQueriesPage = () => {
             primary="true"
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
-              ":hover": { backgroundColor: "#7776a3" },
+              backgroundColor: "#4a748f",
+              ":hover": { backgroundColor: "#588bab" },
             }}
             onClick={() => saveProgress()}
           >
@@ -135,8 +135,8 @@ const CreateQueriesPage = () => {
             primary="true"
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
-              ":hover": { backgroundColor: "#7776a3" },
+              backgroundColor: "#4a748f",
+              ":hover": { backgroundColor: "#659dc1" },
             }}
             onClick={() => loadProgress()}
           >

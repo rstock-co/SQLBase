@@ -1,7 +1,7 @@
 import { React, useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material'
 import Image from 'mui-image'
-import HoverVideoPlayer from 'react-hover-video-player'
+// import HoverVideoPlayer from 'react-hover-video-player'
 
 const ProductFeature = () => {
 

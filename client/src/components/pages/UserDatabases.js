@@ -98,9 +98,9 @@ const UserDatabases = () => {
                       <Button
                         variant="contained"
                         sx={{
-                          backgroundColor: "#5755a1",
+                          backgroundColor: "#5483a1",
                           boxShadow: '0 11px 32px -6px #7170a4',
-                          ":hover": { backgroundColor: "#7776a3" },
+                          ":hover": { backgroundColor: "#588bab" },
                         }}
                         size='small'
                         onClick={() => {

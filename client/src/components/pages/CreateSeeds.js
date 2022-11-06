@@ -94,14 +94,14 @@ const CreateSeedsPage = () => {
         <Button
           primary="true"
           onClick={() => generateAllSeedState(seedFormData)}
-          variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }}
+          variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": {backgroundColor: "#588bab" }  }}
         >
         <AutoFixHighIcon/> <div>  Seed </div>
         </Button>
-        <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => saveProgress()}>
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": {backgroundColor: "#588bab" }  }} onClick={() => saveProgress()}>
         <SaveIcon />  <div>Save</div>
         </Button>
-        <Button primary="true" variant="contained" sx={{ backgroundColor: '#5755a1', ":hover": {backgroundColor: "#7776a3" }  }} onClick={() => loadProgress()}>
+        <Button primary="true" variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": {backgroundColor: "#588bab" }  }} onClick={() => loadProgress()}>
         <DownloadIcon /> <div> Load </div>
         </Button>
       </Box>
