@@ -18,10 +18,11 @@ import DownloadIcon from '@mui/icons-material/Download';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 
+
 const CreateSeedsPage = () => {
   const { state, generateSeedState, generateAllSeedState } = useSeedState();
   const { getTableNames } = useGlobalState();
-  const { saveProgress, loadProgress } = useDatabase();
+  const { saveProgress, loadProgress, seedDatabase } = useDatabase();
 
   const style = {
     fontSize: "25px",
@@ -93,7 +94,7 @@ const CreateSeedsPage = () => {
       <Box id="seeds-buttons">
         <Button
           primary="true"
-          onClick={() => generateAllSeedState(seedFormData)}
+          onClick={() => seedDatabase(state.databaseName, generateSeedSQL(state.seedState))}
           variant="contained" sx={{ backgroundColor: '#4a748f', ":hover": {backgroundColor: "#588bab" }  }}
         >
         <AutoFixHighIcon/> <div>  Seed </div>
