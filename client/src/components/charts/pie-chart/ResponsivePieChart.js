@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie } from "recharts";
 import ActivePieShape from "./ActivePieShape";
-import { pieChartData } from "../../../state/data_structures/chartState";
+import {
+  pieChartData,
+  pieChartColors,
+} from "../../../state/data_structures/chartState";
 
 const ResponsivePieChart = ({
   width,
   height,
-  chartColor,
-  textColor1,
-  textColor2,
+  subTextColor,
   tableName,
   colName,
 }) => {
@@ -23,9 +24,6 @@ const ResponsivePieChart = ({
   const chartTitle = `${
     tableName.charAt(0).toUpperCase() + tableName.slice(1)
   }, categorized by "${colName.charAt(0).toUpperCase() + colName.slice(1)}"`;
-  // const chartTitle = titleString.replace(/(^\w{1})|(\s+\w{1})/g, letter =>
-  //   letter.toUpperCase()
-  // );
 
   return (
     <>
@@ -37,14 +35,17 @@ const ResponsivePieChart = ({
           <Pie
             activeIndex={activeIndex}
             activeShape={
-              <ActivePieShape textColor1={textColor1} textColor2={textColor2} />
+              <ActivePieShape
+                chartColors={pieChartColors}
+                subTextColor={subTextColor}
+                activeIndex={activeIndex}
+              />
             }
             data={pieChartData}
             cx={width / 2}
             cy={height / 2}
-            innerRadius={60}
-            outerRadius={80}
-            fill={chartColor}
+            innerRadius={100}
+            outerRadius={140}
             dataKey="value"
             onMouseEnter={onPieEnter}
           />

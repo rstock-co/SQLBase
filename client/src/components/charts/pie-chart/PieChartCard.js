@@ -8,7 +8,8 @@ const PieChartCard = ({
   tableList,
   columnList,
   valueList,
-  relationList,
+  relTableList,
+  relColList,
   indexes,
   setIndexes,
   selectHandler,
@@ -69,22 +70,26 @@ const PieChartCard = ({
       </div>
       <div id="dropdown-row-2">
         <FormInputDropdown
-          name={"RelationSelect"}
+          name={"RelTableSelect"}
           control={control}
-          label={"Select Relation"}
-          menuOptions={relationList}
-          handleChange={event => selectHandler(relationList, "relIndex", event)}
-          value={relationList[indexes.relIndex].value}
-        />
-        {/* <FormInputDropdown
-          name={"ColumnSelect"}
-          control={control}
-          label={"Select Column"}
-          menuOptions={columnList}
-          handleChange={event => selectColumnHandler(event)}
-          value={columnList[activeColIndex].value}
+          label={"Select Relation Table"}
+          menuOptions={relTableList}
+          handleChange={event =>
+            selectHandler(relTableList, "relTableIndex", event)
+          }
+          value={relTableList[indexes.relTableIndex].value}
         />
         <FormInputDropdown
+          name={"RelColSelect"}
+          control={control}
+          label={"Select Relation Column"}
+          menuOptions={relColList}
+          handleChange={event =>
+            selectHandler(relColList, "relColIndex", event)
+          }
+          value={relColList[indexes.relColIndex].value}
+        />
+        {/* <FormInputDropdown
           name={"ValueColumnSelect"}
           control={control}
           label={"Select Value"}
@@ -95,11 +100,9 @@ const PieChartCard = ({
       </div>
       <div id="chart">
         <ResponsivePieChart
-          width={500}
-          height={350}
-          chartColor={"#e68209"}
-          textColor1={"#e68209"}
-          textColor2={"#fcba03"}
+          width={700}
+          height={450}
+          subTextColor={"#616161"}
           tableName={tableList[indexes.tableIndex].value}
           colName={columnList[indexes.colIndex].value}
         />

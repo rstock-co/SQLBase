@@ -13,8 +13,9 @@ const ActivePieShape = ({
   payload,
   percent,
   value,
-  textColor1,
-  textColor2,
+  subTextColor,
+  chartColors,
+  activeIndex,
 }) => {
   const RADIAN = Math.PI / 180;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -29,7 +30,15 @@ const ActivePieShape = ({
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text
+        x={cx}
+        y={cy}
+        dy={8}
+        fontSize={24}
+        fontWeight={600}
+        textAnchor="middle"
+        fill={chartColors[activeIndex]}
+      >
         {payload.name}
       </text>
       <Sector
@@ -39,7 +48,7 @@ const ActivePieShape = ({
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill={fill}
+        fill={chartColors[activeIndex]}
       />
       <Sector
         cx={cx}
@@ -48,7 +57,7 @@ const ActivePieShape = ({
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
-        fill={fill}
+        fill={chartColors[activeIndex]}
       />
       <path
         d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
@@ -60,14 +69,17 @@ const ActivePieShape = ({
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill={textColor1}
+        fill={chartColors[activeIndex]}
+        fontWeight={600}
+        fontSize={21}
       >{`PV ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill={textColor2}
+        fill={subTextColor}
+        fontSize={18}
       >
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text>
