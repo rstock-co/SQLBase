@@ -143,7 +143,7 @@ const CreateQueriesPage = () => {
           <DownloadIcon /> <div>  Load </div>
           </Button>
         </Box>
-      <PageSplitter src="body-purple.png" id="tables-bottom" />
+      <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
   );
 };

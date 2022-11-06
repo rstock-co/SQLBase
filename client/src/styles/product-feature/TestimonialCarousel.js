@@ -47,7 +47,7 @@ export default function TestimonialCarousel() {
           spaceBetween={30}
           loop={true}
 
-          autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 3000 }}
           pagination={{
             clickable: true,
           }}

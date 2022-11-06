@@ -134,7 +134,7 @@ const UserDatabases = () => {
               })}
           </div>
         </Container>
-        <PageSplitter src="body-purple.png" id="database-tables-bottom" />
+        <PageSplitter src="body-teal.png" id="database-tables-bottom" />
       </ThemeProvider>
     </main>
   );

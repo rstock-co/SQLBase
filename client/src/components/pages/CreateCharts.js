@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import PieChartCard from "../charts/pie-chart/PieChartCard";
+import PageSplitter from "../../styles/components/PageSplitter";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
@@ -14,16 +15,16 @@ const CreateChartsPage = () => {
   const tableNameList = getTableNames();
   const columnList = getColumnList(allTables[activeTableIndex]);
 
-  const selectTableHandler = event => {
+  const selectTableHandler = (event) => {
     setActiveTableIndex(
-      tableNameList.map(table => table.value).indexOf(event.target.value)
+      tableNameList.map((table) => table.value).indexOf(event.target.value)
     );
     setActiveColIndex(0);
   };
 
-  const selectColumnHandler = event => {
+  const selectColumnHandler = (event) => {
     setActiveColIndex(
-      columnList.map(col => col.value).indexOf(event.target.value)
+      columnList.map((col) => col.value).indexOf(event.target.value)
     );
   };
 
@@ -37,6 +38,7 @@ const CreateChartsPage = () => {
         selectTableHandler={selectTableHandler}
         selectColumnHandler={selectColumnHandler}
       />
+      <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
   );
 };
