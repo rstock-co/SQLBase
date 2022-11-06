@@ -5,6 +5,7 @@ import {
   pieChartData,
   pieChartColors,
 } from "../../../state/data_structures/chartState";
+import { capitalizeWord, titleCase } from "../../../helpers/chartFormHelpers";
 
 const ResponsivePieChart = ({
   width,
@@ -12,6 +13,9 @@ const ResponsivePieChart = ({
   subTextColor,
   tableName,
   colName,
+  valName,
+  relTableName,
+  relColName,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
@@ -21,14 +25,26 @@ const ResponsivePieChart = ({
     [setActiveIndex]
   );
 
-  const chartTitle = `${
-    tableName.charAt(0).toUpperCase() + tableName.slice(1)
-  }, categorized by "${colName.charAt(0).toUpperCase() + colName.slice(1)}"`;
+  const chartTitle = `${capitalizeWord(tableName)}, ${titleCase(
+    colName
+  )}: '${valName}',
+  categorized by
+  ${capitalizeWord(relTableName)}: '${capitalizeWord(relColName)}'`;
 
   return (
     <>
       <div id="chart-title">
-        <h3>{chartTitle}</h3>
+        <h2
+          style={{
+            whiteSpace: "pre-line",
+            textAlign: "center",
+            // textAlign: "left",
+            // marginLeft: "17%",
+            lineHeight: "2em",
+          }}
+        >
+          {chartTitle}
+        </h2>
       </div>
       <div id="pie-chart">
         <PieChart width={width} height={height}>

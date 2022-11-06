@@ -9,7 +9,7 @@ export const pieChartData = [
 export const pieChartColors = [
   "#0088FE",
   "#00C49F",
-  "#FFBB28",
+  "#e8aa23",
   "#FF8042",
-  "#eb4034",
+  "#952cb8",
 ];

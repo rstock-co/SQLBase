@@ -6,13 +6,18 @@ const useChartsState = () => {
   const [state, dispatch] = useContext(GlobalContext);
   const seeds = state.seedState[0];
 
-  const getUniqueValues = (tableName, colName) =>
-    uniqueArray(seeds[tableName].map(tableData => tableData[colName])).map(
-      val => ({
+  const getUniqueValues = (tableName, colName) => {
+    const uniqueValues = uniqueArray(
+      seeds[tableName].map(tableData => tableData[colName])
+    );
+    if (uniqueValues) {
+      return uniqueValues.map(val => ({
         label: val,
         value: val,
-      })
-    );
+      }));
+    }
+    return { label: "None", value: "None" };
+  };
 
   const getRelTableList = tableName => {
     const allTables = ["companies", "employees", "products"];

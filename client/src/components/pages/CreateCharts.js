@@ -26,7 +26,10 @@ const CreateChartsPage = () => {
     getColumnList(allTables[indexes.tableIndex])
   );
   const [valueList, setValueList] = useState(
-    getUniqueValues(String(tableList[0].value), String(columnList[1].value))
+    getUniqueValues(
+      String(tableList[indexes.tableIndex].value),
+      String(columnList[indexes.colIndex].value)
+    )
   );
   const [relTableList, setRelTableList] = useState(
     getRelTableList(String(tableList[indexes.tableIndex].value))

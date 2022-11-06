@@ -19,9 +19,6 @@ const PieChartCard = ({
     control,
   } = useForm();
 
-  console.log("Indexes: ", indexes);
-  console.log("Table List: ", tableList);
-
   return (
     <Card
       sx={{
@@ -34,7 +31,7 @@ const PieChartCard = ({
       }}
     >
       <div id="title">
-        <h2>Pie Chart</h2>
+        <h2>Select Dataset</h2>
       </div>
       <div id="dropdown-row-1">
         <FormInputDropdown
@@ -89,14 +86,6 @@ const PieChartCard = ({
           }
           value={relColList[indexes.relColIndex].value}
         />
-        {/* <FormInputDropdown
-          name={"ValueColumnSelect"}
-          control={control}
-          label={"Select Value"}
-          menuOptions={valueList}
-          handleChange={event => selectValueHandler(event)}
-          value={valueList[activeValueIndex].value}
-        /> */}
       </div>
       <div id="chart">
         <ResponsivePieChart
@@ -105,6 +94,9 @@ const PieChartCard = ({
           subTextColor={"#616161"}
           tableName={tableList[indexes.tableIndex].value}
           colName={columnList[indexes.colIndex].value}
+          valName={valueList[indexes.valIndex].value}
+          relTableName={relTableList[indexes.relTableIndex].value}
+          relColName={relColList[indexes.relColIndex].value}
         />
       </div>
     </Card>
