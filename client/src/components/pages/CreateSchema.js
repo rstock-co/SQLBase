@@ -143,8 +143,8 @@ const CreateSchemaPage = () => {
             onClick={() => buttonHandler("addTable")}
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
-              ":hover": { backgroundColor: "#7776a3" },
+              backgroundColor: "#4a748f",
+              ":hover": { backgroundColor: "#588bab" },
             }}
           >
             <AddCircleIcon /> <div>Add Table</div>
@@ -153,8 +153,8 @@ const CreateSchemaPage = () => {
             id="copy-all"
             variant="contained"
             sx={{
-              backgroundColor: "#5755a1",
-              ":hover": { backgroundColor: "#7776a3" },
+              backgroundColor: "#4a748f",
+              ":hover": { backgroundColor: "#588bab" },
             }}
             primary="true"
             onClick={() => buttonHandler("copy")}
@@ -167,8 +167,8 @@ const CreateSchemaPage = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#5755a1",
-            ":hover": { backgroundColor: "#7776a3" },
+            backgroundColor: "#4a748f",
+            ":hover": { backgroundColor: "#588bab" },
           }}
           primary="true"
           onClick={() => buttonHandler("modal")}
@@ -178,8 +178,8 @@ const CreateSchemaPage = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#5755a1",
-            ":hover": { backgroundColor: "#7776a3" },
+            backgroundColor: "#4a748f",
+            ":hover": { backgroundColor: "#588bab" },
           }}
           primary="true"
           onClick={() => buttonHandler("save")}
@@ -189,8 +189,8 @@ const CreateSchemaPage = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#5755a1",
-            ":hover": { backgroundColor: "#7776a3" },
+            backgroundColor: "#4a748f",
+            ":hover": { backgroundColor: "#588bab" },
           }}
           primary="true"
           onClick={() => buttonHandler("createDB")}
@@ -198,7 +198,7 @@ const CreateSchemaPage = () => {
           <AddCircleIcon /> <div> Create</div>
         </Button>
       </Box>
-      <PageSplitter src="body-purple.png" id="tables-bottom" />
+      <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
   );
 };

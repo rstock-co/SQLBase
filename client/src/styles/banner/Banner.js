@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, useMediaQuery, Container, Box, Typography, Slide } from '@mui/material'
+import { useTheme, useMediaQuery, Container, Box, Typography, Slide, Button, Fade } from '@mui/material'
 import PurpleBox from '../components/PurpleBox';
 import Image from 'mui-image'
 import ParticlesPartial from '../components/ParticlesPartial';
@@ -26,10 +26,11 @@ const Banner = () => {
       }
       }
     >
-      <ParticlesPartial className={'particles'} />
 
       {/* {matches ? <h1>Mobile</h1> : <h1>Desktop</h1>} */}
 
+
+      <ParticlesPartial className={'particles'} />
       <Box className={"hero-div"}
         sx={{
           display: 'flex',
@@ -42,27 +43,82 @@ const Banner = () => {
 
         {/* {matches ? <h1>Mobile</h1> : <h1>Desktop</h1>} */}
 
-        <Slide direction='up'
-          in={true}
-          easing={theme.transitions.easing.easeInOut}
-          timeout={1000}
-          mountOnEnter
-          unmountOnExit
-          container={containerRef.current}>
 
-          <Typography id="tagline"
-            sx={{
-              width: 400,
-              fontSize: 'h4.fontSize',
-              color: 'white',
-              textAlign: 'left',
-              marginTop: 32,
-              marginRight: -6
-            }}
-          >
-            Create your entire database with no code. Generate, seed, and query sample data, to get your project started faster.
-          </Typography>
-        </Slide >
+        <box style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'apart',
+          flexWrap: 'wrap',
+        }}>
+
+          <Slide direction='up'
+            in={true}
+            easing={theme.transitions.easing.easeInOut}
+            timeout={1000}
+            mountOnEnter
+            unmountOnExit
+            container={containerRef.current}>
+
+            <Typography id="tagline"
+              sx={{
+                width: 400,
+                fontSize: 'h4.fontSize',
+                color: 'white',
+                textAlign: 'left',
+                marginTop: 32,
+                marginRight: -6
+              }}
+            >
+              Create your entire database with no code. Generate, seed, and query sample data, to get your project started faster.
+            </Typography>
+
+
+          </Slide >
+
+          <box style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            pt: 24
+          }}>
+
+            <Fade in={true} timeout={5000} appear={true}>
+              <Button sx={{
+                backgroundColor: '#fe854f',
+                height: 48,
+                width: 175,
+                boxShadow: '0 11px 32px -6px #fe854f',
+                ":hover": {
+                  backgroundColor: '#fe854f',
+                  boxShadow: 'none'
+                },
+
+              }} style={{ marginTop: 36 }}
+              >Start SQLBase
+              </Button>
+            </Fade>
+            <Fade in={true} timeout={5000} appear={true}>
+
+              <Button sx={{
+                backgroundColor: '#31d0c6',
+                height: 48,
+                width: 175,
+                boxShadow: '0 11px 32px -6px #31d0c6',
+                ":hover": {
+                  backgroundColor: '#31d0c6',
+                  boxShadow: 'none'
+                },
+
+              }} style={{ marginTop: 36, marginLeft: 24 }}>Free Trial</Button>
+            </Fade>
+
+          </box>
+        </box>
+
+
+
+
 
         <Box
           sx={{
@@ -71,7 +127,7 @@ const Banner = () => {
 
 
           <Image
-            src="diagram.png"
+            src="tealdiagram.png"
             height="400px"
             width="400px"
             fit="scale-down"
@@ -85,7 +141,9 @@ const Banner = () => {
             shiftDuration={900}
             bgColor="inherit"
           />
+
         </Box>
+
       </Box>
 
     </PurpleBox >

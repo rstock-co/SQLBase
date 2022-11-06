@@ -1,9 +1,17 @@
-import React from 'react';
+import { React, useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material'
 import Image from 'mui-image'
+// import HoverVideoPlayer from 'react-hover-video-player'
 
 const ProductFeature = () => {
 
+  // const hoverVideoRef = useRef();
+
+  // useEffect(() => {
+  //   const videoElement = hoverVideoRef.current;
+
+  //   videoElement.playbackRate = 2.5;
+  // }, []);
 
   return (
     <>
@@ -36,6 +44,32 @@ const ProductFeature = () => {
             duration={1000}
             shift={"right"}
           />
+          {/* <HoverVideoPlayer
+            videoRef={hoverVideoRef}
+            videoSrc="./forms.mp4"
+            restartOnPaused
+            style={{
+              width: '45%',
+              height: '45%'
+            }}
+            pausedOverlay={
+              <img
+                src="formSS.png"
+                alt=""
+                style={{
+                  // Make the image expand to cover the video's dimensions
+                  width: '100%',
+                  height: '100%',
+                  // objectFit: 'cover',
+                }}
+              />
+            }
+            loadingOverlay={
+              <div className="loading-overlay">
+                <div className="loading-spinner" />
+              </div>
+            } /> */}
+
           <Box className="section-text" width={300}>
             <Typography variant='h5'>Powerful Form Tools</Typography>
             <Typography variant='body1'>SQLBase is a SQL platform that allows users to easily create, query, and seed a database. It delivers a functional database with no code inputs, providing you with the right tools to build your outstanding projects.

@@ -3,6 +3,7 @@ import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import PieChartCard from "../charts/pie-chart/PieChartCard";
+import PageSplitter from "../../styles/components/PageSplitter";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
@@ -91,6 +92,7 @@ const CreateChartsPage = () => {
         selectValueHandler={selectValueHandler}
         selectRelHandler={selectRelHandler}
       />
+      <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
   );
 };

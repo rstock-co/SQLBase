@@ -1,0 +1,11 @@
+#landing-container{
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 15vh;
+}
+
+.page-section {
+  height: 80vh;
+  scroll-snap-align: center;
+}
