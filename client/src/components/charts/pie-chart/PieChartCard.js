@@ -72,7 +72,7 @@ const PieChartCard = ({
           handleChange={event => selectRelHandler(event)}
           value={relationList[activeRelIndex].value}
         />
-        <FormInputDropdown
+        {/* <FormInputDropdown
           name={"ColumnSelect"}
           control={control}
           label={"Select Column"}
@@ -87,7 +87,7 @@ const PieChartCard = ({
           menuOptions={valueList}
           handleChange={event => selectValueHandler(event)}
           value={valueList[activeValueIndex].value}
-        />
+        /> */}
       </div>
       <div id="chart">
         <ResponsivePieChart

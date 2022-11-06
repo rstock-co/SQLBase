@@ -76,7 +76,7 @@ const useSeedState = () => {
         ) * 1000;
 
       companies.push({
-        id: i + 1,
+        uid: i + 1,
         name: randBrand(),
         ceo: randFullName(),
         num_employees,
