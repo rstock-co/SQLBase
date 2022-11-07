@@ -8,8 +8,6 @@ const BarChartCard = ({
   tableList,
   columnList,
   valueList,
-  relTableList,
-  relColList,
   indexes,
   setIndexes,
   selectHandler,
@@ -70,31 +68,9 @@ const BarChartCard = ({
           value={valueList[indexes.valIndex].value}
         />
       </div>
-      <div id="dropdown-row-2">
-        <FormInputDropdown
-          name={"RelTableSelect"}
-          control={control}
-          label={"Select Relation Table"}
-          menuOptions={relTableList}
-          handleChange={event =>
-            selectHandler("bar", relTableList, "relTableIndex", event)
-          }
-          value={relTableList[indexes.relTableIndex].value}
-        />
-        <FormInputDropdown
-          name={"RelColSelect"}
-          control={control}
-          label={"Select Relation Column"}
-          menuOptions={relColList}
-          handleChange={event => {
-            selectHandler("bar", relColList, "relColIndex", event);
-          }}
-          value={relColList[indexes.relColIndex].value}
-        />
-      </div>
       <div id="chart">
         <ResponsiveBarChart
-          width={1000}
+          width={1200}
           height={600}
           barSize={35}
           lineColor={"#ff7300"}
@@ -103,9 +79,7 @@ const BarChartCard = ({
           tableName={tableList[indexes.tableIndex].value}
           colName={columnList[indexes.colIndex].value}
           valName={valueList[indexes.valIndex].value}
-          relTableName={relTableList[indexes.relTableIndex].value}
-          relColName={relColList[indexes.relColIndex].value}
-          // chartData={chartData[String(relColList[indexes.relColIndex].value)]}
+          chartData={chartData}
         />
       </div>
     </Card>
