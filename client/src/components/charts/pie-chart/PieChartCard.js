@@ -25,7 +25,7 @@ const PieChartCard = ({
       sx={{
         textAlign: "center",
         paddingX: "30px",
-        marginTop: "50px",
+        marginTop: "90px",
         backgroundColor: "#e8e8e8",
         boxShadow: "0 8px 20px -6px #f7f7f7",
         ":hover": { backgroundColor: "#f3f3f3" },
@@ -41,7 +41,7 @@ const PieChartCard = ({
           label={"Select Table"}
           menuOptions={tableList}
           handleChange={event => {
-            selectHandler(tableList, "tableIndex", event);
+            selectHandler("pie", tableList, "tableIndex", event);
             setIndexes(prev => ({
               ...prev,
               colIndex: 0,
@@ -54,7 +54,9 @@ const PieChartCard = ({
           control={control}
           label={"Select Column"}
           menuOptions={columnList}
-          handleChange={event => selectHandler(columnList, "colIndex", event)}
+          handleChange={event =>
+            selectHandler("pie", columnList, "colIndex", event)
+          }
           value={columnList[indexes.colIndex].value}
         />
         <FormInputDropdown
@@ -62,7 +64,9 @@ const PieChartCard = ({
           control={control}
           label={"Select Value"}
           menuOptions={valueList}
-          handleChange={event => selectHandler(valueList, "valIndex", event)}
+          handleChange={event =>
+            selectHandler("pie", valueList, "valIndex", event)
+          }
           value={valueList[indexes.valIndex].value}
         />
       </div>
@@ -73,7 +77,7 @@ const PieChartCard = ({
           label={"Select Relation Table"}
           menuOptions={relTableList}
           handleChange={event =>
-            selectHandler(relTableList, "relTableIndex", event)
+            selectHandler("pie", relTableList, "relTableIndex", event)
           }
           value={relTableList[indexes.relTableIndex].value}
         />
@@ -83,7 +87,7 @@ const PieChartCard = ({
           label={"Select Relation Column"}
           menuOptions={relColList}
           handleChange={event => {
-            selectHandler(relColList, "relColIndex", event);
+            selectHandler("pie", relColList, "relColIndex", event);
           }}
           value={relColList[indexes.relColIndex].value}
         />

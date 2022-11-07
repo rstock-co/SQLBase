@@ -1,4 +1,4 @@
-export const pieChartData = {
+export const initialPieChartData = {
   age: [
     { name: "Ages 20-30", value: 10, low: 20, hi: 29 },
     { name: "Ages 30-40", value: 5, low: 30, hi: 40 },
@@ -30,4 +30,43 @@ export const pieChartColors = [
   "#e8aa23",
   "#FF8042",
   "#952cb8",
+];
+
+export const initialBarChartData = [
+  {
+    name: "Page A",
+    uv: 590,
+    pv: 800,
+    amt: 1400,
+  },
+  {
+    name: "Page B",
+    uv: 868,
+    pv: 967,
+    amt: 1506,
+  },
+  {
+    name: "Page C",
+    uv: 1397,
+    pv: 1098,
+    amt: 989,
+  },
+  {
+    name: "Page D",
+    uv: 1480,
+    pv: 1200,
+    amt: 1228,
+  },
+  {
+    name: "Page E",
+    uv: 1520,
+    pv: 1108,
+    amt: 1100,
+  },
+  {
+    name: "Page F",
+    uv: 1400,
+    pv: 680,
+    amt: 1700,
+  },
 ];
