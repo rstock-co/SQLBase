@@ -1,26 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import PieChartCard from "../charts/pie-chart/PieChartCard";
 import PageSplitter from "../../styles/components/PageSplitter";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
+import { pieChartData } from "../../state/data_structures/chartState";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
-  const { getUniqueValues, getRelTableList, getRelColList } = useChartsState();
+  const {
+    getUniqueValues,
+    getAllValues,
+    getRelTableList,
+    getRelColList,
+    filterChartData,
+  } = useChartsState();
+
   const { state } = useSchemaState();
+  let tableList = getTableNames();
+  let allTables = state.schemaState;
 
   const [indexes, setIndexes] = useState({
     tableIndex: 0,
     colIndex: 1,
     valIndex: 0,
     relTableIndex: 0,
-    relColIndex: 0,
+    relColIndex: 8,
   });
-
-  let tableList = getTableNames();
-  let allTables = state.schemaState;
 
   const [columnList, setColumnList] = useState(
     getColumnList(allTables[indexes.tableIndex])
@@ -37,27 +44,68 @@ const CreateChartsPage = () => {
   const [relColList, setRelColList] = useState(
     getRelColList(String(relTableList[indexes.relTableIndex].value))
   );
+  const [relValList, setRelValList] = useState(
+    getAllValues(
+      String(relTableList[indexes.relTableIndex].value),
+      String(relColList[indexes.relColIndex].value),
+      indexes.valIndex
+    )
+  );
+  const [chartData, setChartData] = useState(pieChartData);
 
   useEffect(() => {
-    setColumnList(getColumnList(allTables[indexes.tableIndex]));
-    setValueList(
+    setColumnList(prev => getColumnList(allTables[indexes.tableIndex]));
+    setValueList(prev =>
       getUniqueValues(
         String(tableList[indexes.tableIndex].value),
         String(columnList[indexes.colIndex].value)
       )
     );
-    setRelTableList(
+    setRelTableList(prev =>
       getRelTableList(String(tableList[indexes.tableIndex].value))
     );
-    setRelColList(
-      getRelColList(String(relTableList[indexes.relTableIndex].value))
+    setRelColList(prev => {
+      return getRelColList(String(relTableList[indexes.relTableIndex].value));
+    });
+    setRelValList(prev =>
+      getAllValues(
+        String(relTableList[indexes.relTableIndex].value),
+        String(relColList[indexes.relColIndex].value),
+        indexes.valIndex
+      )
     );
-  }, [indexes.colIndex, indexes.tableIndex, indexes.relTableIndex]);
+  }, [
+    indexes.colIndex,
+    indexes.tableIndex,
+    indexes.relTableIndex,
+    indexes.relColIndex,
+    indexes.valIndex,
+  ]);
+
+  console.log("INDEXES: ", indexes);
+
+  const generateData = useCallback(() => {
+    setChartData(prev =>
+      filterChartData(
+        chartData,
+        String(relColList[indexes.relColIndex].value),
+        indexes.valIndex,
+        relValList
+      )
+    );
+  }, [relValList]);
+
+  useEffect(() => {
+    generateData(chartData, relValList);
+  }, [generateData]);
+
+  // console.log(filterChartData(pieChartData, relValList));
+  // console.log("REL VAL LIST: ", relValList);
 
   const selectHandler = (list, index, event) => {
     setIndexes(prev => {
       let next = deepCopy(prev);
-      next[index] = list.map((val, i) => val.value).indexOf(event.target.value);
+      next[index] = list.map(val => val.value).indexOf(event.target.value);
       return next;
     });
   };
@@ -73,6 +121,7 @@ const CreateChartsPage = () => {
         indexes={indexes}
         setIndexes={setIndexes}
         selectHandler={selectHandler}
+        chartData={chartData}
       />
       <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
