@@ -39,6 +39,7 @@ const CreateSchemaPage = () => {
     copy: false,
     save: false,
     load: false,
+    create: false,
     addTable: false,
     message: null,
   });
@@ -56,13 +57,9 @@ const CreateSchemaPage = () => {
         saveProgress();
         break;
       case "createDB":
+        setIsOpen({ create: true, message: "Database Created!" })
         let allStrings = generateSQL(state.schemaState);
         createDatabase(allStrings.join(""));
-        break;
-      case "seed":
-        let seedString = generateSeedSQL(state.seedState);
-        console.log(seedString);
-        seedDatabase(state.databaseName, seedString);
         break;
       case "addTable":
         setIsOpen({ addTable: true, message: "Table Added" });

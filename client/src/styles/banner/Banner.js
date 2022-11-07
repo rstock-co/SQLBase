@@ -5,11 +5,13 @@ import Image from 'mui-image'
 import ParticlesPartial from '../components/ParticlesPartial';
 import './banner.scss'
 import zIndex from '@mui/material/styles/zIndex';
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const containerRef = React.useRef(null);
+  const navigate = useNavigate();
 
   return (
 
@@ -61,8 +63,8 @@ const Banner = () => {
 
             <Typography id="tagline"
               sx={{
-                width: 400,
-                fontSize: 'h4.fontSize',
+                width: 700,
+                fontSize: 'h2.fontSize',
                 color: 'white',
                 textAlign: 'left',
                 marginTop: 32,
@@ -86,8 +88,11 @@ const Banner = () => {
             <Fade in={true} timeout={5000} appear={true}>
               <Button sx={{
                 backgroundColor: '#fe854f',
-                height: 48,
-                width: 175,
+                height: 64,
+                width: 300,
+                color: '#fff',
+                fontSize: '1.3em',
+                fontWeight: 'bold',
                 boxShadow: '0 11px 32px -6px #fe854f',
                 ":hover": {
                   backgroundColor: '#fe854f',
@@ -95,6 +100,9 @@ const Banner = () => {
                 },
 
               }} style={{ marginTop: 36 }}
+                onClick={() => {
+                  navigate("/tables");
+                }}
               >Start SQLBase
               </Button>
             </Fade>
@@ -102,8 +110,11 @@ const Banner = () => {
 
               <Button sx={{
                 backgroundColor: '#31d0c6',
-                height: 48,
-                width: 175,
+                height: 64,
+                width: 300,
+                color: '#fff',
+                fontSize: '1.3em',
+                fontWeight: 'bold',
                 boxShadow: '0 11px 32px -6px #31d0c6',
                 ":hover": {
                   backgroundColor: '#31d0c6',
@@ -128,8 +139,8 @@ const Banner = () => {
 
           <Image
             src="tealdiagram.png"
-            height="400px"
-            width="400px"
+            height="600px"
+            width="600px"
             fit="scale-down"
             duration={3000}
             easing="cubic-bezier(0.7, 0, 0.6, 1)"

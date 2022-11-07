@@ -10,6 +10,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/lazy";
 
+import "./testimonialCarousel.scss"
+
 
 // import required modules
 import { Pagination, Navigation, Lazy, Autoplay } from "swiper";
@@ -33,85 +35,43 @@ export default function TestimonialCarousel() {
 
       <Box className="section-title" sx={{
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: "center",
         margin: 6,
       }}>
-        <Typography variant='h4'>Top Reviews</Typography>
-      </Box>
-      <Box sx={{ m: 12 }}>
+        <Typography variant='h3' sx={{
+          borderBottom: 'solid #31d0c6',
+          pb: 2,
+          borderBottomWidth: '4px',
 
-        <Swiper
-          slidesPerView={1}
-          watchSlidesProgress={true}
-          spaceBetween={30}
-          loop={true}
+        }}>Top Reviews</Typography>
+        <Box sx={{ width: '900px', marginTop: 16 }}>
 
-          autoplay={{ delay: 3000 }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation, Lazy, Autoplay]}
-          className="mySwiper"
-        >
-          {testimonials.map((testimonial) => {
-            return (
+          <Swiper
+            slidesPerView={1}
+            watchSlidesProgress={true}
+            spaceBetween={30}
+            loop={true}
 
-              <SwiperSlide>
-                <Testimonial img={testimonial.img} name={testimonial.name} review={testimonial.review} />
-              </SwiperSlide>
-            )
-          })}
-          {/* <SwiperSlide>
-            <Card sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignContent: 'center'
-            }}>
-              <Image src="http://picsum.photos/400" alt="1" className="swiper-lazy" style={{ borderRadius: '50%', width: '300px', height: '300px' }} />
-              <Box sx={{
-                marginBottom: 6,
-              }}>
+            autoplay={{ delay: 3000 }}
+            pagination={{
+              clickable: true,
+            }}
+            navigation={true}
+            modules={[Pagination, Navigation, Lazy, Autoplay]}
+            className="mySwiper"
+            style={{}}
+          >
+            {testimonials.map((testimonial) => {
+              return (
 
-                <Typography variant='h5' textAlign='center' sx={{ mt: 6 }}>Person's Name</Typography>
-                <Typography variant='body2' textAlign='center' sx={{ mt: 6 }}>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
-              </Box>
-            </Card>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignContent: 'center'
-            }}>
-              <Image src="http://picsum.photos/410" alt="1" className="swiper-lazy" style={{ borderRadius: '50%', width: '300px', height: '300px' }} />
-              <Box sx={{
-                marginBottom: 6,
-              }}>
-
-                <Typography variant='h5' textAlign='center'>Person's Name</Typography>
-                <Typography variant='body2' textAlign='center'>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
-              </Box>
-            </Card>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignContent: 'center'
-            }}>
-              <Image src="http://picsum.photos/420" alt="1" className="swiper-lazy" style={{ borderRadius: '50%', width: '300px', height: '300px' }} />
-              <Box sx={{
-                marginBottom: 6,
-              }}>
-
-                <Typography variant='h5' textAlign='center'>Person's Name</Typography>
-                <Typography variant='body2' textAlign='center'>safdasfjriedhanfjkndmskanfkjdnsajkfnejkdwanfjkdnsajk</Typography>
-              </Box>
-            </Card>
-          </SwiperSlide> */}
-        </Swiper>
+                <SwiperSlide>
+                  <Testimonial img={testimonial.img} name={testimonial.name} review={testimonial.review} />
+                </SwiperSlide>
+              )
+            })}
+          </Swiper>
+        </Box>
       </Box>
     </Container>
   );

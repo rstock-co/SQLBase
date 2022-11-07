@@ -30,6 +30,7 @@ module.exports = db => {
 
 
   const dropDB = (dbName) => {
+    console.log('dropDB dbHelpers', dbName)
     return db.query(`DROP DATABASE IF EXISTS ${dbName};`)
       .then(result => console.log(result))
       .catch(err => err)

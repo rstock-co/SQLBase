@@ -9,27 +9,30 @@
 // (3) display x number of "select columns" drop down boxes in one row
 // (4)
 
-const generateColumns = (aggregate, aggregateAs, columns, having) => {
+const generateColumns = (aggregate, aggregateAs, columns, having, orderBy, order = 'ASC') => {
   let columnString = '';
   let havingString = 'HAVING ';
+  let orderByString = 'ORDER BY ';
   if (columns.length > 0) {
     columns.forEach(col => {
       (columnString += `${aggregate[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ')' : col}${aggregateAs[columns.indexOf(col)] ? ' AS ' + aggregateAs[columns.indexOf(col)] : ''}${columns.indexOf(col) === columns.length - 1 ? "" : ", "}`);
 
       (havingString += `${having[columns.indexOf(col)] ? aggregate[columns.indexOf(col)] + '(' + col + ') ' + having[columns.indexOf(col)] : ""}`);
 
+      (orderByString += `${orderBy[columns.indexOf(col)] ? orderBy[columns.indexOf(col)] + ' ' + order : ""}`)
     })
   } else {
     columnString += "*"
   }
   return {
     columnString,
-    havingString
+    havingString,
+    orderByString
   }
 }
 
-const generateFirstLine = (table, columns, distinct = false, aggregate, aggregateAs, having) => {
-  return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns, having).columnString} FROM ${table}`
+const generateFirstLine = (table, columns, distinct = false, aggregate, aggregateAs, having, orderBy, order) => {
+  return `SELECT${distinct ? ' DISTINCT' : ''} ${generateColumns(aggregate, aggregateAs, columns, having, orderBy, order).columnString} FROM ${table}`
 };
 
 const generateWhere = (condition) => {
@@ -52,9 +55,9 @@ const generateLimit = limit => {
   return (limit === 1000) ? "" : `LIMIT ${limit}`;
 }
 
-const generateOrder = (orderBy, order) => {
-  return orderBy ? `ORDER BY ${orderBy} ${order || ""}` : "";
-}
+// const generateOrder = (orderBy, order) => {
+//   return orderBy.length > 0 ? `ORDER BY ${orderBy} ${order || ""}` : "";
+// }
 
 const generateGroupBy = (groupBy) => {
   let groupByString = 'GROUP BY ';
@@ -75,7 +78,7 @@ const generateGroupBy = (groupBy) => {
 
 export default function generateQuerySQL(queries) {
   return queries.map(query => {
-    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having)} ${query.whereCondition.length > 0 ? '\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy.length > 0 ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having).havingString : ""} ${query.orderBy.length > 0 ? "\n" + generateOrder(query.orderBy, query.order) : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
+    return `${generateFirstLine(query.table, query.columns, query.distinct, query.aggregate, query.aggregateAs, query.having, query.orderBy, query.order)} ${query.whereCondition.length > 0 ? '\n' + generateWhere(query.whereCondition) : ""} ${query.groupBy.length > 0 ? "\n" + generateGroupBy(query.groupBy) : ""} ${query.having.length > 0 ? "\n" + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having, query.orderBy, query.order).havingString : ""} ${query.orderBy.length > 0 ? '\n' + generateColumns(query.aggregate, query.aggregateAs, query.columns, query.having, query.orderBy, query.order).orderByString : ""} ${query.limit ? "\n" + generateLimit(query.limit) : ""};`
   })
 };
 
