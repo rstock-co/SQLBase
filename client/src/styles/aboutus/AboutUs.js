@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Typography, Link } from '@mui/material';
 import Image from 'mui-image';
 import { useTheme } from '@emotion/react';
-import { padding, style } from '@mui/material/node_modules/@mui/system';
+import { fontFamily, padding, style } from '@mui/material/node_modules/@mui/system';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
@@ -46,10 +46,11 @@ const AboutUs = () => {
           }}>
             <Image src="lawrence.jpeg"
               height='400px' width='400px' style={{ borderRadius: '8%' }} />
-            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Lawrence Chan</Typography>
+            <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Lawrence Chan</Typography>
             <Box sx={linkBoxStyle}>
               <Typography sx={{
-                fontSize: 22
+                fontSize: 22,
+                fontFamily: 'Oxygen, sans-serif'
               }}>
                 Coder for hire
               </Typography>
@@ -74,10 +75,12 @@ const AboutUs = () => {
           }}>
             <Image src="richard.jpg"
               height='400px' width='400px' style={{ borderRadius: '8%' }} />
-            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Richard Stock</Typography>
+            <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Richard Stock</Typography>
             <Box sx={linkBoxStyle}>
               <Typography sx={{
-                fontSize: 22
+                fontSize: 22,
+                fontFamily: 'Oxygen, sans-serif'
+
               }}>
                 Open to work
               </Typography>
@@ -101,11 +104,12 @@ const AboutUs = () => {
           }}>
             <Image src="travis.PNG"
               height='400px' width='400px' style={{ borderRadius: '8%' }} />
-            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Travis Liu</Typography>
+            <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Travis Liu</Typography>
 
             <Box sx={linkBoxStyle}>
               <Typography sx={{
-                fontSize: 22
+                fontSize: 22,
+                fontFamily: 'Oxygen, sans-serif'
               }}>
                 Needs to pay rent
               </Typography>
