@@ -9,7 +9,7 @@ module.exports = ({ createTable, dropDB, seedTable, queryTable }) => {
     const globalStateString = req.body.globalStateString;
     const originalDBName = globalStateString.databaseName;
     // const schemaString = globalStateString.schemaString
-    console.log('rsschemaString', schemaString)
+    // console.log('rsschemaString', schemaString)
     createTable(originalDBName, userID, schemaString)
       .then(data => {
         console.log(data)

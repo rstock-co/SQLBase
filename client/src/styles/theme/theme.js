@@ -12,6 +12,16 @@ const theme = createTheme({
     white: '#fff',
     black: '#000'
   },
+  typography: {
+    fontFamily: [
+      'Oxygen',
+      'sans-serif',
+      'Roboto'
+
+    ].join(','),
+
+  },
+
 
   transitions: {
     duration: {

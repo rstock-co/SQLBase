@@ -11,8 +11,6 @@ import TestimonialCarousel from "../../styles/product-feature/TestimonialCarouse
 import AboutUs from "../../styles/aboutus/AboutUs";
 import PageSplitter from "../../styles/components/PageSplitter";
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
-import { Keyboard } from "swiper";
-import { Box } from "@mui/material/node_modules/@mui/system";
 
 const Home = () => {
 
