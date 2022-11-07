@@ -82,14 +82,11 @@ const CreateChartsPage = () => {
     indexes.valIndex,
   ]);
 
-  console.log("INDEXES: ", indexes);
-
   const generateData = useCallback(() => {
     setChartData(prev =>
       filterChartData(
         chartData,
         String(relColList[indexes.relColIndex].value),
-        indexes.valIndex,
         relValList
       )
     );
@@ -98,9 +95,6 @@ const CreateChartsPage = () => {
   useEffect(() => {
     generateData(chartData, relValList);
   }, [generateData]);
-
-  // console.log(filterChartData(pieChartData, relValList));
-  // console.log("REL VAL LIST: ", relValList);
 
   const selectHandler = (list, index, event) => {
     setIndexes(prev => {

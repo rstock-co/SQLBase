@@ -21,12 +21,9 @@ const useChartsState = () => {
   };
 
   const getAllValues = (tableName, colName, valIndex) => {
-    console.log("Company ID: ", valIndex);
-    console.log("COL NAME: ", colName);
     const allValues = seeds[tableName]
       .filter(tableData => tableData.company_id === valIndex)
       .map(data => data[colName]);
-    console.log("ALL VALSZZ: ", allValues);
     if (allValues) return allValues;
     return [];
   };
@@ -54,15 +51,8 @@ const useChartsState = () => {
     return relColList;
   };
 
-  const filterChartData = (data, field, valueIndex, relValList) => {
+  const filterChartData = (data, field, relValList) => {
     const newData = deepCopy(data);
-    console.log("(1) INITIAL DATA: ", newData);
-    console.log("REL VAL LIST: ", relValList);
-    console.log("FIELD: ", field);
-    console.log("DATASET: ", newData[field]);
-
-    // get
-
     if (newData[field]) {
       newData[field].forEach(category => {
         let count = relValList.filter(
@@ -70,7 +60,6 @@ const useChartsState = () => {
         );
         category.value = count.length;
       });
-      console.log("(2) FILTERED DATA: ", newData);
       return newData;
     }
     return data;
