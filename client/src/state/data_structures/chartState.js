@@ -1,3 +1,11 @@
+export const pieChartColors = [
+  "#0088FE",
+  "#00C49F",
+  "#e8aa23",
+  "#FF8042",
+  "#952cb8",
+];
+
 export const initialPieChartData = {
   age: [
     { name: "Ages 20-30", value: 10, low: 20, hi: 29 },
@@ -24,49 +32,41 @@ export const initialPieChartData = {
   ],
 };
 
-export const pieChartColors = [
-  "#0088FE",
-  "#00C49F",
-  "#e8aa23",
-  "#FF8042",
-  "#952cb8",
-];
-
 export const initialBarChartData = [
   {
-    name: "Page A",
-    uv: 590,
-    pv: 800,
-    amt: 1400,
+    year: "2016",
+    total_assets: 590,
+    annual_expenditures: 800,
+    annual_revenue: 1400,
   },
   {
-    name: "Page B",
-    uv: 868,
-    pv: 967,
-    amt: 1506,
+    year: "2017",
+    total_assets: 868,
+    annual_expenditures: 967,
+    annual_revenue: 1506,
   },
   {
-    name: "Page C",
-    uv: 1397,
-    pv: 1098,
-    amt: 989,
+    year: "2018",
+    total_assets: 1397,
+    annual_expenditures: 1098,
+    annual_revenue: 989,
   },
   {
-    name: "Page D",
-    uv: 1480,
-    pv: 1200,
-    amt: 1228,
+    year: "2019",
+    total_assets: 1480,
+    annual_expenditures: 1200,
+    annual_revenue: 1228,
   },
   {
-    name: "Page E",
-    uv: 1520,
-    pv: 1108,
-    amt: 1100,
+    year: "2020",
+    total_assets: 1520,
+    annual_expenditures: 1108,
+    annual_revenue: 1100,
   },
   {
-    name: "Page F",
-    uv: 1400,
-    pv: 680,
-    amt: 1700,
+    year: "2021",
+    total_assets: 1400,
+    annual_expenditures: 680,
+    annual_revenue: 1700,
   },
 ];

@@ -5,6 +5,7 @@ import { deepCopy } from "../../helpers/schemaFormHelpers";
 
 const useChartsState = () => {
   const [state, dispatch] = useContext(GlobalContext);
+
   const seeds = state.seedState[0];
 
   const getUniqueValues = (tableName, colName) => {
@@ -20,7 +21,7 @@ const useChartsState = () => {
     return { label: "None", value: "None" };
   };
 
-  const getAllValues = (tableName, colName, valIndex) => {
+  const getAllPieValues = (tableName, colName, valIndex) => {
     const allValues = seeds[tableName]
       .filter(tableData => tableData.company_id === valIndex)
       .map(data => data[colName]);
@@ -66,17 +67,12 @@ const useChartsState = () => {
     return data;
   };
 
-  const filterBarChartData = data => {
-    console.log("BAR CHART DATA", data);
-  };
-
   return {
     getUniqueValues,
-    getAllValues,
+    getAllPieValues,
     getRelTableList,
     getRelColList,
     filterPieChartData,
-    filterBarChartData,
   };
 };
 
