@@ -1,10 +1,19 @@
 import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, Link } from '@mui/material';
 import Image from 'mui-image';
 import { useTheme } from '@emotion/react';
+import { padding, style } from '@mui/material/node_modules/@mui/system';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const AboutUs = () => {
   const theme = useTheme()
+  const linkBoxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    // pl: '132px'
+  }
 
   return (
     <Box>
@@ -21,7 +30,7 @@ const AboutUs = () => {
             pb: 2,
             borderBottomWidth: '3px',
 
-          }} color={theme.palette.black}>The Team</Typography></Box>
+          }} color={theme.palette.black}>Hire The Team</Typography></Box>
 
         <Box sx={{
           pt: 10,
@@ -35,38 +44,82 @@ const AboutUs = () => {
             width: '400px',
             margin: 2,
           }}>
-            <Image src="https://picsum.photos/400"
-              height='400px' width='400px' />
-            <Typography variant='h4' color={theme.palette.black} textAlign='center'>Developers</Typography>
-            <br />
-            <Typography className="section-text" color={theme.palette.black} textAlign='center' sx={{
-              fontSize: 20
-            }}>With SQLBase, as a developer you'll gain the ability to streamline the entire database creation process, use simple yet powerful data visualization tools, and allow you to save valuable time and minimize errors.  Create tables and the relationships between them with a simple form, auto generate SQL language, view and seed your tables, and more. Impress your clients with the speed and efficiency that you can create databases from scratch!</Typography>
+            <Image src="lawrence.jpeg"
+              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Lawrence Chan</Typography>
+            <Box sx={linkBoxStyle}>
+              <Typography sx={{
+                fontSize: 22
+              }}>
+                Coder for hire
+              </Typography>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://www.linkedin.com/in/lschan12/">
+                <LinkedInIcon />
+                LinkedIn
+              </Link>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://github.com/lschan12">
+                <GitHubIcon />
+                Github
+              </Link>
+            </Box>
           </Box>
 
           <Box className="subsection-content" sx={{
             width: '400px',
             margin: 2,
           }}>
-            <Image src="https://picsum.photos/400"
-              height='400px' width='400px' />
-            <Typography variant='h4' color={theme.palette.black} textAlign='center'>Developers</Typography>
-            <br />
-            <Typography className="section-text" color={theme.palette.black} textAlign='center' sx={{
-              fontSize: 20
-            }}>With SQLBase, as a developer you'll gain the ability to streamline the entire database creation process, use simple yet powerful data visualization tools, and allow you to save valuable time and minimize errors.  Create tables and the relationships between them with a simple form, auto generate SQL language, view and seed your tables, and more. Impress your clients with the speed and efficiency that you can create databases from scratch!</Typography>
+            <Image src="richard.jpg"
+              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Richard Stock</Typography>
+            <Box sx={linkBoxStyle}>
+              <Typography sx={{
+                fontSize: 22
+              }}>
+                Open to work
+              </Typography>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://www.linkedin.com/in/-richard-stock/">
+                <LinkedInIcon />
+                LinkedIn
+              </Link>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://github.com/rstock-co">
+                <GitHubIcon />
+                Github
+              </Link>
+            </Box>
           </Box>
           <Box className="subsection-content" sx={{
             width: '400px',
             margin: 2,
           }}>
-            <Image src="https://picsum.photos/400"
-              height='400px' width='400px' />
-            <Typography variant='h4' color={theme.palette.black} textAlign='center'>Developers</Typography>
-            <br />
-            <Typography className="section-text" color={theme.palette.black} textAlign='center' sx={{
-              fontSize: 20
-            }}>With SQLBase, as a developer you'll gain the ability to streamline the entire database creation process, use simple yet powerful data visualization tools, and allow you to save valuable time and minimize errors.  Create tables and the relationships between them with a simple form, auto generate SQL language, view and seed your tables, and more. Impress your clients with the speed and efficiency that you can create databases from scratch!</Typography>
+            <Image src="travis.PNG"
+              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+            <Typography variant='h4' color={theme.palette.black} textAlign='left'>Travis Liu</Typography>
+
+            <Box sx={linkBoxStyle}>
+              <Typography sx={{
+                fontSize: 22
+              }}>
+                Needs to pay rent
+              </Typography>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://www.linkedin.com/in/travis-liu/">
+                <LinkedInIcon /> LinkedIn
+              </Link>
+              <Link sx={{
+                fontSize: 28
+              }} href="https://github.com/liucidity">
+                <GitHubIcon /> Github
+              </Link>
+            </Box>
           </Box>
         </Box>
       </Container>
