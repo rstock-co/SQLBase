@@ -3,9 +3,14 @@ import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
 import PieChartCard from "../charts/pie-chart/PieChartCard";
+import BarChartCard from "../charts/combo-chart/BarChartCard";
 import PageSplitter from "../../styles/components/PageSplitter";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
-import { pieChartData } from "../../state/data_structures/chartState";
+import {
+  initialPieChartData,
+  initialBarChartData,
+} from "../../state/data_structures/chartState";
+import "./CreateCharts.scss";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
@@ -21,7 +26,10 @@ const CreateChartsPage = () => {
   let tableList = getTableNames();
   let allTables = state.schemaState;
 
-  const [indexes, setIndexes] = useState({
+  /**
+   * PIE CHART STATE
+   */
+  const [pieIndexes, setPieIndexes] = useState({
     tableIndex: 0,
     colIndex: 1,
     valIndex: 0,
@@ -29,94 +37,212 @@ const CreateChartsPage = () => {
     relColIndex: 8,
   });
 
-  const [columnList, setColumnList] = useState(
-    getColumnList(allTables[indexes.tableIndex])
+  const [pieColList, setPieColList] = useState(
+    getColumnList(allTables[pieIndexes.tableIndex])
   );
-  const [valueList, setValueList] = useState(
+  const [pieValList, setPieValList] = useState(
     getUniqueValues(
-      String(tableList[indexes.tableIndex].value),
-      String(columnList[indexes.colIndex].value)
+      String(tableList[pieIndexes.tableIndex].value),
+      String(pieColList[pieIndexes.colIndex].value)
     )
   );
-  const [relTableList, setRelTableList] = useState(
-    getRelTableList(String(tableList[indexes.tableIndex].value))
+  const [pieRelTableList, setPieRelTableList] = useState(
+    getRelTableList(String(tableList[pieIndexes.tableIndex].value))
   );
-  const [relColList, setRelColList] = useState(
-    getRelColList(String(relTableList[indexes.relTableIndex].value))
+  const [pieRelColList, setPieRelColList] = useState(
+    getRelColList(String(pieRelTableList[pieIndexes.relTableIndex].value))
   );
-  const [relValList, setRelValList] = useState(
+  const [pieRelValList, setPieRelValList] = useState(
     getAllValues(
-      String(relTableList[indexes.relTableIndex].value),
-      String(relColList[indexes.relColIndex].value),
-      indexes.valIndex
+      String(pieRelTableList[pieIndexes.relTableIndex].value),
+      String(pieRelColList[pieIndexes.relColIndex].value),
+      pieIndexes.valIndex
     )
   );
-  const [chartData, setChartData] = useState(pieChartData);
+  const [pieChartData, setPieChartData] = useState(initialPieChartData);
+
+  /**
+   * BAR CHART STATE
+   */
+
+  const [barIndexes, setBarIndexes] = useState({
+    tableIndex: 0,
+    colIndex: 1,
+    valIndex: 0,
+    relTableIndex: 0,
+    relColIndex: 8,
+  });
+
+  const [barColList, setBarColList] = useState(
+    getColumnList(allTables[barIndexes.tableIndex])
+  );
+  const [barValList, setBarValList] = useState(
+    getUniqueValues(
+      String(tableList[barIndexes.tableIndex].value),
+      String(barColList[barIndexes.colIndex].value)
+    )
+  );
+  const [barRelTableList, setBarRelTableList] = useState(
+    getRelTableList(String(tableList[barIndexes.tableIndex].value))
+  );
+  const [barRelColList, setBarRelColList] = useState(
+    getRelColList(String(barRelTableList[barIndexes.relTableIndex].value))
+  );
+  const [barRelValList, setBarRelValList] = useState(
+    getAllValues(
+      String(barRelTableList[barIndexes.relTableIndex].value),
+      String(barRelColList[barIndexes.relColIndex].value),
+      barIndexes.valIndex
+    )
+  );
+  const [barChartData, setBarChartData] = useState(initialBarChartData);
+
+  /**
+   * PIE CHART SETTERS
+   */
 
   useEffect(() => {
-    setColumnList(prev => getColumnList(allTables[indexes.tableIndex]));
-    setValueList(prev =>
+    setPieColList(prev => getColumnList(allTables[pieIndexes.tableIndex]));
+    setPieValList(prev =>
       getUniqueValues(
-        String(tableList[indexes.tableIndex].value),
-        String(columnList[indexes.colIndex].value)
+        String(tableList[pieIndexes.tableIndex].value),
+        String(pieColList[pieIndexes.colIndex].value)
       )
     );
-    setRelTableList(prev =>
-      getRelTableList(String(tableList[indexes.tableIndex].value))
+    setPieRelTableList(prev =>
+      getRelTableList(String(tableList[pieIndexes.tableIndex].value))
     );
-    setRelColList(prev => {
-      return getRelColList(String(relTableList[indexes.relTableIndex].value));
+    setPieRelColList(prev => {
+      return getRelColList(
+        String(pieRelTableList[pieIndexes.relTableIndex].value)
+      );
     });
-    setRelValList(prev =>
+    setPieRelValList(prev =>
       getAllValues(
-        String(relTableList[indexes.relTableIndex].value),
-        String(relColList[indexes.relColIndex].value),
-        indexes.valIndex
+        String(pieRelTableList[pieIndexes.relTableIndex].value),
+        String(pieRelColList[pieIndexes.relColIndex].value),
+        pieIndexes.valIndex
       )
     );
   }, [
-    indexes.colIndex,
-    indexes.tableIndex,
-    indexes.relTableIndex,
-    indexes.relColIndex,
-    indexes.valIndex,
+    pieIndexes.colIndex,
+    pieIndexes.tableIndex,
+    pieIndexes.relTableIndex,
+    pieIndexes.relColIndex,
+    pieIndexes.valIndex,
   ]);
-
-  const generateData = useCallback(() => {
-    setChartData(prev =>
-      filterChartData(
-        chartData,
-        String(relColList[indexes.relColIndex].value),
-        relValList
+  /**
+   * BAR CHART SETTERS
+   */
+  useEffect(() => {
+    setBarColList(prev => getColumnList(allTables[barIndexes.tableIndex]));
+    setBarValList(prev =>
+      getUniqueValues(
+        String(tableList[barIndexes.tableIndex].value),
+        String(barColList[barIndexes.colIndex].value)
       )
     );
-  }, [relValList]);
+    setBarRelTableList(prev =>
+      getRelTableList(String(tableList[barIndexes.tableIndex].value))
+    );
+    setBarRelColList(prev => {
+      return getRelColList(
+        String(barRelTableList[barIndexes.relTableIndex].value)
+      );
+    });
+    setBarRelValList(prev =>
+      getAllValues(
+        String(barRelTableList[barIndexes.relTableIndex].value),
+        String(barRelColList[barIndexes.relColIndex].value),
+        barIndexes.valIndex
+      )
+    );
+  }, [
+    barIndexes.colIndex,
+    barIndexes.tableIndex,
+    barIndexes.relTableIndex,
+    barIndexes.relColIndex,
+    barIndexes.valIndex,
+  ]);
+
+  /** PIE CHART */
+
+  const generatePieData = useCallback(() => {
+    setPieChartData(prev =>
+      filterChartData(
+        pieChartData,
+        String(pieRelColList[pieIndexes.relColIndex].value),
+        pieRelValList
+      )
+    );
+  }, [pieRelValList]);
 
   useEffect(() => {
-    generateData(chartData, relValList);
-  }, [generateData]);
+    generatePieData(pieChartData, pieRelValList);
+  }, [generatePieData]);
 
-  const selectHandler = (list, index, event) => {
-    setIndexes(prev => {
-      let next = deepCopy(prev);
-      next[index] = list.map(val => val.value).indexOf(event.target.value);
-      return next;
-    });
+  /** BAR CHART */
+
+  const generateBarData = useCallback(() => {
+    setBarChartData(prev =>
+      filterChartData(
+        barChartData,
+        String(barRelColList[barIndexes.relColIndex].value),
+        barRelValList
+      )
+    );
+  }, [barRelValList]);
+
+  useEffect(() => {
+    generateBarData(barChartData, barRelValList);
+  }, [generateBarData]);
+
+  /** COMMON */
+
+  const selectHandler = (chart, list, index, event) => {
+    if (chart === "pie") {
+      setPieIndexes(prev => {
+        let next = deepCopy(prev);
+        next[index] = list.map(val => val.value).indexOf(event.target.value);
+        return next;
+      });
+    }
+    if (chart === "bar") {
+      setBarIndexes(prev => {
+        let next = deepCopy(prev);
+        next[index] = list.map(val => val.value).indexOf(event.target.value);
+        return next;
+      });
+    }
   };
 
   return (
     <main>
-      <PieChartCard
-        tableList={tableList}
-        columnList={columnList}
-        valueList={valueList}
-        relTableList={relTableList}
-        relColList={relColList}
-        indexes={indexes}
-        setIndexes={setIndexes}
-        selectHandler={selectHandler}
-        chartData={chartData}
-      />
+      <div id="chart-container">
+        <PieChartCard
+          tableList={tableList}
+          columnList={pieColList}
+          valueList={pieValList}
+          relTableList={pieRelTableList}
+          relColList={pieRelColList}
+          indexes={pieIndexes}
+          setIndexes={setPieIndexes}
+          selectHandler={selectHandler}
+          chartData={pieChartData}
+        />
+
+        <BarChartCard
+          tableList={tableList}
+          columnList={barColList}
+          valueList={barValList}
+          relTableList={barRelTableList}
+          relColList={barRelColList}
+          indexes={barIndexes}
+          setIndexes={setBarIndexes}
+          selectHandler={selectHandler}
+          chartData={barChartData}
+        />
+      </div>
       <PageSplitter src="body-teal.png" id="tables-bottom" />
     </main>
   );
