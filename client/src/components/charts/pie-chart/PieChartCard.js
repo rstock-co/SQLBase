@@ -13,6 +13,7 @@ const PieChartCard = ({
   indexes,
   setIndexes,
   selectHandler,
+  chartData,
 }) => {
   const {
     formState: { errors },
@@ -81,9 +82,9 @@ const PieChartCard = ({
           control={control}
           label={"Select Relation Column"}
           menuOptions={relColList}
-          handleChange={event =>
-            selectHandler(relColList, "relColIndex", event)
-          }
+          handleChange={event => {
+            selectHandler(relColList, "relColIndex", event);
+          }}
           value={relColList[indexes.relColIndex].value}
         />
       </div>
@@ -91,12 +92,13 @@ const PieChartCard = ({
         <ResponsivePieChart
           width={700}
           height={450}
-          subTextColor={"#616161"}
+          subTextColor={"#3a3a3b"}
           tableName={tableList[indexes.tableIndex].value}
           colName={columnList[indexes.colIndex].value}
           valName={valueList[indexes.valIndex].value}
           relTableName={relTableList[indexes.relTableIndex].value}
           relColName={relColList[indexes.relColIndex].value}
+          chartData={chartData[String(relColList[indexes.relColIndex].value)]}
         />
       </div>
     </Card>

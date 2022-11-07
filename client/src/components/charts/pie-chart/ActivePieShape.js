@@ -16,6 +16,7 @@ const ActivePieShape = ({
   subTextColor,
   chartColors,
   activeIndex,
+  sectorName,
 }) => {
   const RADIAN = Math.PI / 180;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -72,7 +73,7 @@ const ActivePieShape = ({
         fill={chartColors[activeIndex]}
         fontWeight={600}
         fontSize={21}
-      >{`PV ${value}`}</text>
+      >{`${value} ${sectorName}s`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -81,7 +82,7 @@ const ActivePieShape = ({
         fill={subTextColor}
         fontSize={18}
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(${(percent * 100).toFixed(2)}% of total)`}
       </text>
     </g>
   );

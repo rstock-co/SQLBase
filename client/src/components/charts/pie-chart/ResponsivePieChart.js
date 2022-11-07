@@ -1,10 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie } from "recharts";
 import ActivePieShape from "./ActivePieShape";
-import {
-  pieChartData,
-  pieChartColors,
-} from "../../../state/data_structures/chartState";
+import { pieChartColors } from "../../../state/data_structures/chartState";
 import { capitalizeWord, titleCase } from "../../../helpers/chartFormHelpers";
 
 const ResponsivePieChart = ({
@@ -16,6 +13,7 @@ const ResponsivePieChart = ({
   valName,
   relTableName,
   relColName,
+  chartData,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
@@ -25,11 +23,13 @@ const ResponsivePieChart = ({
     [setActiveIndex]
   );
 
+  const sectorName = capitalizeWord(relTableName);
+
   const chartTitle = `${capitalizeWord(tableName)}, ${titleCase(
     colName
   )}: '${valName}',
   categorized by
-  ${capitalizeWord(relTableName)}: '${capitalizeWord(relColName)}'`;
+  ${sectorName}: '${capitalizeWord(relColName)}'`;
 
   return (
     <>
@@ -55,9 +55,10 @@ const ResponsivePieChart = ({
                 chartColors={pieChartColors}
                 subTextColor={subTextColor}
                 activeIndex={activeIndex}
+                sectorName={sectorName}
               />
             }
-            data={pieChartData}
+            data={chartData}
             cx={width / 2}
             cy={height / 2}
             innerRadius={100}
