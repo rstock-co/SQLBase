@@ -21,36 +21,6 @@ import { SEED_ALL_FAKE_DATA, SEED_FAKE_DATA } from "../reducers/globalReducer";
 const useSeedState = () => {
   const [state, dispatch] = useContext(GlobalContext);
 
-  /** Form UI
-    -------
-      (✓) there should be a 'load progress' button for user to load their schema
-      (✓) provide list of tables in state to the Seed Form for rendering
-      (✓) provide list of options (0, 5, 10, 25, 50, etc...) for dropdown
-      (✓) build SeedForm in UI
-      (✓) user will select # of fields from a dropdown box and code block will adjust in real time
-
-    Seed process
-    ------------
-      (✓) determine a list of columns for each table (as ARRAY of strings)
-      (✓) For each table, generate the selected amount of fake data points for each column.
-          - Build a set of helper functions which take in (colName, numDataPoints)
-            and return an array of objects (1 per table) containing the seed data
-      (✓) Save the seed data into seedState globally (need to determine data structure)
-      (✓) Convert seedState object to SQL language for seeding tables
-      (✓) Render the seeded data as tables on a modal (so user can verify no errors / make changes to schema)
-      (✓) user will finish seed process and then click "Generate Database" when done
-
-    Database process
-    ----------------
-      (✓) create the database
-      (✓) use the SQL schema language from App 1 (schemaState) to create tables
-      (✓) use the seed data from App 3 to seed tables
-
-    Execute Queries
-    ---------------
-      (✓) a button on each query form will allow the user to run the queries from App 2 on their seeded database
-*/
-
   /**
    * FAKE DATA HELPER FUNCTIONS: goals are (1) generate DB seed string to seed database, (2) store in global state?
    * @param {string} colName the column name inside the tables
@@ -74,6 +44,12 @@ const useSeedState = () => {
             randFloat({ min: 1, max: 2, fraction: 2 })) /
             1000
         ) * 1000;
+      let annual_expenditures =
+        annual_revenue +
+        annual_revenue * (0.9 * randFloat({ min: -1, max: 0.2, fraction: 2 }));
+      let total_assets =
+        annual_revenue +
+        annual_revenue * (1.1 * randFloat({ min: 0, max: 1, fraction: 2 }));
 
       companies.push({
         uid: i + 1,
@@ -82,11 +58,51 @@ const useSeedState = () => {
         num_employees,
         num_products,
         annual_revenue,
+        annual_expenditures,
+        total_assets,
         num_countries: randNumber({ min: 1, max: 200 }),
         head_office: `${randCity()}, ${randCountry()}`,
       });
     }
+
     return companies;
+  };
+
+  const yearsGenerator = numYears => {
+    let years = [];
+    for (let i = 0; i < numYears; i++) {
+      let num_employees = randNumber({ min: 20, max: 100000 });
+      let num_products = randNumber({ min: 1, max: 1000 });
+      let annual_revenue =
+        Math.round(
+          (num_employees *
+            num_products *
+            randFloat({ min: 1, max: 1.2, fraction: 2 })) /
+            1000
+        ) * 1000;
+      let annual_expenditures =
+        Math.round(
+          (annual_revenue +
+            annual_revenue *
+              (0.9 * randFloat({ min: -1, max: 0.2, fraction: 2 }))) /
+            1000
+        ) * 1000;
+      let total_assets =
+        Math.round(
+          (annual_revenue +
+            annual_revenue *
+              (1.1 * randFloat({ min: 0, max: 1, fraction: 2 }))) /
+            1000
+        ) * 1000;
+      let year = {
+        year: 2022 - numYears + i,
+        annual_expenditures,
+        annual_revenue,
+        total_assets,
+      };
+      years.push(year);
+    }
+    return years;
   };
 
   /**
@@ -147,12 +163,12 @@ const useSeedState = () => {
       let name = product.title;
       let sku = product.id;
       let rating = Number(product.rating.rate);
-      let rating_count = Number(product.rating.count);
+      let rating_count = randNumber({ min: 20, max: 1000 });
       let msrp = Math.round(randNumber({ min: 20, max: 1000 }) / 5) * 5;
       let cost = randFloat({ min: 5, max: msrp - msrp * 0.1, fraction: 2 });
       let profit_margin = ((msrp - cost) / cost) * 100;
 
-      ["id", "title", "price", "image", "rating"].forEach(
+      ["id", "title", "price", "image", "rating", "rating_count"].forEach(
         i => delete product[i]
       );
 
@@ -168,6 +184,7 @@ const useSeedState = () => {
         rating_count,
       });
     }
+
     return products;
   };
 
@@ -204,6 +221,7 @@ const useSeedState = () => {
     productSeed,
     generateAllSeedState,
     generateSeedState,
+    yearsGenerator,
   };
 };
 
