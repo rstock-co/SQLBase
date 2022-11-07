@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import useGlobalState from "../../state/hooks/useGlobalState";
 import useChartsState from "../../state/hooks/useChartsState";
 import useSchemaState from "../../state/hooks/useSchemaState";
+import useSeedState from "../../state/hooks/useSeedState";
 import PieChartCard from "../charts/pie-chart/PieChartCard";
-import BarChartCard from "../charts/combo-chart/BarChartCard";
+import BarChartCard from "../charts/bar-chart/BarChartCard";
 import PageSplitter from "../../styles/components/PageSplitter";
 import { deepCopy } from "../../helpers/schemaFormHelpers";
 import {
@@ -14,9 +15,11 @@ import "./CreateCharts.scss";
 
 const CreateChartsPage = () => {
   const { getTableNames, getColumnList } = useGlobalState();
+  const { yearsGenerator } = useSeedState();
   const {
     getUniqueValues,
-    getAllValues,
+    getAllPieValues,
+    getAllBarValues,
     getRelTableList,
     getRelColList,
     filterPieChartData,
@@ -30,6 +33,7 @@ const CreateChartsPage = () => {
   /**
    * PIE CHART STATE
    */
+
   const [pieIndexes, setPieIndexes] = useState({
     tableIndex: 0,
     colIndex: 1,
@@ -54,7 +58,7 @@ const CreateChartsPage = () => {
     getRelColList(String(pieRelTableList[pieIndexes.relTableIndex].value))
   );
   const [pieRelValList, setPieRelValList] = useState(
-    getAllValues(
+    getAllPieValues(
       String(pieRelTableList[pieIndexes.relTableIndex].value),
       String(pieRelColList[pieIndexes.relColIndex].value),
       pieIndexes.valIndex
@@ -83,21 +87,9 @@ const CreateChartsPage = () => {
       String(barColList[barIndexes.colIndex].value)
     )
   );
-  const [barRelTableList, setBarRelTableList] = useState(
-    getRelTableList(String(tableList[barIndexes.tableIndex].value))
-  );
-  const [barRelColList, setBarRelColList] = useState(
-    getRelColList(String(barRelTableList[barIndexes.relTableIndex].value))
-  );
-  const [barRelValList, setBarRelValList] = useState(
-    getAllValues(
-      String(barRelTableList[barIndexes.relTableIndex].value),
-      String(barRelColList[barIndexes.relColIndex].value),
-      barIndexes.valIndex
-    )
-  );
   const [barChartData, setBarChartData] = useState(initialBarChartData);
 
+  console.log("BAR CHART DATA: ", barChartData);
   /**
    * PIE CHART SETTERS
    */
@@ -119,7 +111,7 @@ const CreateChartsPage = () => {
       );
     });
     setPieRelValList(prev =>
-      getAllValues(
+      getAllPieValues(
         String(pieRelTableList[pieIndexes.relTableIndex].value),
         String(pieRelColList[pieIndexes.relColIndex].value),
         pieIndexes.valIndex
@@ -137,36 +129,12 @@ const CreateChartsPage = () => {
    */
   useEffect(() => {
     setBarColList(prev => getColumnList(allTables[barIndexes.tableIndex]));
-    setBarValList(prev =>
-      getUniqueValues(
-        String(tableList[barIndexes.tableIndex].value),
-        String(barColList[barIndexes.colIndex].value)
-      )
+    setBarChartData(prev =>
+      yearsGenerator(Math.floor(Math.random() * (7 - 4 + 1) + 4))
     );
-    setBarRelTableList(prev =>
-      getRelTableList(String(tableList[barIndexes.tableIndex].value))
-    );
-    setBarRelColList(prev => {
-      return getRelColList(
-        String(barRelTableList[barIndexes.relTableIndex].value)
-      );
-    });
-    setBarRelValList(prev =>
-      getAllValues(
-        String(barRelTableList[barIndexes.relTableIndex].value),
-        String(barRelColList[barIndexes.relColIndex].value),
-        barIndexes.valIndex
-      )
-    );
-  }, [
-    barIndexes.colIndex,
-    barIndexes.tableIndex,
-    barIndexes.relTableIndex,
-    barIndexes.relColIndex,
-    barIndexes.valIndex,
-  ]);
+  }, [barIndexes.colIndex, barIndexes.tableIndex, barIndexes.valIndex]);
 
-  /** PIE CHART */
+  /**  USE CALLBACK (PIE CHART) */
 
   const generatePieData = useCallback(() => {
     setPieChartData(prev =>
@@ -181,22 +149,6 @@ const CreateChartsPage = () => {
   useEffect(() => {
     generatePieData(pieChartData, pieRelValList);
   }, [generatePieData]);
-
-  /** BAR CHART */
-
-  const generateBarData = useCallback(() => {
-    setBarChartData(prev =>
-      filterBarChartData(
-        barChartData,
-        String(barRelColList[barIndexes.relColIndex].value),
-        barRelValList
-      )
-    );
-  }, [barRelValList]);
-
-  useEffect(() => {
-    generateBarData(barChartData, barRelValList);
-  }, [generateBarData]);
 
   /** COMMON */
 
@@ -236,8 +188,6 @@ const CreateChartsPage = () => {
           tableList={tableList}
           columnList={barColList}
           valueList={barValList}
-          relTableList={barRelTableList}
-          relColList={barRelColList}
           indexes={barIndexes}
           setIndexes={setBarIndexes}
           selectHandler={selectHandler}
