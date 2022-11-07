@@ -19,7 +19,8 @@ const CreateChartsPage = () => {
     getAllValues,
     getRelTableList,
     getRelColList,
-    filterChartData,
+    filterPieChartData,
+    filterBarChartData,
   } = useChartsState();
 
   const { state } = useSchemaState();
@@ -169,7 +170,7 @@ const CreateChartsPage = () => {
 
   const generatePieData = useCallback(() => {
     setPieChartData(prev =>
-      filterChartData(
+      filterPieChartData(
         pieChartData,
         String(pieRelColList[pieIndexes.relColIndex].value),
         pieRelValList
@@ -185,7 +186,7 @@ const CreateChartsPage = () => {
 
   const generateBarData = useCallback(() => {
     setBarChartData(prev =>
-      filterChartData(
+      filterBarChartData(
         barChartData,
         String(barRelColList[barIndexes.relColIndex].value),
         barRelValList

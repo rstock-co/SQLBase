@@ -105,7 +105,7 @@ const BarChartCard = ({
           valName={valueList[indexes.valIndex].value}
           relTableName={relTableList[indexes.relTableIndex].value}
           relColName={relColList[indexes.relColIndex].value}
-          chartData={chartData[String(relColList[indexes.relColIndex].value)]}
+          // chartData={chartData[String(relColList[indexes.relColIndex].value)]}
         />
       </div>
     </Card>

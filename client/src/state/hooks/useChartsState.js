@@ -51,7 +51,7 @@ const useChartsState = () => {
     return relColList;
   };
 
-  const filterChartData = (data, field, relValList) => {
+  const filterPieChartData = (data, field, relValList) => {
     const newData = deepCopy(data);
     if (newData[field]) {
       newData[field].forEach(category => {
@@ -60,9 +60,14 @@ const useChartsState = () => {
         );
         category.value = count.length;
       });
+      console.log("PIE CHART DATA", newData);
       return newData;
     }
     return data;
+  };
+
+  const filterBarChartData = data => {
+    console.log("BAR CHART DATA", data);
   };
 
   return {
@@ -70,7 +75,8 @@ const useChartsState = () => {
     getAllValues,
     getRelTableList,
     getRelColList,
-    filterChartData,
+    filterPieChartData,
+    filterBarChartData,
   };
 };
 
