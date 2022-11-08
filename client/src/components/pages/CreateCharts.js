@@ -129,9 +129,13 @@ const CreateChartsPage = () => {
    */
   useEffect(() => {
     setBarColList(prev => getColumnList(allTables[barIndexes.tableIndex]));
-    setBarChartData(prev =>
-      yearsGenerator(Math.floor(Math.random() * (7 - 4 + 1) + 4))
-    );
+    setBarChartData(prev => {
+      console.log(
+        "YEARS: ",
+        yearsGenerator([3, 5, 7, 9][Math.floor(Math.random() * 4)])
+      );
+      return yearsGenerator([5, 7, 9][Math.floor(Math.random() * 3)]);
+    });
   }, [barIndexes.colIndex, barIndexes.tableIndex, barIndexes.valIndex]);
 
   /**  USE CALLBACK (PIE CHART) */
