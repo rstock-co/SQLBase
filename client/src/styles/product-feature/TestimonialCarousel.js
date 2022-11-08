@@ -20,7 +20,7 @@ import Testimonial from "./Testimonial";
 
 
 const testimonials = [
-  { img: './andy.jpeg', name: 'Andy Lindsay', review: '-\"It\'s better than my robot car!\"' },
+  { img: './andy.jpeg', name: 'Andy Lindsay', review: '-\"It\'s almost as good as my robot car!\"' },
   { img: './francis.jpg', name: 'Francis Bourgouin', review: '-\"This DOES sound good everybody.\"' },
   { img: './nally.jpg', name: 'Christian Nally', review: '-\"You have a solid project on your hands.\"' },
   { img: './vasiliy.jpeg', name: 'Vasiliy Klimkin', review: '-\"You probably will use this!\"' },

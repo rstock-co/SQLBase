@@ -10,7 +10,7 @@ const ProductFeature = () => {
   useEffect(() => {
     const videoElement = hoverVideoRef.current;
 
-    videoElement.playbackRate = 1.5;
+    videoElement.playbackRate = 2;
   }, []);
 
   return (
@@ -56,8 +56,8 @@ const ProductFeature = () => {
             videoSrc="./CreateAndSeed.mp4"
             restartOnPaused
             style={{
-              width: '55%',
-              height: '55%'
+              width: '45%',
+              height: '45%'
             }}
             pausedOverlay={
               <img
@@ -128,8 +128,8 @@ const ProductFeature = () => {
             videoSrc="./CreateAndSeed.mp4"
             restartOnPaused
             style={{
-              width: '55%',
-              height: '55%'
+              width: '45%',
+              height: '45%'
             }}
             pausedOverlay={
               <img

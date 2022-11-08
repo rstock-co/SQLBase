@@ -45,7 +45,7 @@ const AboutUs = () => {
             margin: 2,
           }}>
             <Image src="lawrence.jpeg"
-              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+              height='400px' width='400px' style={{ borderRadius: '8%', marginBottom: 40 }} />
             <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Lawrence Chan</Typography>
             <Box sx={linkBoxStyle}>
               <Typography sx={{
@@ -57,14 +57,12 @@ const AboutUs = () => {
               <Link sx={{
                 fontSize: 28
               }} href="https://www.linkedin.com/in/lschan12/">
-                <LinkedInIcon />
-                LinkedIn
+                <LinkedInIcon /> LinkedIn
               </Link>
               <Link sx={{
                 fontSize: 28
               }} href="https://github.com/lschan12">
-                <GitHubIcon />
-                Github
+                <GitHubIcon /> Github
               </Link>
             </Box>
           </Box>
@@ -74,7 +72,7 @@ const AboutUs = () => {
             margin: 2,
           }}>
             <Image src="richard.jpg"
-              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+              height='400px' width='400px' style={{ borderRadius: '8%', marginBottom: 40 }} />
             <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Richard Stock</Typography>
             <Box sx={linkBoxStyle}>
               <Typography sx={{
@@ -87,14 +85,12 @@ const AboutUs = () => {
               <Link sx={{
                 fontSize: 28
               }} href="https://www.linkedin.com/in/-richard-stock/">
-                <LinkedInIcon />
-                LinkedIn
+                <LinkedInIcon /> LinkedIn
               </Link>
               <Link sx={{
                 fontSize: 28
               }} href="https://github.com/rstock-co">
-                <GitHubIcon />
-                Github
+                <GitHubIcon /> Github
               </Link>
             </Box>
           </Box>
@@ -103,7 +99,7 @@ const AboutUs = () => {
             margin: 2,
           }}>
             <Image src="travis.PNG"
-              height='400px' width='400px' style={{ borderRadius: '8%' }} />
+              height='400px' width='400px' style={{ borderRadius: '8%', marginBottom: 40 }} />
             <Typography variant='h4' color={theme.palette.black} textAlign='left' fontFamily={'Montserrat, sans-serif'}>Travis Liu</Typography>
 
             <Box sx={linkBoxStyle}>

@@ -63,11 +63,11 @@ const Banner = () => {
 
             <Typography id="tagline"
               sx={{
-                width: 700,
-                fontSize: 'h2.fontSize',
+                width: 600,
+                fontSize: 'h3.fontSize',
                 color: 'white',
                 textAlign: 'left',
-                marginTop: 32,
+                marginTop: 20,
                 marginRight: -6
               }}
             >
@@ -82,7 +82,7 @@ const Banner = () => {
             flexDirection: 'row',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            pt: 24
+            pt: 12
           }}>
 
             <Fade in={true} timeout={5000} appear={true}>
@@ -133,14 +133,14 @@ const Banner = () => {
 
         <Box
           sx={{
-            marginTop: 24,
+            marginTop: 20,
           }}>
 
 
           <Image
             src="tealdiagram.png"
-            height="600px"
-            width="600px"
+            height="500px"
+            width="500px"
             fit="scale-down"
             duration={3000}
             easing="cubic-bezier(0.7, 0, 0.6, 1)"
