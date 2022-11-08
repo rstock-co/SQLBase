@@ -19,11 +19,9 @@ const CreateChartsPage = () => {
   const {
     getUniqueValues,
     getAllPieValues,
-    getAllBarValues,
     getRelTableList,
     getRelColList,
     filterPieChartData,
-    filterBarChartData,
   } = useChartsState();
 
   const { state } = useSchemaState();
@@ -74,8 +72,6 @@ const CreateChartsPage = () => {
     tableIndex: 0,
     colIndex: 1,
     valIndex: 0,
-    relTableIndex: 0,
-    relColIndex: 8,
   });
 
   const [barColList, setBarColList] = useState(
@@ -89,7 +85,6 @@ const CreateChartsPage = () => {
   );
   const [barChartData, setBarChartData] = useState(initialBarChartData);
 
-  console.log("BAR CHART DATA: ", barChartData);
   /**
    * PIE CHART SETTERS
    */
@@ -124,18 +119,16 @@ const CreateChartsPage = () => {
     pieIndexes.relColIndex,
     pieIndexes.valIndex,
   ]);
+
   /**
    * BAR CHART SETTERS
    */
+
   useEffect(() => {
     setBarColList(prev => getColumnList(allTables[barIndexes.tableIndex]));
-    setBarChartData(prev => {
-      console.log(
-        "YEARS: ",
-        yearsGenerator([3, 5, 7, 9][Math.floor(Math.random() * 4)])
-      );
-      return yearsGenerator([5, 7, 9][Math.floor(Math.random() * 3)]);
-    });
+    setBarChartData(prev =>
+      yearsGenerator([5, 7, 9][Math.floor(Math.random() * 3)])
+    );
   }, [barIndexes.colIndex, barIndexes.tableIndex, barIndexes.valIndex]);
 
   /**  USE CALLBACK (PIE CHART) */

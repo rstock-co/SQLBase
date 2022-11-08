@@ -73,12 +73,10 @@ const BarChartCard = ({
           width={1400}
           height={600}
           barSize={35}
-          lineColor={"#ff7300"}
+          lineColor={"#f58369"}
           barColor={"#413ea0"}
           areaColor={"#8884d8"}
-          tableName={tableList[indexes.tableIndex].value}
-          colName={columnList[indexes.colIndex].value}
-          valName={valueList[indexes.valIndex].value}
+          companyName={valueList[indexes.valIndex].value}
           chartData={chartData}
         />
       </div>

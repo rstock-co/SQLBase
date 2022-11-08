@@ -70,6 +70,7 @@ const useSeedState = () => {
 
   const yearsGenerator = numYears => {
     let years = [];
+    let total_assets = [];
     for (let i = 0; i < numYears; i++) {
       let num_employees = randNumber({ min: 20, max: 100000 });
       let num_products = randNumber({ min: 1, max: 1000 });
@@ -87,18 +88,31 @@ const useSeedState = () => {
               (0.9 * randFloat({ min: -1, max: 0.2, fraction: 2 }))) /
             1000
         ) * 1000;
-      let total_assets =
-        Math.round(
-          (annual_revenue +
-            annual_revenue *
-              (1.1 * randFloat({ min: 0, max: 1, fraction: 2 }))) /
-            1000
-        ) * 1000;
+      if (i === 0) {
+        total_assets.push(
+          Math.round(
+            (annual_revenue +
+              annual_revenue *
+                (1.1 * randFloat({ min: 0, max: 0.5, fraction: 2 }))) /
+              1000
+          ) * 1000
+        );
+      } else {
+        total_assets.push(
+          Math.round(
+            (total_assets[i - 1] +
+              total_assets[i - 1] *
+                (0.5 * randFloat({ min: -1, max: 1, fraction: 2 }))) /
+              1000
+          ) * 1000
+        );
+      }
+
       let year = {
         year: 2022 - numYears + i,
         annual_expenditures,
         annual_revenue,
-        total_assets,
+        total_assets: total_assets[i],
       };
       years.push(year);
     }

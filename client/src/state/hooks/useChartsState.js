@@ -23,7 +23,7 @@ const useChartsState = () => {
 
   const getAllPieValues = (tableName, colName, valIndex) => {
     const allValues = seeds[tableName]
-      .filter(tableData => tableData.company_id === valIndex)
+      .filter(tableData => tableData.company_id - 1 === valIndex)
       .map(data => data[colName]);
     if (allValues) return allValues;
     return [];
@@ -61,7 +61,6 @@ const useChartsState = () => {
         );
         category.value = count.length;
       });
-      console.log("PIE CHART DATA", newData);
       return newData;
     }
     return data;
