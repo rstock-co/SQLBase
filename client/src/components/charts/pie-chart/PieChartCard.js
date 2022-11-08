@@ -32,7 +32,7 @@ const PieChartCard = ({
       }}
     >
       <div id="title">
-        <h2>Select Dataset</h2>
+        <p style={{ fontSize: "1.5em" }}>Select Dataset</p>
       </div>
       <div id="dropdown-row-1">
         <FormInputDropdown

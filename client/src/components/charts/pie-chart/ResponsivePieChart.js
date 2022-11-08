@@ -25,26 +25,35 @@ const ResponsivePieChart = ({
 
   const sectorName = capitalizeWord(relTableName);
 
-  const chartTitle = `${capitalizeWord(tableName)}, ${titleCase(
+  const chartTitle = `${capitalizeWord(tableName)}: ${titleCase(
     colName
-  )}: '${valName}',
-  categorized by
-  ${sectorName}: '${capitalizeWord(relColName)}'`;
+  )}: '${valName}'`;
+  const mid = `categorized by`;
+  const relTitle = `${sectorName}: '${capitalizeWord(relColName)}'`;
+  const hstyle = {
+    whiteSpace: "pre-line",
+    textAlign: "center",
+    // textAlign: "left",
+    // marginLeft: "17%",
+    lineHeight: "0.8em",
+    color: "#383838",
+  };
+  const pstyle = {
+    whiteSpace: "pre-line",
+    textAlign: "center",
+    // textAlign: "left",
+    // marginLeft: "17%",
+    lineHeight: "0.8em",
+    fontSize: "1.5em",
+    color: "#383838",
+  };
 
   return (
     <>
       <div id="chart-title">
-        <h2
-          style={{
-            whiteSpace: "pre-line",
-            textAlign: "center",
-            // textAlign: "left",
-            // marginLeft: "17%",
-            lineHeight: "2em",
-          }}
-        >
-          {chartTitle}
-        </h2>
+        <h1 style={hstyle}>{chartTitle}</h1>
+        <p style={pstyle}>{mid}</p>
+        <h1 style={hstyle}>{relTitle}</h1>
       </div>
       <div id="pie-chart">
         <PieChart width={width} height={height}>
@@ -55,7 +64,7 @@ const ResponsivePieChart = ({
                 chartColors={pieChartColors}
                 subTextColor={subTextColor}
                 activeIndex={activeIndex}
-                sectorName={sectorName}
+                sectorName={sectorName.slice(0, -1)}
               />
             }
             data={chartData}

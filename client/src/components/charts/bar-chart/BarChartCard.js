@@ -30,7 +30,7 @@ const BarChartCard = ({
       }}
     >
       <div id="title">
-        <h2>Select Dataset</h2>
+        <p style={{ fontSize: "1.5em" }}>Select Dataset</p>
       </div>
       <div id="dropdown-row-1">
         <FormInputDropdown
@@ -72,7 +72,7 @@ const BarChartCard = ({
         <ResponsiveBarChart
           width={1400}
           height={600}
-          barSize={35}
+          barSize={40}
           lineColor={"#f58369"}
           barColor={"#413ea0"}
           areaColor={"#8884d8"}
