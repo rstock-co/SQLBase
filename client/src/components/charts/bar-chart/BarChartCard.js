@@ -70,7 +70,7 @@ const BarChartCard = ({
       </div>
       <div id="chart">
         <ResponsiveBarChart
-          width={1400}
+          width={1000}
           height={600}
           barSize={40}
           lineColor={"#f58369"}

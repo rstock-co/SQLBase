@@ -60,7 +60,7 @@ const ParticlesPartial = () => {
           },
           links: {
             color: "#ffffff",
-            distance: 125,
+            distance: 150,
             enable: true,
             opacity: 0.5,
             width: 1,
@@ -83,7 +83,7 @@ const ParticlesPartial = () => {
               enable: true,
               area: 1200,
             },
-            value: 50,
+            value: 60,
           },
           opacity: {
             value: 0.5,
@@ -92,7 +92,7 @@ const ParticlesPartial = () => {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 4 },
+            value: { min: 1, max: 5 },
           },
         },
         detectRetina: true,
