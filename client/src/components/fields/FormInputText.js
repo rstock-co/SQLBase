@@ -24,7 +24,7 @@ export const FormInputText = ({
           size="small"
           margin="dense"
           disabled={disabled}
-          sx={{minWidth: 50, marginLeft: '0.5%'}}
+          sx={{ minWidth: 50, marginLeft: '0.5%' }}
         />
       )}
     />

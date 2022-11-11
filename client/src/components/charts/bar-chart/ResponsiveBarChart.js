@@ -25,7 +25,7 @@ const ResponsiveBarChart = ({
   chartData,
   companyName,
 }) => {
-  const chartTitle = `Financial Report for: ${companyName}`;
+  const chartTitle = `Financial Report: ${companyName}`;
 
   return (
     <>

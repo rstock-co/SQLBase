@@ -31,7 +31,7 @@ export const FormInputDropdown = ({
       control={control}
       name={name}
       render={({ field: { onChange, } }) => (
-        <FormControl sx={{ m: 1, minWidth: 170 }} size="small">
+        <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
           <InputLabel>{label}</InputLabel>
           <Select
             key={uniqueID}
@@ -40,7 +40,7 @@ export const FormInputDropdown = ({
             label={label}
             defaultValue=""
             disabled={disabled}
-            sx={{backgroundColor: "white"}}
+            sx={{ backgroundColor: "white" }}
           >
             {generateSelectOptions()}
           </Select>

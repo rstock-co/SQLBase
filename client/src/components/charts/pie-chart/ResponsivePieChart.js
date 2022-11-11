@@ -25,9 +25,7 @@ const ResponsivePieChart = ({
 
   const sectorName = capitalizeWord(relTableName);
 
-  const chartTitle = `${capitalizeWord(tableName)}: ${titleCase(
-    colName
-  )}: '${valName}'`;
+  const chartTitle = `${capitalizeWord(tableName)}: '${valName}'`;
   const mid = `categorized by`;
   const relTitle = `${sectorName}: '${capitalizeWord(relColName)}'`;
   const hstyle = {

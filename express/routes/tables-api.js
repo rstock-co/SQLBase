@@ -67,7 +67,7 @@ module.exports = ({ queryDBParams, queryDB }) => {
       `
       ).then(data => {
         res.json(data);
-        console.log(data)
+        // console.log(data)
       })
         .catch(err => {
           res.status(500).json({ error: err.message });

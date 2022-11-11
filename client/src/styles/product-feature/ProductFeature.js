@@ -5,12 +5,15 @@ import HoverVideoPlayer from 'react-hover-video-player'
 
 const ProductFeature = () => {
 
-  const hoverVideoRef = useRef();
+  const firstVideoRef = useRef();
+  const secondVideoRef = useRef();
 
   useEffect(() => {
-    const videoElement = hoverVideoRef.current;
+    const videoElement = firstVideoRef.current;
+    const video2Element = secondVideoRef.current;
 
-    videoElement.playbackRate = 2;
+    videoElement.playbackRate = 2.5;
+    video2Element.playbackRate = 2.5;
   }, []);
 
   return (
@@ -52,7 +55,8 @@ const ProductFeature = () => {
             shift={"right"}
           /> */}
           <HoverVideoPlayer
-            videoRef={hoverVideoRef}
+            loop={false}
+            videoRef={firstVideoRef}
             videoSrc="./CreateAndSeed.mp4"
             restartOnPaused
             style={{
@@ -124,8 +128,9 @@ const ProductFeature = () => {
             </Typography>
           </Box>
           <HoverVideoPlayer
-            videoRef={hoverVideoRef}
-            videoSrc="./CreateAndSeed.mp4"
+            loop={false}
+            videoRef={secondVideoRef}
+            videoSrc="./chartsandquery.mp4"
             restartOnPaused
             style={{
               width: '45%',
@@ -133,7 +138,7 @@ const ProductFeature = () => {
             }}
             pausedOverlay={
               <img
-                src="formSS.png"
+                src="chartsandquery.png"
                 alt=""
                 style={{
                   // Make the image expand to cover the video's dimensions

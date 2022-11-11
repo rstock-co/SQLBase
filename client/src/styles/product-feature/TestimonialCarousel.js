@@ -21,8 +21,8 @@ import Testimonial from "./Testimonial";
 
 const testimonials = [
   { img: './andy.jpeg', name: 'Andy Lindsay', review: '-\"It\'s almost as good as my robot car!\"' },
-  { img: './francis.jpg', name: 'Francis Bourgouin', review: '-\"This DOES sound good everybody.\"' },
   { img: './nally.jpg', name: 'Christian Nally', review: '-\"You have a solid project on your hands.\"' },
+  { img: './francis.jpg', name: 'Francis Bourgouin', review: '-\"This DOES sound good everybody.\"' },
   { img: './vasiliy.jpeg', name: 'Vasiliy Klimkin', review: '-\"You probably will use this!\"' },
 ]
 
@@ -53,7 +53,7 @@ export default function TestimonialCarousel() {
             spaceBetween={30}
             loop={true}
 
-            autoplay={{ delay: 3000 }}
+            // autoplay={{ delay: 3000 }}
             pagination={{
               clickable: true,
             }}
