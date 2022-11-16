@@ -23,5 +23,7 @@ SQLBase uses modern React charting libraries to visualize the data relationships
 ## Tech Stack
 
 **Front End:** React, Node, Axios
+
 **Back End:**  PostgreSQL, Express
+
 **APIs/Libraries:**  Falso API for fake data generation.  Recharts library for charts.
